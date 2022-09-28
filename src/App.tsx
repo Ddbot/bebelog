@@ -1,4 +1,4 @@
-import React, { Dispatch, useEffect, useReducer } from 'react';
+import React, { Dispatch, useReducer } from 'react';
 import {Action, Event, EventType, ActiveState } from './models/Event';
 import Buttons from './screens/widgetsScreen/Buttons';
 import EventsList from './screens/eventsListScreen/EventsList';
