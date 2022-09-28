@@ -1,6 +1,6 @@
 import React, { Dispatch, useEffect, useReducer } from 'react';
 import {Action, Event, EventType, ActiveState } from './models/Event';
-import './App.css';
+import Buttons from './screens/widgetsScreen/Buttons';
 
 function App(): JSX.Element {
   function reducer(state: Event[], action: Action): Event[] | [] {
@@ -73,11 +73,7 @@ function App(): JSX.Element {
 					<li></li>
 				)}
       </ul>
-      {
-        Object.entries(EventType).map((ev: [string, EventType], i: number): any => { 
-          return <button key={ 'btn' + i } data-type={ev[1]} onClick={handleClick}>{ ev[1].toUpperCase() }</button>
-        })
-      }
+      <Buttons handleClick={ handleClick } />
 		</div>
   );
 }
