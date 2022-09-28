@@ -8,7 +8,7 @@ type Props = {
 
 const ButtonsGroup = styled.div``;
 
-const Buttons = ({ handleClick }: Props) => { 
+const Buttons = ({ handleClick }: Props): JSX.Element => { 
     return <ButtonsGroup>
               {
         Object.entries(EventType).map((ev: [string, EventType], i: number): any => { 

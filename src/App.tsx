@@ -1,6 +1,8 @@
 import React, { Dispatch, useEffect, useReducer } from 'react';
 import {Action, Event, EventType, ActiveState } from './models/Event';
 import Buttons from './screens/widgetsScreen/Buttons';
+import EventsList from './screens/eventsListScreen/EventsList';
+
 
 function App(): JSX.Element {
   function reducer(state: Event[], action: Action): Event[] | [] {
@@ -48,31 +50,14 @@ function App(): JSX.Element {
 
   function handleClick(event: React.MouseEvent<HTMLButtonElement>): void {
     const currentTarget: HTMLButtonElement = event.currentTarget;
-    const type: any = currentTarget.dataset.type;
-    console.log(currentTarget.innerText);
-    
+    const { type }: any = currentTarget.dataset;
+
     setEventsList({ type });
   };
 
-  useEffect(() => { 
-    console.log(eventsList);
-  },[eventsList]);
-
   return (
 		<div>
-			<ul>
-				{eventsList.length > 0 ? (
-					eventsList?.map((ev: Event, i:number) => {
-						return (
-							<li key={'key' + i}>
-								{ev.type} : {ev.start}{' '}
-							</li>
-						);
-					})
-				) : (
-					<li></li>
-				)}
-      </ul>
+      <EventsList list={ eventsList } />
       <Buttons handleClick={ handleClick } />
 		</div>
   );
