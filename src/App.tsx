@@ -49,12 +49,14 @@ function App(): JSX.Element {
   function handleClick(event: React.MouseEvent<HTMLButtonElement>): void {
     const currentTarget: HTMLButtonElement = event.currentTarget;
     const type: any = currentTarget.dataset.type;
+    console.log(currentTarget.innerText);
+    
     setEventsList({ type });
   };
 
   useEffect(() => { 
-    console.log('Events: ', eventsList);
-  }, [eventsList]);
+    console.log(eventsList);
+  },[eventsList]);
 
   return (
 		<div>
@@ -70,22 +72,12 @@ function App(): JSX.Element {
 				) : (
 					<li></li>
 				)}
-			</ul>
-      <button data-type="change" onClick={handleClick}>
-				change
-			</button>
-			<button data-type="nourriture" onClick={handleClick}>
-				nourriture
-			</button>
-			<button data-type="dodo" onClick={handleClick}>
-				dodo
-			</button>
-			<button data-type="medicament" onClick={handleClick}>
-				medicament
-			</button>
-			<button data-type="lavage" onClick={handleClick}>
-				lavage
-			</button>
+      </ul>
+      {
+        Object.entries(EventType).map((ev: [string, EventType], i: number): any => { 
+          return <button key={ 'btn' + i } data-type={ev[1]} onClick={handleClick}>{ ev[1].toUpperCase() }</button>
+        })
+      }
 		</div>
   );
 }
