@@ -1,4 +1,4 @@
-import React, { Dispatch, useReducer } from 'react';
+import React, { Dispatch, SetStateAction, useReducer, useState } from 'react';
 import {Action, Event, EventType, ActiveState } from './models/Event';
 import Buttons from './screens/widgetsScreen/Buttons';
 import EventsList from './screens/eventsListScreen/EventsList';
@@ -47,6 +47,7 @@ function App(): JSX.Element {
   };
 
   const [eventsList, setEventsList]: [Event[], Dispatch<Action>] = useReducer(reducer, []);
+  const [isPending, setIsPending]: [Object[], SetStateAction<S>] = useState([]);
 
   function handleClick(event: React.MouseEvent<HTMLButtonElement>): void {
     const currentTarget: HTMLButtonElement = event.currentTarget;
