@@ -71,11 +71,6 @@ function App(): JSX.Element {
     });    
   }, [timer]);
 
-  useEffect(() => { 
-    console.log(eventsList);
-    
-  },[eventsList]);
-
   return (
       <div>
         <EventsList list={eventsList} />
