@@ -39,9 +39,11 @@ const Buttons = ({ handleClick, timerFn }: Props): JSX.Element => {
         }
         <Widget
             key={'btn_dodo'}                
+            data-type='dodo'
             onClick={timerFn}>{icons['dodo']}</Widget>
         <Widget
-                key={'btn_nourriture'}                
+            key={'btn_nourriture'}                
+            data-type='nourriture'
             onClick={timerFn}>{ icons['nourriture']}</Widget>
     </ButtonsGroup>
 };

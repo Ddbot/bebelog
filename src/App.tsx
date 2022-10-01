@@ -80,7 +80,9 @@ function App(): JSX.Element {
   };
 
   function timerFn(event: React.MouseEvent<HTMLButtonElement>): void {    
-    const category: string = event.currentTarget.innerHTML;
+    const currentTarget: HTMLButtonElement = event.currentTarget;
+    const category: any = currentTarget.dataset.type;
+
     setTimer((prev: TimerType) => { 
       if (!timer.category) { 
         return {
@@ -114,7 +116,7 @@ function App(): JSX.Element {
     Object.keys(timer).length === 3 && setEventsList({
       type: EventType.TIMED,
       value: {
-      type: timer.category,
+        type: timer.category,
         start: timer.start,
         end: Date.now()
       }
@@ -126,15 +128,16 @@ function App(): JSX.Element {
     
   }, [eventsList]);
 
-  return (
+  return (<>
       <MobileShell className='App'>
-      {/* <EventsList list={eventsList} /> */}
         <TopBar>Bebelog</TopBar>
       <Buttons timerFn={timerFn} handleClick={handleClick} />
-      <FAB>
+      <FAB onClick={() => { console.log('On va dans la page Stats & Reglages')}}>
         <Gear />
       </FAB>
-      </MobileShell>
+    </MobileShell>
+      {/* <EventsList list={eventsList} /> */}
+    </>
     );
   }
 export default App;

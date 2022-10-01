@@ -15,7 +15,7 @@ const EventsList = (props : Props): JSX.Element => {
                         <li key={'key' + i}>
                             {ev.type} : {ev.start}{' '}
                         </li>
-                    ) : (<li key={'key' + i}>{ev.type} : { String(Object.values(ev)) }</li>);
+                    ) : (<li key={'key' + i}>{ String(Object.values(ev)) }</li>);
                 })
             ) : (
                 <li></li>
