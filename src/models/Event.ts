@@ -1,6 +1,6 @@
 // type EventType = 'lavage' | 'change' | 'nourriture' | 'dodo' | 'medicament';
 
-export enum EventType { LAVAGE = 'lavage', CHANGE = 'change', NOURRITURE = 'nourriture', DODO = 'dodo', MEDICAMENT = 'medicament', TIMED = 'TIMED' };
+export enum EventType { LAVAGE = 'lavage', CHANGE = 'change', NOURRITURE = 'nourriture', DODO = 'dodo', MEDICAMENT = 'medicament', TIMED = 'timed' };
 export enum ActiveState { ACTIVE = 'active', FINISHED = 'finished', PENDING = 'pending' };
 
 export type Action = {
