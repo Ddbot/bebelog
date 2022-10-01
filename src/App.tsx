@@ -4,6 +4,8 @@ import Buttons from './screens/widgetsScreen/Buttons';
 import EventsList from './screens/eventsListScreen/EventsList';
 import styled from 'styled-components';
 import './App.css';
+import Gear from './assets/Gear';
+import { Widget } from './screens/widgetsScreen/styled-components';
 
 const radius = '0.67cm';
 
@@ -16,6 +18,8 @@ const MobileShell = styled.div`
   display: flex;
   flex-flow: row wrap;
   align-items: center;
+
+  position: relative;
 `;
 
 const TopBar = styled.h1`
@@ -32,6 +36,20 @@ align-self: flex-start;
 
   margin: 0;
   border-bottom: 2px solid black;
+`;
+
+const FAB = styled.button`
+  aspect-ratio: 1 / 1;
+
+  width: 30%;
+  
+  border-radius: 50%;
+  
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.5rem;
+
+  background: transparent;
 `;
 
 function App(): JSX.Element {
@@ -111,8 +129,11 @@ function App(): JSX.Element {
   return (
       <MobileShell className='App'>
       {/* <EventsList list={eventsList} /> */}
-      <TopBar>Bebelog</TopBar>
-        <Buttons timerFn={timerFn} handleClick={handleClick} />
+        <TopBar>Bebelog</TopBar>
+      <Buttons timerFn={timerFn} handleClick={handleClick} />
+      <FAB>
+        <Gear />
+      </FAB>
       </MobileShell>
     );
   }

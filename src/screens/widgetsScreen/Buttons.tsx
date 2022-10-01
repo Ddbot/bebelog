@@ -3,11 +3,24 @@ import {
     Widget,
     ButtonsGroup
 } from './styled-components';
+import Lavage from '../../assets/Lavage';
+import Change from '../../assets/Change';
+import Dodo from '../../assets/Dodo';
+import Medicament from '../../assets/Medicament';
+import Nourriture from '../../assets/Nourriture';
 
 type Props = {
     handleClick: any,
     timerFn: any,
-}
+};
+
+const icons: any = {
+    lavage: <Lavage />,
+    change: < Change />,
+    medicament:<Medicament />,
+    dodo:<Dodo />,
+    nourriture: <Nourriture />
+};
 
 const Buttons = ({ handleClick, timerFn }: Props): JSX.Element => { 
     return <ButtonsGroup>
@@ -21,15 +34,15 @@ const Buttons = ({ handleClick, timerFn }: Props): JSX.Element => {
                 key={'btn' + i}
                 data-type={ev[1]}
                 onClick={handleClick}
-            >{ev[1]}</Widget>
+            >{icons[ev[1]]}</Widget>
         })
         }
         <Widget
             key={'btn_dodo'}                
-            onClick={timerFn}>dodo</Widget>
+            onClick={timerFn}>{icons['dodo']}</Widget>
         <Widget
                 key={'btn_nourriture'}                
-                onClick={timerFn}>nourriture</Widget>
+            onClick={timerFn}>{ icons['nourriture']}</Widget>
     </ButtonsGroup>
 };
 

@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Pills = () => {
+const Medicament = ():JSX.Element => {
     return (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 980 982">
+      <svg xmlns="http://www.w3.org/2000/svg" width={32} viewBox="0 0 980 982">
         <defs />
         <path
           fill="#B5B5B5"
@@ -26,4 +26,4 @@ const Pills = () => {
     );
 }
 
-export default Pills;
+export default Medicament;
