@@ -103,6 +103,11 @@ function App(): JSX.Element {
     });    
   }, [timer]);
 
+  useEffect(() => { 
+    console.log(eventsList);
+    
+  }, [eventsList]);
+
   return (
       <MobileShell className='App'>
       {/* <EventsList list={eventsList} /> */}
