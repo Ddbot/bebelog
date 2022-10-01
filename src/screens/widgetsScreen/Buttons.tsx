@@ -1,13 +1,13 @@
-import styled from 'styled-components';
 import { EventType } from '../../models/Event';
-
+import {
+    Widget,
+    ButtonsGroup
+} from './styled-components';
 
 type Props = {
     handleClick: any,
     timerFn: any,
 }
-
-const ButtonsGroup = styled.div``;
 
 const Buttons = ({ handleClick, timerFn }: Props): JSX.Element => { 
     return <ButtonsGroup>
@@ -17,19 +17,19 @@ const Buttons = ({ handleClick, timerFn }: Props): JSX.Element => {
                     return !['dodo','nourriture','timed'].includes(button[1])
                 })
                 .map((ev: [string, EventType], i: number): any => { 
-            return <button
+            return <Widget
                 key={'btn' + i}
                 data-type={ev[1]}
                 onClick={handleClick}
-            >{ev[1]}</button>
+            >{ev[1]}</Widget>
         })
         }
-        <button
+        <Widget
             key={'btn_dodo'}                
-            onClick={timerFn}>dodo</button>
-        <button
+            onClick={timerFn}>dodo</Widget>
+        <Widget
                 key={'btn_nourriture'}                
-                onClick={timerFn}>nourriture</button>
+                onClick={timerFn}>nourriture</Widget>
     </ButtonsGroup>
 };
 

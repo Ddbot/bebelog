@@ -15,10 +15,11 @@ const MobileShell = styled.div`
 
   display: flex;
   flex-flow: row wrap;
-  align-items: space-between;
+  align-items: center;
 `;
 
 const TopBar = styled.h1`
+align-self: flex-start;
   width: calc(100vw - 20px);
   height: 3rem;
 
