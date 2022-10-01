@@ -1,53 +1,27 @@
-import React, { Dispatch, SetStateAction, useReducer, useState } from 'react';
-import {Action, Event, EventType, ActiveState } from './models/Event';
+import React, { Dispatch, SetStateAction, useEffect, useReducer, useRef, useState } from 'react';
+import {Action, Event, EventType, TimerType } from './models/Event';
 import Buttons from './screens/widgetsScreen/Buttons';
 import EventsList from './screens/eventsListScreen/EventsList';
 
-
 function App(): JSX.Element {
-  function reducer(state: Event[], action: Action): Event[] | [] {
-    let obj;
-    let newState = state;
-    const activeEventIndex: number = state.findIndex((ev: Event) => ev.type === action.type && ev.status === ActiveState.ACTIVE);
+  function reducer(state: any, action: Action): any {
 
     switch (action.type) {
-      case EventType.DODO:
-      case EventType.NOURRITURE:
-
-        if (activeEventIndex === -1) {
-          newState = [...newState, {
-            start: Date.now(),
-            type: action.type,
-            status: ActiveState.ACTIVE
-          }];
-        };
-
-        if (activeEventIndex >= 0) {           
-          newState[activeEventIndex] = {
-            ...newState[activeEventIndex],
-            end: Date.now(),
-            status: ActiveState.FINISHED
-          };
-        };
-
-        return newState;
-      
+      case EventType.TIMED:
+        return [...state,
+        action.value
+        ];
       default:
-        obj = {
+        return [...state, {
           start: Date.now(),
           end: Date.now(),
-          type: action.type,
-          status: ActiveState.FINISHED
-        };
-        return [
-          ...state,
-          obj
-        ];
+          type: action.type
+        }];
     };
   };
 
   const [eventsList, setEventsList]: [Event[], Dispatch<Action>] = useReducer(reducer, []);
-  const [isPending, setIsPending]: [Object[], SetStateAction<S>] = useState([]);
+  const [timer, setTimer]: [any, SetStateAction<any>] = useState({});
 
   function handleClick(event: React.MouseEvent<HTMLButtonElement>): void {
     const currentTarget: HTMLButtonElement = event.currentTarget;
@@ -56,12 +30,57 @@ function App(): JSX.Element {
     setEventsList({ type });
   };
 
-  return (
-		<div>
-      <EventsList list={ eventsList } />
-      <Buttons handleClick={ handleClick } />
-		</div>
-  );
-}
+  function timerFn(event: React.MouseEvent) {    
+    const category: string = event.currentTarget.innerHTML;
+    setTimer((prev: TimerType) => { 
+      if (!timer.category) { 
+        return {
+          category,
+          start: Date.now()
+        }
+      };
 
+      if (timer.category === category && Object.keys(timer).length === 2) {
+        return {
+        ...prev,
+          end: Date.now()
+        }
+      }; 
+
+      if (Object.keys(timer).length === 3) { 
+        return {
+          category,
+          start: Date.now()
+        }
+      }
+
+      if (timer.category !== category && Object.keys(timer).length === 2) {
+        return prev;
+      }
+    });       
+  };
+
+  useEffect(() => { 
+    Object.keys(timer).length === 3 && setEventsList({
+      type: EventType.TIMED,
+      value: {
+      type: timer.category,
+        start: timer.start,
+        end: Date.now()
+      }
+    });    
+  }, [timer]);
+
+  useEffect(() => { 
+    console.log(eventsList);
+    
+  },[eventsList]);
+
+  return (
+      <div>
+        <EventsList list={eventsList} />
+        <Buttons timerFn={timerFn} handleClick={handleClick} />
+      </div>
+    );
+  }
 export default App;
