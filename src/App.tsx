@@ -1,12 +1,13 @@
 import React, { Dispatch, SetStateAction, useEffect, useReducer, useRef, useState } from 'react';
-import {Action, Event, EventType, TimerType } from './models/Event';
-import Buttons from './screens/widgetsScreen/Buttons';
+import { Action, Event, EventType, TimerType } from './models/Event';
+import { Routes, Route, Link } from 'react-router-dom';
 import EventsList from './screens/eventsListScreen/EventsList';
 import styled from 'styled-components';
 import './App.css';
 import Gear from './assets/Gear';
 import { Widget } from './screens/widgetsScreen/styled-components';
 import { supabase } from './supabase/client'; 
+import Home from './screens/widgetsScreen/Home';
 
 
 const radius = '0.67cm';
@@ -38,20 +39,6 @@ align-self: flex-start;
 
   margin: 0;
   border-bottom: 2px solid black;
-`;
-
-const FAB = styled.button`
-  aspect-ratio: 1 / 1;
-
-  width: 30%;
-  
-  border-radius: 50%;
-  
-  position: absolute;
-  right: 0.5rem;
-  bottom: 0.5rem;
-
-  background: transparent;
 `;
 
 function App(): JSX.Element {
@@ -135,13 +122,13 @@ function App(): JSX.Element {
 
   return (<>
       <MobileShell className='App'>
-        <TopBar>Bebelog</TopBar>
-        <Buttons timerFn={timerFn} handleClick={handleClick} />
-        <FAB onClick={() => { console.log('On va dans la page Stats & Reglages')}}>
-          <Gear />
-        </FAB>
+      <TopBar><Link to='/' style={{width: '100%'}}>Bebelog</Link></TopBar>
+      <Routes>
+        <Route path='/' element={
+          <Home handleClick={handleClick} timerFn={timerFn} />} />
+        <Route path='settings' element={<EventsList />} />
+        </Routes>
       </MobileShell>
-      {/* <EventsList /> */}
     </>
     );
   }

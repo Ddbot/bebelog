@@ -26,3 +26,17 @@ export const ButtonsGroup = styled.div`
 	flex-flow: row wrap;
 	justify-content: center;
 `;
+
+export const FAB = styled.button`
+	aspect-ratio: 1 / 1;
+
+	width: 30%;
+
+	border-radius: 50%;
+
+	position: absolute;
+	right: 0.5rem;
+	bottom: 0.5rem;
+
+	background: transparent;
+`;
