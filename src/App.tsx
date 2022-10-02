@@ -6,6 +6,8 @@ import styled from 'styled-components';
 import './App.css';
 import Gear from './assets/Gear';
 import { Widget } from './screens/widgetsScreen/styled-components';
+import { supabase } from './supabase/client'; 
+
 
 const radius = '0.67cm';
 
@@ -76,7 +78,11 @@ function App(): JSX.Element {
     const currentTarget: HTMLButtonElement = event.currentTarget;
     const { type }: any = currentTarget.dataset;
 
-    setEventsList({ type });
+    insertEvent({
+          type,
+          start: Date.now(),
+          end: Date.now(),
+        });
   };
 
   function timerFn(event: React.MouseEvent<HTMLButtonElement>): void {    
@@ -110,17 +116,30 @@ function App(): JSX.Element {
       }
     });       
   };
+  async function insertEvent(event:any) {
+    const { data, error } = await supabase.from('events').insert(event);
+      if (error) console.error('Erruer lors de linsertion');
+      if(data) console.log('Inséré ', data);
+  };
 
   // repere le nb de parametres dans timer et setEventsList accordingly
   useEffect((): void => { 
-    Object.keys(timer).length === 3 && setEventsList({
-      type: EventType.TIMED,
-      value: {
-        type: timer.category,
-        start: timer.start,
-        end: Date.now()
-      }
-    });    
+    if (Object.keys(timer).length === 3) {
+        insertEvent({
+          type: timer.category,
+          start: timer.start,
+          end: Date.now()
+        });
+      
+    //   setEventsList({
+    //   type: EventType.TIMED,
+    //   value: {
+    //     type: timer.category,
+    //     start: timer.start,
+    //     end: Date.now()
+    //   }
+    // });
+  };    
   }, [timer]);
 
   useEffect(() => { 
