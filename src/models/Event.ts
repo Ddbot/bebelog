@@ -10,7 +10,6 @@ export type Action = {
 
 export type ActiveStateType = {
   type?: EventType | undefined,
-  status: ActiveState,
   start?: number
 };
 
@@ -18,7 +17,6 @@ export type Event = {
     start: number;
     end?: number;
     type: EventType;
-    status?: ActiveState;
 };
 
 export type TimerType = {

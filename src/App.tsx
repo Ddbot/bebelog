@@ -16,13 +16,12 @@ const MobileShell = styled.div`
   aspect-ratio: 1 / 2;
   width: 7.57cm;
   border-radius: ${radius};
-  border: 10px solid black;
+  border: 8px solid black;
 
   display: flex;
   flex-flow: row wrap;
   align-items: center;
 
-  position: relative;
 `;
 
 const TopBar = styled.h1`
