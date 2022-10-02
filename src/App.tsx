@@ -129,15 +129,6 @@ function App(): JSX.Element {
           start: timer.start,
           end: Date.now()
         });
-      
-    //   setEventsList({
-    //   type: EventType.TIMED,
-    //   value: {
-    //     type: timer.category,
-    //     start: timer.start,
-    //     end: Date.now()
-    //   }
-    // });
   };    
   }, [timer]);
 
