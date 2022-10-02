@@ -117,8 +117,9 @@ function App(): JSX.Element {
   };
   async function insertEvent(event:any) {
     const { data, error } = await supabase.from('events').insert(event);
-      if (error) console.error('Erruer lors de linsertion');
-      if(data) console.log('Inséré ', data);
+
+    if (error) console.error('Erruer lors de linsertion');
+    if (data) console.log('Inséré ', data);
   };
 
   // repere le nb de parametres dans timer et setEventsList accordingly
@@ -135,12 +136,12 @@ function App(): JSX.Element {
   return (<>
       <MobileShell className='App'>
         <TopBar>Bebelog</TopBar>
-      <Buttons timerFn={timerFn} handleClick={handleClick} />
-      <FAB onClick={() => { console.log('On va dans la page Stats & Reglages')}}>
-        <Gear />
-      </FAB>
-    </MobileShell>
-      <EventsList />
+        <Buttons timerFn={timerFn} handleClick={handleClick} />
+        <FAB onClick={() => { console.log('On va dans la page Stats & Reglages')}}>
+          <Gear />
+        </FAB>
+      </MobileShell>
+      {/* <EventsList /> */}
     </>
     );
   }
