@@ -71,7 +71,6 @@ function App(): JSX.Element {
     };
   };
 
-  const [eventsList, setEventsList]: [Event[], Dispatch<Action>] = useReducer(reducer, []);
   const [timer, setTimer]: [any, SetStateAction<any>] = useState({});
 
   function handleClick(event: React.MouseEvent<HTMLButtonElement>): void {
@@ -142,11 +141,6 @@ function App(): JSX.Element {
   };    
   }, [timer]);
 
-  useEffect(() => { 
-    console.log(eventsList);
-    
-  }, [eventsList]);
-
   return (<>
       <MobileShell className='App'>
         <TopBar>Bebelog</TopBar>
@@ -155,7 +149,7 @@ function App(): JSX.Element {
         <Gear />
       </FAB>
     </MobileShell>
-      {/* <EventsList list={eventsList} /> */}
+      <EventsList />
     </>
     );
   }
