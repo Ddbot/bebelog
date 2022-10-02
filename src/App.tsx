@@ -119,7 +119,7 @@ function App(): JSX.Element {
   };    
   }, [timer]);
 
-  return (<>
+  return (
       <MobileShell className='App'>
       <TopBar><Link to='/' style={{width: '100%'}}>Bebelog</Link></TopBar>
       <Routes>
@@ -128,7 +128,6 @@ function App(): JSX.Element {
         <Route path='settings' element={<EventsList />} />
         </Routes>
       </MobileShell>
-    </>
     );
   }
 export default App;

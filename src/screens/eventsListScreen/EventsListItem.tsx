@@ -37,9 +37,9 @@ const Li = styled.li`
 
 const EventsListItem = ({event}: Props) => { 
     return  !['dodo','nourriture'].includes(event.type) ? <Li>
-            {icons[event.type]} {event.type}
+        {icons[event.type]}{ event.start}
     </Li> : <Li>
-            {icons[event.type]} {event.type}
+            {icons[event.type]} { (event.end! - event.start)/1000 }
     </Li>
 };
 
