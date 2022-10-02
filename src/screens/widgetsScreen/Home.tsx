@@ -10,10 +10,8 @@ type Props = {
 
 const Home = ({ handleClick, timerFn }: Props) => <HomeContainer>
     <Buttons timerFn={timerFn} handleClick={handleClick} />
-    <Link to='/settings'>
-        <FAB>
-            <Gear />
-        </FAB>
-    </Link>
+    <FAB>
+        <Gear />
+    </FAB>
 </HomeContainer>;
 export default Home;        
