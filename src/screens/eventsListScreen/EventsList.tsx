@@ -3,7 +3,24 @@ import styled from 'styled-components';
 import { Event } from '../../models/Event';
 import { supabase } from '../../supabase/client';
 
-const List = styled.ul``;
+import EventsListItem from './EventsListItem';
+
+const List = styled.ul`
+    max-height: calc(15.14cm - 3rem);
+    overflow-y: scroll;
+    width: 100%;
+
+    align-self: flex-start;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    grid-auto-rows: 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    place-items: center;
+    // place-content: start space-evenly;
+`;
 
 const EventsList = (): JSX.Element => { 
     const [list, setList]: [Event[], any] = useState([]);
@@ -19,14 +36,11 @@ const EventsList = (): JSX.Element => {
     }, []);
 
     return <List>
-        <ul>
             {list?.length > 0 && (
-                list?.map((ev: any, i:number) =>
-                    <li key={'key' + i}>
-                        {ev.type} : {ev.start} : {ev.end}
-                    </li>)
+            list?.map((ev: Event, i: number) => {
+                return <EventsListItem event={ev} key={'eventListItem'+i} />
+            })
             )}
-        </ul>
     </List>
 };
 
