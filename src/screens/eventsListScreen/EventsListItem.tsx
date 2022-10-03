@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Event } from '../../models/Event';
 import { icons } from '../../assets/icons';
+import dayjs from 'dayjs'
+import { useEffect } from 'react';
 
 type Props = {
     event: Event
@@ -40,9 +42,9 @@ const Li = styled.li`
 
 `;
 
-const EventsListItem = ({event}: Props) => { 
+const EventsListItem = ({ event }: Props) => { 
     return  !['dodo','nourriture'].includes(event.type) ? <Card to={`/events_list/${event.id}`} state={{ value: event}}><Li>
-        {icons[event.type]}{ event.start}
+        {icons[event.type]}{ dayjs(event.start).format('HH[:]mm')}
     </Li></Card> : <Card to={`/events_list/${event.id}`} state={{value:event}}><Li>
             {icons[event.type]} { (event.end! - event.start)/1000 }
     </Li></Card>

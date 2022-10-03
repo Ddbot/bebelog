@@ -58,11 +58,6 @@ const EventsList = (): JSX.Element => {
         fetchEvents();
     });
 
-    useEffect(() => { 
-        console.log(list);
-        
-    }, [list]);
-
     return <>
         <TemporaryDateSearchBox><span>⬅️</span><span>DATE SEARCHBOX</span><span>➡️</span></TemporaryDateSearchBox>
             <List>

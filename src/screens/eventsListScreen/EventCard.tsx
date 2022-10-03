@@ -1,8 +1,9 @@
 import styled from 'styled-components';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { icons } from '../../assets/icons';
 import React from 'react';
 import { supabase } from '../../supabase/client';
+import dayjs from 'dayjs';
 
 const Card = styled.div`
     width: 100%;
@@ -39,7 +40,8 @@ const Values = styled.div`
         flex-flow: row nowrap;
         align-items: center;
         justify-content: center;
-            width: 100%;
+        width: 100%;
+        font-size: 3rem;
   
     }
     `;
@@ -89,12 +91,12 @@ const EventCard = () => {
 
     return !['dodo','nourriture'].includes(value!.type) ? <Card>
         <Content>
-            <Icon>{icons[value!.type]}</Icon>
-            <Values><div>{value!.start}</div></Values>
+            <Icon>{icons[value.type]}</Icon>
+            <Values><div>{dayjs(value.start).format('HH:mm')}</div></Values>
             <ButtonContainer>
-                <button id={value.id} onClick={editEvent}>🖊️</button>
                 <button id={value.id} onClick={deleteEvent}>🗑️</button>
                 <button id={value.id} onClick={confirmChange}>✔️</button>
+                <button id={value.id} onClick={editEvent}>🖊️</button>
             </ButtonContainer>
         </Content>
     </Card> : <Card>
@@ -102,9 +104,9 @@ const EventCard = () => {
             <Icon>{icons[value!.type]}</Icon>
                 <Values><div>{(value!.end! - value!.start) / 1000}</div></Values>
                 <ButtonContainer>
-                    <button id={value.id} onClick={editEvent}>🖊️</button>
                     <button id={value.id} onClick={deleteEvent}>🗑️</button>
                     <button id={value.id} onClick={confirmChange}>✔️</button>
+                    <button id={value.id} onClick={editEvent}>🖊️</button>
                 </ButtonContainer>
             </Content>
         </Card>
