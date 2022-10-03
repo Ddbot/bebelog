@@ -31,18 +31,23 @@ const Icon = styled.div`
 const Values = styled.div`
     grid-column: 1 / span 3;
     grid-row: 2 / span 1;
+
     display: flex;
     flex-flow: row nowrap;
-    align-items: space-evenly;
+    align-items: center;
     justify-content: center;
-    & > div {
+
+    & > div:not(.durationDisplay) {
         display: flex;
         flex-flow: row nowrap;
         align-items: center;
         justify-content: center;
         width: 100%;
         font-size: 3rem;
-  
+    }
+
+    & > div.durationDisplay {
+        font-size: 2rem;
     }
     `;
 
@@ -65,6 +70,14 @@ const ButtonContainer = styled.div`
         text-align: center;
 
         scale: 1.5;
+    }
+`;
+
+const ArrowContainer = styled.span`
+    margin: 0 4px;
+    & > span {
+        font-weight: 900;
+        font-size: 1.6rem;
     }
 `;
 
@@ -93,19 +106,21 @@ const EventCard = () => {
         <Content>
             <Icon>{icons[value.type]}</Icon>
             <Values><div>{dayjs(value.start).format('HH:mm')}</div></Values>
-            <ButtonContainer>
-                <button id={value.id} onClick={deleteEvent}>🗑️</button>
+            <ButtonContainer>← 
                 <button id={value.id} onClick={confirmChange}>✔️</button>
+                <button id={value.id} onClick={confirmChange}>⬅️</button>
+                <button id={value.id} onClick={deleteEvent}>🗑️</button>
                 <button id={value.id} onClick={editEvent}>🖊️</button>
             </ButtonContainer>
         </Content>
     </Card> : <Card>
         <Content>
             <Icon>{icons[value.type]}</Icon>
-                <Values><div>{(value.end! - value.start) / 1000}</div></Values>
+                <Values><div className="durationDisplay">{dayjs(value.end!).format('HH:mm')} <ArrowContainer><span>→</span></ArrowContainer> {dayjs(value.start).format('HH:mm')}</div></Values>
                 <ButtonContainer>
-                    <button id={value.id} onClick={deleteEvent}>🗑️</button>
                     <button id={value.id} onClick={confirmChange}>✔️</button>
+                    <button id={value.id} onClick={confirmChange}>⬅️</button>
+                    <button id={value.id} onClick={deleteEvent}>🗑️</button>
                     <button id={value.id} onClick={editEvent}>🖊️</button>
                 </ButtonContainer>
             </Content>
