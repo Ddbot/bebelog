@@ -13,7 +13,8 @@ export type ActiveStateType = {
   start?: number
 };
 
-export type Event = {         
+export type Event = { 
+    id?: number;  
     start: number;
     end?: number;
     type: EventType;

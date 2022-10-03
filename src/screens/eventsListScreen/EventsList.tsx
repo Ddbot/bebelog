@@ -6,13 +6,11 @@ import { supabase } from '../../supabase/client';
 import EventsListItem from './EventsListItem';
 
 const List = styled.ul`
-	max-height: calc(100% - 7rem);
-	height: calc(100% - 7rem);
+	max-height: calc(100% - 11rem);
+	min-height: calc(100% - 11rem);
 
     overflow-y: scroll;
     width: 100%;
-
-    align-self: flex-start;
 
     display: grid;
     grid-template-columns: 1fr;
@@ -20,22 +18,31 @@ const List = styled.ul`
     grid-auto-rows: 1fr;
     gap: 0px 0px;
     grid-auto-flow: row;
-    place-items: center;
+    place-items: start;
+    align-items: start;
+    align-content: start;
 `;
 
 const TemporaryDateSearchBox = styled.h2`
-    text-align: center;
     width: 100%;
-    align-self: flex-start;
-    margin: 0;
-    padding: auto 0;
     height: 4rem;
 
+    align-self: flex-start;
+    margin: 0;
+    padding: 0 16px;
 
 	display: flex;
 	flex-flow: row nowrap;
 	align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+
+
+    & > span:nth-child(odd) {
+        font-size: 2rem;
+    }
+        & > span:nth-child(even) {
+        font-size: 1rem;
+    }
 `;
 
 const EventsList = (): JSX.Element => { 
@@ -49,7 +56,7 @@ const EventsList = (): JSX.Element => {
 
     useEffect(() => { 
         fetchEvents();
-    }, []);
+    });
 
     useEffect(() => { 
         console.log(list);
@@ -57,14 +64,15 @@ const EventsList = (): JSX.Element => {
     }, [list]);
 
     return <>
-        <TemporaryDateSearchBox><span>⬅️</span>DATE SEARCHBOX<span>➡️</span></TemporaryDateSearchBox>
-        <List>
-            {list?.length > 0 && (
-            list?.map((ev: Event, i: number) => {
-                return <EventsListItem event={ev} key={'eventListItem'+i} />
-            })
-            )}
-    </List></>
+        <TemporaryDateSearchBox><span>⬅️</span><span>DATE SEARCHBOX</span><span>➡️</span></TemporaryDateSearchBox>
+            <List>
+                {list?.length > 0 && (
+                list?.map((ev: Event, i: number) => {
+                    return <EventsListItem event={ev} key={'eventListItem'+i} />
+                })
+                )}
+            </List>
+        </>
 };
 
 export default EventsList;

@@ -58,5 +58,5 @@ const FABContainer = styled(Link)`
 `;
 
 export const FAB = ({ children }) => {
-	return <FABContainer to="/settings">{children}</FABContainer>
+	return <FABContainer to="/events_list">{children}</FABContainer>
 };

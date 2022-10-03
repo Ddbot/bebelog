@@ -2,6 +2,8 @@ import React, { Dispatch, SetStateAction, useEffect, useReducer, useRef, useStat
 import { Action, Event, EventType, TimerType } from './models/Event';
 import { Routes, Route, Link } from 'react-router-dom';
 import EventsList from './screens/eventsListScreen/EventsList';
+import EventCard from './screens/eventsListScreen/EventCard';
+
 import styled from 'styled-components';
 import './App.css';
 import Gear from './assets/Gear';
@@ -125,8 +127,9 @@ function App(): JSX.Element {
       <Routes>
         <Route path='/' element={
           <Home handleClick={handleClick} timerFn={timerFn} />} />
-        <Route path='settings' element={<EventsList />} />
-        </Routes>
+        <Route path='events_list' element={<EventsList />} />
+        <Route path="events_list/:id" element={ <EventCard />} />
+      </Routes>
       </MobileShell>
     );
   }
