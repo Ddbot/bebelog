@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { icons } from '../../assets/icons';
@@ -109,22 +109,22 @@ const EventCard = () => {
         <Content>
             <Icon>{icons[value.type]}</Icon>
             <Values><div>{dayjs(value.start).format('HH:mm')}</div></Values>
-            <ButtonContainer>← 
-                <button id={value.id} onClick={confirmChange}>✔️</button>
+            <ButtonContainer>                
                 <button id={value.id} onClick={() => { navigate('/events_list')}}>⬅️</button>
                 <button id={value.id} onClick={deleteEvent}>🗑️</button>
-                <button id={value.id} onClick={editEvent}>🖊️</button>
+                { !isInEditMode &&<button id={value.id} onClick={() => { setIsInEditMode(true)}}>🖊️</button>}
+                { isInEditMode && <button id={value.id} onClick={confirmChange}>✔️</button>}
             </ButtonContainer>
         </Content>
     </Card> : <Card>
         <Content>
             <Icon>{icons[value.type]}</Icon>
                 <Values><div className="durationDisplay">{dayjs(value.end!).format('HH:mm')} <ArrowContainer><span>→</span></ArrowContainer> {dayjs(value.start).format('HH:mm')}</div></Values>
-                <ButtonContainer>
-                    <button id={value.id} onClick={confirmChange}>✔️</button>
+                <ButtonContainer>                    
                     <button id={value.id} onClick={() => { navigate('/events_list')}}>⬅️</button>
                     <button id={value.id} onClick={deleteEvent}>🗑️</button>
-                    <button id={value.id} onClick={editEvent}>🖊️</button>
+                    { !isInEditMode &&<button id={value.id} onClick={() => { setIsInEditMode(true)}}>🖊️</button>}
+                    { isInEditMode && <button id={value.id} onClick={confirmChange}>✔️</button>}
                 </ButtonContainer>
             </Content>
         </Card>
