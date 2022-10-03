@@ -38,17 +38,20 @@ const Values = styled.div`
     align-items: center;
     justify-content: center;
 
-    & > div:not(.durationDisplay) {
+    & > div:not(.durationDisplay),
+    & > input:not(.durationDisplay) {
         display: flex;
         flex-flow: row nowrap;
         align-items: center;
         justify-content: center;
         width: 100%;
         font-size: 3rem;
+        padding: 0 1.8rem;
     }
 
-    & > div.durationDisplay {
-        font-size: 2rem;
+    & > div.durationDisplay,
+    & > input.durationDisplay {
+        font-size: 1.2rem;
     }
     `;
 
@@ -108,7 +111,8 @@ const EventCard = () => {
     return !['dodo','nourriture'].includes(value.type) ? <Card>
         <Content>
             <Icon>{icons[value.type]}</Icon>
-            <Values><div>{dayjs(value.start).format('HH:mm')}</div></Values>
+            { isInEditMode && <Values><input type="time" min={0} max={23} value={dayjs(value.start).format('HH:mm')} /></Values>}
+            { !isInEditMode && <Values><div>{dayjs(value.start).format('HH:mm')}</div></Values>}
             <ButtonContainer>                
                 <button id={value.id} onClick={() => { navigate('/events_list')}}>⬅️</button>
                 <button id={value.id} onClick={deleteEvent}>🗑️</button>
@@ -119,7 +123,8 @@ const EventCard = () => {
     </Card> : <Card>
         <Content>
             <Icon>{icons[value.type]}</Icon>
-                <Values><div className="durationDisplay">{dayjs(value.end!).format('HH:mm')} <ArrowContainer><span>→</span></ArrowContainer> {dayjs(value.start).format('HH:mm')}</div></Values>
+                { isInEditMode && <Values><input type="time" className="durationDisplay" min={0} max={23} value={dayjs(value.start).format('HH:mm')} /> <ArrowContainer><span>→</span></ArrowContainer> <input type="time" className="durationDisplay" min={0} max={23} value={dayjs(value.end).format('HH:mm')} /></Values>}
+                { !isInEditMode && <Values><div className="durationDisplay">{dayjs(value.end!).format('HH:mm')} <ArrowContainer><span>→</span></ArrowContainer> {dayjs(value.start).format('HH:mm')}</div></Values>}
                 <ButtonContainer>                    
                     <button id={value.id} onClick={() => { navigate('/events_list')}}>⬅️</button>
                     <button id={value.id} onClick={deleteEvent}>🗑️</button>

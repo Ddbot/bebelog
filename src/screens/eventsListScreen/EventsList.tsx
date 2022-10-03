@@ -27,21 +27,21 @@ const TemporaryDateSearchBox = styled.h2`
     width: 100%;
     height: 4rem;
 
-    align-self: flex-start;
+    font-size: 1.3rem;
     margin: 0;
-    padding: 0 16px;
 
 	display: flex;
 	flex-flow: row nowrap;
-	align-items: center;
+	align-items: flex-end;
     justify-content: space-between;
 
+    & > span {
+        padding: 0 16px;
+        width: 100%;
 
-    & > span:nth-child(odd) {
-        font-size: 2rem;
-    }
-        & > span:nth-child(even) {
-        font-size: 1rem;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-around;
     }
 `;
 
@@ -59,7 +59,7 @@ const EventsList = (): JSX.Element => {
     });
 
     return <>
-        <TemporaryDateSearchBox><span>⬅️</span><span>DATE SEARCHBOX</span><span>➡️</span></TemporaryDateSearchBox>
+        <TemporaryDateSearchBox><span>⬅️ DATE SEARCHBOX ➡️</span></TemporaryDateSearchBox>
             <List>
                 {list?.length > 0 && (
                 list?.map((ev: Event, i: number) => {
