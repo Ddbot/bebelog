@@ -89,7 +89,7 @@ const EventCard = () => {
         console.log('ici on envoie a superbase lupdate');        
     };     
 
-    return !['dodo','nourriture'].includes(value!.type) ? <Card>
+    return !['dodo','nourriture'].includes(value.type) ? <Card>
         <Content>
             <Icon>{icons[value.type]}</Icon>
             <Values><div>{dayjs(value.start).format('HH:mm')}</div></Values>
@@ -101,8 +101,8 @@ const EventCard = () => {
         </Content>
     </Card> : <Card>
         <Content>
-            <Icon>{icons[value!.type]}</Icon>
-                <Values><div>{(value!.end! - value!.start) / 1000}</div></Values>
+            <Icon>{icons[value.type]}</Icon>
+                <Values><div>{(value.end! - value.start) / 1000}</div></Values>
                 <ButtonContainer>
                     <button id={value.id} onClick={deleteEvent}>🗑️</button>
                     <button id={value.id} onClick={confirmChange}>✔️</button>

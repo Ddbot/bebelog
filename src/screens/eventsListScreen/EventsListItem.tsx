@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { Event } from '../../models/Event';
 import { icons } from '../../assets/icons';
 import dayjs from 'dayjs'
-import { useEffect } from 'react';
 
 type Props = {
     event: Event
@@ -26,6 +25,9 @@ const Card = styled(Link)`
 
     margin-bottom:16px; 
 
+    text-decoration: none;
+    font-size: 1.1rem;
+
 `;
 const Li = styled.li`
     width: 100%;
@@ -39,14 +41,17 @@ const Li = styled.li`
     align-items: center;
 
     background: papayawhip;
+`;
 
+const ArrowContainer = styled.span`
+    margin: 0 4px;
 `;
 
 const EventsListItem = ({ event }: Props) => { 
     return  !['dodo','nourriture'].includes(event.type) ? <Card to={`/events_list/${event.id}`} state={{ value: event}}><Li>
         {icons[event.type]}{ dayjs(event.start).format('HH[:]mm')}
     </Li></Card> : <Card to={`/events_list/${event.id}`} state={{value:event}}><Li>
-            {icons[event.type]} { (event.end! - event.start)/1000 }
+            {icons[event.type]} <>{dayjs(event.end!).format('HH:mm')} <ArrowContainer>→</ArrowContainer> {dayjs(event.start).format('HH:mm')}</>
     </Li></Card>
 };
 
