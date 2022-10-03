@@ -11,15 +11,17 @@ const Card = styled.div`
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
 
     border: 1px solid red;
-    padding: 0 16px;
 
 `;
-const Li = styled.li`
+const Content = styled.div`
     width: 100%;
     height: 3rem;
+
+    padding: 2rem 0.75rem;
+
 
 
     display: flex;
@@ -28,6 +30,11 @@ const Li = styled.li`
     align-items: center;
 
     background: papayawhip;
+`;
+
+const Icon = styled.div`
+    scale: 1.2;
+    
 `;
 
 const EventCard = () => { 
@@ -44,10 +51,10 @@ const EventCard = () => {
     };    
 
     return !['dodo','nourriture'].includes(value!.type) ? <Card>
-        <span>{icons[value!.type]}{ value!.start}</span><span><button id={value.id} onClick={deleteEvent}>🗑️</button></span>
-    </Card> : <Card>
+        <Content><Icon>{icons[value!.type]}</Icon><span>{ value!.start}</span><span><button id={value.id} onClick={deleteEvent}>🗑️</button></span>
+    </Content></Card> : <Card><Content>
             <span>{icons[value!.type]} { (value!.end! - value!.start)/1000 }</span><span><button id={value.id} onClick={deleteEvent}>🗑️</button></span>
-    </Card>
+    </Content></Card>
     
 };
 
