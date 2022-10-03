@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { icons } from '../../assets/icons';
@@ -86,6 +87,8 @@ const EventCard = () => {
     const { value } = location.state;
     const navigate = useNavigate();
 
+    const [isInEditMode, setIsInEditMode] = useState(false);
+
     async function deleteEvent(event: React.MouseEvent<Element>) {
         const { id } = event.currentTarget;
         const { data, error } = await supabase.from('events').delete().match({ id });        
@@ -108,7 +111,7 @@ const EventCard = () => {
             <Values><div>{dayjs(value.start).format('HH:mm')}</div></Values>
             <ButtonContainer>← 
                 <button id={value.id} onClick={confirmChange}>✔️</button>
-                <button id={value.id} onClick={confirmChange}>⬅️</button>
+                <button id={value.id} onClick={() => { navigate('/events_list')}}>⬅️</button>
                 <button id={value.id} onClick={deleteEvent}>🗑️</button>
                 <button id={value.id} onClick={editEvent}>🖊️</button>
             </ButtonContainer>
@@ -119,7 +122,7 @@ const EventCard = () => {
                 <Values><div className="durationDisplay">{dayjs(value.end!).format('HH:mm')} <ArrowContainer><span>→</span></ArrowContainer> {dayjs(value.start).format('HH:mm')}</div></Values>
                 <ButtonContainer>
                     <button id={value.id} onClick={confirmChange}>✔️</button>
-                    <button id={value.id} onClick={confirmChange}>⬅️</button>
+                    <button id={value.id} onClick={() => { navigate('/events_list')}}>⬅️</button>
                     <button id={value.id} onClick={deleteEvent}>🗑️</button>
                     <button id={value.id} onClick={editEvent}>🖊️</button>
                 </ButtonContainer>
