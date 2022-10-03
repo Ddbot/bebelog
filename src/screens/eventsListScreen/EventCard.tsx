@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, SetStateAction, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { icons } from '../../assets/icons';
@@ -85,12 +85,21 @@ const ArrowContainer = styled.span`
     }
 `;
 
+type Time = {
+    start: string,
+    end: string
+}
+
 const EventCard = () => { 
     const location = useLocation();
     const { value } = location.state;
     const navigate = useNavigate();
 
     const [isInEditMode, setIsInEditMode] = useState(false);
+    const [time, setTime]:[Time, SetStateAction<any>] = useState({
+        start: dayjs(value.start).format('HH:mm'),
+        end: dayjs(value.end).format('HH:mm')
+    });
 
     async function deleteEvent(event: React.MouseEvent<Element>) {
         const { id } = event.currentTarget;
@@ -108,10 +117,25 @@ const EventCard = () => {
         console.log('ici on envoie a superbase lupdate');        
     };     
 
+    function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
+        const { name,value } = event.currentTarget;  
+        setTime((prev: Time) => {
+            return {
+                ...prev,
+                [name]: value
+            }
+        });  
+    };
+
+    useEffect(() => { 
+        console.log(time);
+        
+    }, [time]);
+
     return !['dodo','nourriture'].includes(value.type) ? <Card>
         <Content>
             <Icon>{icons[value.type]}</Icon>
-            { isInEditMode && <Values><input type="time" min={0} max={23} value={dayjs(value.start).format('HH:mm')} /></Values>}
+            { isInEditMode && <Values><input onChange={handleChange} type="time" name="start" min={0} max={23} value={time['start']} /></Values>}
             { !isInEditMode && <Values><div>{dayjs(value.start).format('HH:mm')}</div></Values>}
             <ButtonContainer>                
                 <button id={value.id} onClick={() => { navigate('/events_list')}}>⬅️</button>
@@ -123,7 +147,8 @@ const EventCard = () => {
     </Card> : <Card>
         <Content>
             <Icon>{icons[value.type]}</Icon>
-                { isInEditMode && <Values><input type="time" className="durationDisplay" min={0} max={23} value={dayjs(value.start).format('HH:mm')} /> <ArrowContainer><span>→</span></ArrowContainer> <input type="time" className="durationDisplay" min={0} max={23} value={dayjs(value.end).format('HH:mm')} /></Values>}
+                {isInEditMode && <Values>
+                    <input onChange={handleChange} type="time" name="start" className="durationDisplay" min={0} max={23} value={time['start']} /> <ArrowContainer><span>→</span></ArrowContainer> <input type="time" onChange={ handleChange} className="durationDisplay" name="end" min={0} max={23} value={time['end']} /></Values>}
                 { !isInEditMode && <Values><div className="durationDisplay">{dayjs(value.end!).format('HH:mm')} <ArrowContainer><span>→</span></ArrowContainer> {dayjs(value.start).format('HH:mm')}</div></Values>}
                 <ButtonContainer>                    
                     <button id={value.id} onClick={() => { navigate('/events_list')}}>⬅️</button>
@@ -132,7 +157,7 @@ const EventCard = () => {
                     { isInEditMode && <button id={value.id} onClick={confirmChange}>✔️</button>}
                 </ButtonContainer>
             </Content>
-        </Card>
+    </Card>
     
 };
 
