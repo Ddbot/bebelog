@@ -8,11 +8,6 @@ export type Action = {
   value?: any
 };
 
-export type ActiveStateType = {
-  type?: EventType | undefined,
-  start?: number
-};
-
 export type Event = { 
     id?: number;  
     start: number;
@@ -25,3 +20,7 @@ export type TimerType = {
   start?: undefined | number,
   end?: undefined | number,
 }
+
+export type NourritureType = {
+  nourriture: 'sein' | 'biberon'
+};
