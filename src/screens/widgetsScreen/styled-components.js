@@ -38,7 +38,7 @@ export const HomeContainer = styled.div`
 	justify-content: center;
 `;
 
-const FABContainer = styled(Link)`
+const FABStatsContainer = styled(Link)`
 	aspect-ratio: 1 / 1;
 	width: 33%;
 	border-radius: 50%;
@@ -49,7 +49,7 @@ const FABContainer = styled(Link)`
 
 	background: transparent;
 
-	border: 1.8px solid black;
+	// border: 1.8px solid black;
 
 	display: flex;
 	flex-flow: column nowrap;
@@ -57,6 +57,14 @@ const FABContainer = styled(Link)`
 	align-items: center;
 `;
 
-export const FAB = ({ children }) => {
-	return <FABContainer to="/events_list">{children}</FABContainer>
+const FABGearContainer = styled(FABStatsContainer)`
+	right: calc(25% + 0.5rem);
+`;
+
+export const FABStats = ({ children }) => {
+	return <FABStatsContainer to="/events_list">{children}</FABStatsContainer>
+};
+
+export const FABGears = ({ children }) => {
+	return <FABGearContainer to="/settings">{children}</FABGearContainer>;
 };

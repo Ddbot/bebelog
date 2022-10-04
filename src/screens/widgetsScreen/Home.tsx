@@ -1,6 +1,7 @@
 import Buttons from './Buttons';
-import { FAB, HomeContainer } from './styled-components';
+import { FABGears, FABStats, HomeContainer } from './styled-components';
 import Gear from '../../assets/Gear';
+import Stats from '../../assets/Stats';
 import { Link, Outlet } from 'react-router-dom';
 
 type Props = {
@@ -10,9 +11,13 @@ type Props = {
 
 const Home = ({ handleClick, timerFn }: Props) => <HomeContainer>
     <Buttons timerFn={timerFn} handleClick={handleClick} />
-    <FAB>
+    <FABStats>
+        {/* <Gear /> */}
+        <Stats />
+    </FABStats>
+        <FABGears>
         <Gear />
-    </FAB>
+    </FABGears>
     <Outlet />
 </HomeContainer>;
 export default Home;        
