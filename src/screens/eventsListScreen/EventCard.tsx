@@ -1,10 +1,12 @@
-import { ChangeEvent, SetStateAction, useEffect, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { icons } from '../../assets/icons';
 import React from 'react';
 import { supabase } from '../../supabase/client';
 import dayjs from 'dayjs';
+var isSameOrAfter = require('dayjs/plugin/isSameOrAfter')
+dayjs.extend(isSameOrAfter);
 
 const Card = styled.div`
     width: 100%;
@@ -116,12 +118,8 @@ const EventCard = () => {
         if (error) console.error(error);
         navigate('/events_list')
     }; 
-    
-    async function editEvent(event: React.MouseEvent<Element>) {
-        console.log('ON VA DANS UNE PAGE FORM pour changer les infos de lEVENT');        
-    };
 
-    async function confirmChange(event: React.MouseEvent<Element>) {
+    async function submitChange(event: React.MouseEvent<Element>) {
         setIsReady(true);
     };     
 
@@ -179,7 +177,7 @@ const EventCard = () => {
                 <button id={value.id} onClick={() => { navigate('/events_list')}}>⬅️</button>
                 <button id={value.id} onClick={deleteEvent}>🗑️</button>
                 { !isInEditMode &&<button id={value.id} onClick={() => { setIsInEditMode(true)}}>🖊️</button>}
-                {isInEditMode && <button id={value.id} onClick={confirmChange} disabled={ isReady }>✔️</button>}
+                {isInEditMode && <button id={value.id} onClick={submitChange} disabled={ isReady }>✔️</button>}
             </ButtonContainer>
         </Content>
     </Card> : <Card>
@@ -192,7 +190,7 @@ const EventCard = () => {
                     <button id={value.id} onClick={() => { navigate('/events_list')}}>⬅️</button>
                     <button id={value.id} onClick={deleteEvent}>🗑️</button>
                     { !isInEditMode &&<button id={value.id} onClick={() => { setIsInEditMode(true)}}>🖊️</button>}
-                    { isInEditMode && <button id={value.id} onClick={confirmChange}>✔️</button>}
+                    { isInEditMode && <button id={value.id} onClick={submitChange}>✔️</button>}
                 </ButtonContainer>
             </Content>
     </Card>
