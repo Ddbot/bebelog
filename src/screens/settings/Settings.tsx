@@ -24,8 +24,7 @@ const SettingsPage = (props: Props) => {
 
     function handleChange(event:React.ChangeEvent<HTMLInputElement>) {
         const { currentTarget } = event;
-        console.log('Input name => ', currentTarget.name);
-        
+        console.log('Input name => ', currentTarget.name);    
     };
 
     return <Container>
