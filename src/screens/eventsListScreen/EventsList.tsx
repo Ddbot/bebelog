@@ -42,7 +42,21 @@ const TemporaryDateSearchBox = styled.h2`
 
     & > button {
         padding: 0 16px;
-        // width: 100%;
+        width: 2rem;
+        height: 2rem;
+
+        border: none;
+        background: transparent;
+
+        &:nth-of-type(1){
+            background: url(${leftArrow});
+            background-repeat: no-repeat;
+        }
+        &:nth-of-type(2){
+            background: url(${rightArrow});
+            background-repeat: no-repeat;
+        }
+
 
         display: flex;
         flex-flow: row nowrap;
@@ -87,7 +101,7 @@ const EventsList = (): JSX.Element => {
     },[query]);
 
     return <>
-        <TemporaryDateSearchBox><button onClick={handleClick} data-name="minus">⬅️</button>{ dayjs(query).format('DD MMM')}<button onClick={handleClick} data-name="plus">➡️</button></TemporaryDateSearchBox>
+        <TemporaryDateSearchBox><button onClick={handleClick} data-name="minus"></button>{ dayjs(query).format('DD MMM')}<button onClick={handleClick} data-name="plus"></button></TemporaryDateSearchBox>
             <List>
                 {list?.length > 0 && (
                 list?.map((ev: Event, i: number) => {
