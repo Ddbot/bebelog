@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Event } from '../../models/Event';
 import { supabase } from '../../supabase/client';
+import dayjs from 'dayjs';
 
 import EventsListItem from './EventsListItem';
 
@@ -47,9 +48,16 @@ const TemporaryDateSearchBox = styled.h2`
 
 const EventsList = (): JSX.Element => { 
     const [list, setList]: [Event[], any] = useState([]);
+    const [query, setQuery]: [number, SetStateAction<any>] = useState(dayjs().unix()*1000);
     
     async function fetchEvents() {
-        const { data, error } = await supabase.from('events').select();        
+        let start = dayjs(query).startOf('D').unix() * 1000;
+        let end = dayjs(query).endOf('D').unix() * 1000;
+        const { data, error } = await supabase
+            .from('events')
+            .select()
+            .gte('start', start)
+            .lte('end', end);
         if (error) console.error(error);
         if (data) setList(data);        
     };

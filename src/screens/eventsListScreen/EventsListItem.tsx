@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Event } from '../../models/Event';
 import { icons } from '../../assets/icons';
 import dayjs from 'dayjs'
+import { useEffect } from 'react';
 
 type Props = {
     event: Event

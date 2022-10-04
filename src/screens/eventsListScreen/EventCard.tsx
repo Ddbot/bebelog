@@ -5,8 +5,6 @@ import { icons } from '../../assets/icons';
 import React from 'react';
 import { supabase } from '../../supabase/client';
 import dayjs from 'dayjs';
-var isSameOrAfter = require('dayjs/plugin/isSameOrAfter')
-dayjs.extend(isSameOrAfter);
 
 const Card = styled.div`
     width: 100%;
@@ -148,7 +146,6 @@ const EventCard = () => {
 
         async function updateEvent(payload: Payload) {
             const { id, start, end } = payload;     
-            console.log('oN UPDATE ', id, start,end);
             
             const { data, error } = await supabase.from('events').update({ start, end }).match({ id });
 
@@ -165,7 +162,12 @@ const EventCard = () => {
             clonedObj[key] = dayjs(value[key]).hour(Number(hh)).minute(Number(mm)).unix()*1000;
         });
 
-        isReady && updateEvent(clonedObj);
+        console.log('End est en meme temps ou apres Start: ', dayjs(clonedObj.end).isAfter(clonedObj.start) || dayjs(clonedObj.end).isSame(clonedObj.start));
+        (dayjs(clonedObj.end).isAfter(clonedObj.start) || dayjs(clonedObj.end).isSame(clonedObj.start)) && isReady && updateEvent(clonedObj);
+        if (dayjs(clonedObj.end).isBefore(clonedObj.start)) { 
+            clonedObj.end = dayjs(clonedObj.end).add(1, 'day').unix()*1000;
+            isReady && updateEvent(clonedObj);
+        }
     }, [isReady,time,value, navigate]);
 
     return !['dodo','nourriture'].includes(value.type) ? <Card>
