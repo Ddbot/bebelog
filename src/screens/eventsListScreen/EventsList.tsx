@@ -51,18 +51,6 @@ const EventsList = (): JSX.Element => {
     const [list, setList]: [Event[], any] = useState([]);
     const [query, setQuery]: [any, SetStateAction<any>] = useState(dayjs().unix()*1000);
     
-    async function fetchEvents() {
-        let start = dayjs(query).startOf('D').unix() * 1000;
-        let end = dayjs(query).endOf('D').unix() * 1000;
-        const { data, error } = await supabase
-            .from('events')
-            .select()
-            .gte('start', start)
-            .lte('end', end);
-        if (error) console.error(error);
-        if (data) setList(data);        
-    };
-
     function handleClick(event:React.MouseEvent<HTMLButtonElement>) {
         const name = event.currentTarget.dataset.name;
         switch (name) {
@@ -81,8 +69,19 @@ const EventsList = (): JSX.Element => {
     }
 
     useEffect(() => { 
+        async function fetchEvents() {
+            let start = dayjs(query).startOf('D').unix() * 1000;
+            let end = dayjs(query).endOf('D').unix() * 1000;
+            const { data, error } = await supabase
+                .from('events')
+                .select()
+                .gte('start', start)
+                .lte('end', end);
+            if (error) console.error(error);
+            if (data) setList(data);        
+        };        
         fetchEvents();
-    });
+    },[query]);
 
     return <>
         <TemporaryDateSearchBox><button onClick={handleClick} data-name="minus">⬅️</button>{ dayjs(query).format('DD MMM')}<button onClick={handleClick} data-name="plus">➡️</button></TemporaryDateSearchBox>
