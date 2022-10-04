@@ -5,6 +5,7 @@ import { icons } from '../../assets/icons';
 import React from 'react';
 import { supabase } from '../../supabase/client';
 import dayjs from 'dayjs';
+import leftArrow from '../../assets/arrow_l.svg';
 
 const Card = styled.div`
     width: 100%;
@@ -74,6 +75,17 @@ const ButtonContainer = styled.div`
         text-align: center;
 
         scale: 1.5;
+        &:nth-of-type(1){
+            background: url(${leftArrow});
+            background-repeat: no-repeat;
+            width: 2rem;
+            height: 2rem;
+
+            transform-origin: center;
+            scale: 1.2;
+
+            border: none;
+        }
     }
 `;
 
@@ -176,7 +188,7 @@ const EventCard = () => {
             {isInEditMode && <Values><input data-type='oneshot' onChange={handleChange} type="time" name="start" min={0} max={23} value={time['start']} /></Values>}
             { !isInEditMode && <Values><div>{dayjs(value.start).format('HH:mm')}</div></Values>}
             <ButtonContainer>                
-                <button id={value.id} onClick={() => { navigate('/events_list')}}>⬅️</button>
+                <button id={value.id} onClick={() => { navigate('/events_list')}}></button>
                 <button id={value.id} onClick={deleteEvent}>🗑️</button>
                 { !isInEditMode &&<button id={value.id} onClick={() => { setIsInEditMode(true)}}>🖊️</button>}
                 {isInEditMode && <button id={value.id} onClick={submitChange} disabled={ isReady }>✔️</button>}
@@ -189,7 +201,7 @@ const EventCard = () => {
                     <input data-type='timed' onChange={handleChange} type="time" name="start" className="durationDisplay" min={0} max={23} value={time['start']} /> <ArrowContainer><span>→</span></ArrowContainer> <input type="time" onChange={ handleChange} className="durationDisplay" name="end" min={0} max={23} value={time['end']} /></Values>}
                 { !isInEditMode && <Values><div className="durationDisplay">{dayjs(value.start!).format('HH:mm')} <ArrowContainer><span>→</span></ArrowContainer> {dayjs(value.end).format('HH:mm')}</div></Values>}
                 <ButtonContainer>                    
-                    <button id={value.id} onClick={() => { navigate('/events_list')}}>⬅️</button>
+                    <button id={value.id} onClick={() => { navigate('/events_list')}}></button>
                     <button id={value.id} onClick={deleteEvent}>🗑️</button>
                     { !isInEditMode &&<button id={value.id} onClick={() => { setIsInEditMode(true)}}>🖊️</button>}
                     { isInEditMode && <button id={value.id} onClick={submitChange}>✔️</button>}
