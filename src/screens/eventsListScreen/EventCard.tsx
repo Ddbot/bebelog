@@ -5,7 +5,6 @@ import { icons } from '../../assets/icons';
 import React from 'react';
 import { supabase } from '../../supabase/client';
 import dayjs from 'dayjs';
-import leftArrow from '../../assets/arrow_l.svg';
 import Trash from '../../assets/Trash';
 import Pen from '../../assets/Pen';
 import BackArrow from '../../assets/BackArrow';
@@ -180,7 +179,6 @@ const EventCard = () => {
             clonedObj[key] = dayjs(value[key]).hour(Number(hh)).minute(Number(mm)).unix()*1000;
         });
 
-        console.log('End est en meme temps ou apres Start: ', dayjs(clonedObj.end).isAfter(clonedObj.start) || dayjs(clonedObj.end).isSame(clonedObj.start));
         (dayjs(clonedObj.end).isAfter(clonedObj.start) || dayjs(clonedObj.end).isSame(clonedObj.start)) && isReady && updateEvent(clonedObj);
         if (dayjs(clonedObj.end).isBefore(clonedObj.start)) { 
             clonedObj.end = dayjs(clonedObj.end).add(1, 'day').unix()*1000;

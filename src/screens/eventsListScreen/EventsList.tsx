@@ -6,9 +6,6 @@ import dayjs from 'dayjs';
 
 import EventsListItem from './EventsListItem';
 
-import leftArrow from '../../assets/arrow_l.svg';
-import rightArrow from '../../assets/arrow_r.svg';
-
 import RightArrow from '../../assets/RighArrow';
 import BackArrow from '../../assets/BackArrow';
 

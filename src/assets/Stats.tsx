@@ -1,15 +1,36 @@
 const Stats = (): JSX.Element => (
-    <svg
-        viewBox="0 0 20 20"
-        width={36}
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
+  <svg
+    viewBox="0 0 21 21"
+    width={36}
+    xmlns="http://www.w3.org/2000/svg"
+    xmlSpace="preserve"
+    style={{
+      fillRule: "evenodd",
+      clipRule: "evenodd",
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeMiterlimit: 1.5,
+    }}
   >
     <path
-      fillRule="evenodd"
-      clipRule="evenodd"
-      d="M18 9h-3.712a.504.504 0 0 0-.354.146l-1.401 1.402a.5.5 0 0 1-.785-.101L9.413 6.46a1 1 0 0 0-1.57-.201l-.499.498.008.014-2.083 2.083A.504.504 0 0 1 4.915 9H2V3a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v6Zm0 8a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-6h3.745c.133 0 .26-.053.354-.146l1.84-1.841a.5.5 0 0 1 .785.101c2.198 3.752 1.76 3.001 2.319 3.964a1.001 1.001 0 0 0 1.57.206l2.148-2.138a.494.494 0 0 1 .352-.146H18v6Zm0-17H2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Z"
-      fill="#000"
+      d="m0 10.032 5.59-.012 3.106-3.097 3.228 5.613 2.61-2.523L20 10"
+      style={{
+        fill: "none",
+        stroke: "#000",
+        strokeWidth: 1,
+      }}
+      transform="translate(.5 .5)"
+    />
+    <path
+      style={{
+        fill: "none",
+        stroke: "#000",
+        strokeWidth: 1,
+        strokeLinecap: "butt",
+        strokeMiterlimit: 2,
+      }}
+      d="M0 0h20v20H0z"
+      transform="translate(.5 .5)"
     />
   </svg>
 )

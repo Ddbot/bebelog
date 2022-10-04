@@ -1,4 +1,4 @@
-import React, {  SetStateAction, useState } from "react";
+import React, {  SetStateAction, useEffect, useState } from "react";
 import { Container, H1, Ul, Li } from './styled-components';
 import { NourritureType } from "../../models/Event";
 import dayjs, { Dayjs } from 'dayjs';
@@ -23,15 +23,25 @@ const SettingsPage = (props: Props) => {
     });
 
     function handleChange(event:React.ChangeEvent<HTMLInputElement>) {
-        const { currentTarget } = event;
-        console.log('Input name => ', currentTarget.name);    
+        const { name, value } = event.currentTarget;
+        setSettings((prev: SettingsType) => { 
+            return {
+                ...prev,
+                [name]: value
+            }
+        });
     };
+
+    useEffect(() => { 
+        console.log(settings);
+        
+    },[settings]);
 
     return <Container>
         <H1>Reglages</H1>
         <Ul>
             <Li><input name="name" onChange={handleChange} placeholder="coucou" /></Li>
-            <Li>Date de naissance</Li>
+            <Li><input name="birthDate" type="date" onChange={handleChange} placeholder={dayjs().toString()} /></Li>
             <Li>nourriture: sein ou biberon ?</Li>
             <Li>Si biberon = objectifs de nourriture (ml)</Li>
         </Ul>
