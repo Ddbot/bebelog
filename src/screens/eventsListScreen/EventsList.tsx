@@ -6,6 +6,9 @@ import dayjs from 'dayjs';
 
 import EventsListItem from './EventsListItem';
 
+import leftArrow from '../../assets/arrow_l.svg';
+import rightArrow from '../../assets/arrow_r.svg';
+
 const List = styled.ul`
 	max-height: calc(100% - 11rem);
 	min-height: calc(100% - 11rem);
