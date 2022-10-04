@@ -39,7 +39,7 @@ align-self: flex-start;
   font-size: 1.7rem;
 
   margin: 0;
-  border-bottom: 2px solid black;
+  // border-bottom: 2px solid black;
   color: black;
 `;
 
@@ -124,7 +124,7 @@ function App(): JSX.Element {
 
   return (
       <MobileShell className='App'>
-      <TopBar><Link to='/' style={{width: '100%', textDecoration: 'none', color: 'black'}}>Bebelog</Link></TopBar>
+      <TopBar><Link to='/' style={{width: '100%', textDecoration: 'none', color: 'black', transform: 'translateY(100%)'}}>Bebelog</Link></TopBar>
       <Routes>
         <Route path='/' element={
           <Home handleClick={handleClick} timerFn={timerFn} />} />
