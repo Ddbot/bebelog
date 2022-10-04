@@ -35,10 +35,11 @@ const TemporaryDateSearchBox = styled.h2`
 	flex-flow: row nowrap;
 	align-items: flex-end;
     justify-content: space-between;
+    padding: 0 16px;
 
-    & > span {
+    & > button {
         padding: 0 16px;
-        width: 100%;
+        // width: 100%;
 
         display: flex;
         flex-flow: row nowrap;
@@ -48,7 +49,7 @@ const TemporaryDateSearchBox = styled.h2`
 
 const EventsList = (): JSX.Element => { 
     const [list, setList]: [Event[], any] = useState([]);
-    const [query, setQuery]: [number, SetStateAction<any>] = useState(dayjs().unix()*1000);
+    const [query, setQuery]: [any, SetStateAction<any>] = useState(dayjs().unix()*1000);
     
     async function fetchEvents() {
         let start = dayjs(query).startOf('D').unix() * 1000;
@@ -62,12 +63,29 @@ const EventsList = (): JSX.Element => {
         if (data) setList(data);        
     };
 
+    function handleClick(event:React.MouseEvent<HTMLButtonElement>) {
+        const name = event.currentTarget.dataset.name;
+        switch (name) {
+            case 'minus':
+                setQuery((prev: any) => { 
+                    return dayjs(prev).subtract(1, 'day').unix() * 1000;
+                });
+                break;        
+            default:
+                setQuery((prev: any) => { 
+                    return dayjs(prev).add(1, 'day').unix() * 1000;
+                });
+                break;
+        }
+        
+    }
+
     useEffect(() => { 
         fetchEvents();
     });
 
     return <>
-        <TemporaryDateSearchBox><span>⬅️ DATE SEARCHBOX ➡️</span></TemporaryDateSearchBox>
+        <TemporaryDateSearchBox><button onClick={handleClick} data-name="minus">⬅️</button>{ dayjs(query).format('DD MMM')}<button onClick={handleClick} data-name="plus">➡️</button></TemporaryDateSearchBox>
             <List>
                 {list?.length > 0 && (
                 list?.map((ev: Event, i: number) => {
