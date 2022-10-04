@@ -21,6 +21,4 @@ export type TimerType = {
   end?: undefined | number,
 }
 
-export type NourritureType = {
-  nourriture: 'sein' | 'biberon'
-};
+export type NourritureType = 'sein' | 'biberon';

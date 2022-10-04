@@ -3,6 +3,7 @@ import { Action, Event, EventType, TimerType } from './models/Event';
 import { Routes, Route, Link } from 'react-router-dom';
 import EventsList from './screens/eventsListScreen/EventsList';
 import EventCard from './screens/eventsListScreen/EventCard';
+import SettingsPage from './screens/settings/Settings';
 
 import styled from 'styled-components';
 import './App.css';
@@ -129,7 +130,8 @@ function App(): JSX.Element {
         <Route path='/' element={
           <Home handleClick={handleClick} timerFn={timerFn} />} />
         <Route path='events_list' element={<EventsList />} />
-        <Route path="events_list/:id" element={ <EventCard />} />
+        <Route path="events_list/:id" element={<EventCard />} />
+        <Route path="settings" element={ <SettingsPage />} />
       </Routes>
       </MobileShell>
     );
