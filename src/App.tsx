@@ -1,5 +1,5 @@
-import React, { Dispatch, SetStateAction, useEffect, useReducer, useRef, useState } from 'react';
-import { Action, Event, EventType, TimerType } from './models/Event';
+import React, { SetStateAction, useEffect, useState } from 'react';
+import { Action, EventType, TimerType } from './models/Event';
 import { Routes, Route, Link } from 'react-router-dom';
 import EventsList from './screens/eventsListScreen/EventsList';
 import EventCard from './screens/eventsListScreen/EventCard';
@@ -9,6 +9,8 @@ import styled from 'styled-components';
 import './App.css';
 import { supabase } from './supabase/client'; 
 import Home from './screens/widgetsScreen/Home';
+
+import { useSettings } from './contexts/SettingsContext';
 
 
 const radius = '0.67cm';
@@ -44,6 +46,7 @@ align-self: flex-start;
 `;
 
 function App(): JSX.Element {
+  const { settings } = useSettings();
   function reducer(state: any, action: Action): any {
 
     switch (action.type) {
@@ -124,7 +127,7 @@ function App(): JSX.Element {
 
   return (
       <MobileShell className='App'>
-      <TopBar><Link to='/' style={{width: '100%', textDecoration: 'none', color: 'black', transform: 'translateY(100%)'}}>Bebelog</Link></TopBar>
+      <TopBar><Link to='/' style={{width: '100%', textDecoration: 'none', color: 'black', transform: 'translateY(100%)'}}>{settings.name}</Link></TopBar>
       <Routes>
         <Route path='/' element={
           <Home handleClick={handleClick} timerFn={timerFn} />} />
@@ -132,7 +135,7 @@ function App(): JSX.Element {
         <Route path="events_list/:id" element={<EventCard />} />
         <Route path="settings" element={ <SettingsPage />} />
       </Routes>
-      </MobileShell>
+    </MobileShell>
     );
   }
 export default App;

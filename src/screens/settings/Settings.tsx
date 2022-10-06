@@ -8,6 +8,7 @@ import Toggle from './Toggle';
 import Nourriture from "../../assets/Nourriture";
 import Tetee from "../../assets/Tetee";
 import Gear from "../../assets/Gear";
+import { useSettings, SettingsType } from "../../contexts/SettingsContext";
 
 const Biberon = styled.div`
     scale:0.7;
@@ -20,13 +21,6 @@ const Sein = styled.div`
 
 type Props = {
 
-};
-
-type SettingsType = {
-    name?: string;
-    birthDate?: Dayjs,
-    nourriture: NourritureType,
-    objectif?: number | undefined
 };
 
 const FeedingToggle = styled.div`
@@ -52,12 +46,7 @@ const Input = styled.input`
 
 
 const SettingsPage = (props: Props): JSX.Element => { 
-    const [settings, setSettings]: [SettingsType, SetStateAction<any>] = useState({
-        name: 'Bébé',
-        birthDate: dayjs(),
-        nourriture: 'sein',
-        objectif: 30
-    });
+    const { settings, setSettings } = useSettings();
 
     function handleChange(event:React.ChangeEvent<HTMLInputElement>) {
         const { name, value } = event.currentTarget;
@@ -65,15 +54,6 @@ const SettingsPage = (props: Props): JSX.Element => {
             return {
                 ...prev,
                 [name]: value
-            }
-        });
-    };
-
-    function toggleIsBreastFeeding(confirm:boolean) {
-        setSettings((prev: SettingsType) => {
-            return {
-                ...prev,
-                nourriture: confirm ? 'sein' : 'biberon'
             }
         });
     };
@@ -127,7 +107,7 @@ const SettingsPage = (props: Props): JSX.Element => {
             </Li>
             <Li>
                 <span><b>Objectif: </b></span>
-                <Input type="number" name="objectif" step="5" min={10} max={1000} />
+                <Input type="number" name="objectif" step="5" min={10} max={1000} onChange={handleChange} />
             </Li>
         </Ul>
     </Container>;

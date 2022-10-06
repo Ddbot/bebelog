@@ -2,7 +2,7 @@ import React, { createContext, SetStateAction, useContext, useState } from "reac
 import dayjs from "dayjs";
 import { NourritureType } from '../models/Event';
 
-type Settings = {
+export type SettingsType = {
     name: string,
     birthDate: dayjs.Dayjs,
     nourriture: NourritureType,
@@ -11,17 +11,17 @@ type Settings = {
 
 type SetSettings = Function
 
-const initialSettings: Settings = {
+const initialSettings: SettingsType = {
         name: 'Bébé',
         birthDate: dayjs(),
         nourriture: 'sein',
         objectif: 30
     }
 
-const SettingsContext: React.Context<any> = createContext<{ settings: Settings; setSettings: SetSettings} | undefined>(undefined);
+const SettingsContext: React.Context<any> = createContext<{ settings: SettingsType; setSettings: SetSettings} | undefined>(undefined);
 
 function SettingsProvider({ children }: { children : React.ReactNode}) {
-    const [settings, setSettings]:[Settings, SetStateAction<any>] = useState(initialSettings);
+    const [settings, setSettings]:[SettingsType, SetStateAction<any>] = useState(initialSettings);
     const value = { settings, setSettings };
     return <SettingsContext.Provider value={ value }>{ children }</SettingsContext.Provider>
 };
