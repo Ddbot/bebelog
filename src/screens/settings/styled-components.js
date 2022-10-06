@@ -1,14 +1,38 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+
+export const H1Link = styled(Link)`
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+`;
 
 export const Container = styled.div`
 	width: 100%;
-	// height: 100%;
 
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: space-between;
 	padding: 0 1rem;
 `;
 
 export const H1 = styled.h1`
-    margin: 4rem 0 1.618rem 0;
+	// margin: 0 0 1.618rem 0;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+
+	& button {
+		width: 2.4rem;
+		height: 2.4rem;
+		align-self: center;
+	}
+
+	& > span {
+		text-align: center;
+		align-self: center;
+	}
 `;
 
 export const Ul = styled.ul`
@@ -26,6 +50,7 @@ export const Ul = styled.ul`
 
 
 	padding-inline-start: 0;
+
 `;
 
 export const Li = styled.li`

@@ -1,6 +1,7 @@
 import React, { SetStateAction, useEffect, useState } from "react";
+import { Link } from 'react-router-dom';
 import styled from "styled-components";
-import { Container, H1, Ul, Li } from './styled-components';
+import { Container, H1, Ul, Li, H1Link } from './styled-components';
 import { NourritureType } from "../../models/Event";
 import dayjs, { Dayjs } from 'dayjs';
 import Toggle from './Toggle';
@@ -98,13 +99,12 @@ const SettingsPage = (props: Props): JSX.Element => {
     },[settings])
 
     return <Container>
-        <H1>Reglages</H1>
-        <Gear />
+        <H1><H1Link to="/"><button>◀</button></H1Link><span>Reglages</span><Gear /></H1>
         <Ul>
             <Li>
                 <FeedingToggle>
                     <span><b>Name: </b></span>
-                    <Input name="name" id="nameInput" onChange={handleChange} placeholder="coucou" />
+                    <Input name="name" id="nameInput" onChange={handleChange} defaultValue={settings.name} />
                 </FeedingToggle>
             </Li>
             <Li>
