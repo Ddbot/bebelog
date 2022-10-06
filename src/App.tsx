@@ -7,8 +7,6 @@ import SettingsPage from './screens/settings/Settings';
 
 import styled from 'styled-components';
 import './App.css';
-import Gear from './assets/Gear';
-import { Widget } from './screens/widgetsScreen/styled-components';
 import { supabase } from './supabase/client'; 
 import Home from './screens/widgetsScreen/Home';
 
@@ -24,6 +22,7 @@ const MobileShell = styled.div`
   display: flex;
   flex-flow: row wrap;
   align-items: center;
+  justify-content: center;
 
 `;
 

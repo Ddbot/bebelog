@@ -1,8 +1,21 @@
-import React, {  SetStateAction, useEffect, useState } from "react";
+import React, { SetStateAction, useEffect, useState } from "react";
+import styled from "styled-components";
 import { Container, H1, Ul, Li } from './styled-components';
 import { NourritureType } from "../../models/Event";
 import dayjs, { Dayjs } from 'dayjs';
-import { Toggle } from './styled-components';
+import Toggle from './Toggle';
+import Nourriture from "../../assets/Nourriture";
+import Tetee from "../../assets/Tetee";
+import Gear from "../../assets/Gear";
+
+const Biberon = styled.div`
+    scale:0.7;
+    margin-right: .3rem;
+`;
+
+const Sein = styled.div`
+    scale: 0.8;
+`;
 
 type Props = {
 
@@ -15,7 +28,29 @@ type SettingsType = {
     objectif?: number | undefined
 };
 
-const SettingsPage = (props: Props) => { 
+const FeedingToggle = styled.div`
+    display: inline-flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    &.feeding {
+        justify-content: flex-end;
+    }
+
+    & > span {
+        margin-right: 1rem;
+    }
+`;
+
+const Input = styled.input`
+    height: 2rem;
+    width: 60%;
+`;
+
+
+const SettingsPage = (props: Props): JSX.Element => { 
     const [settings, setSettings]: [SettingsType, SetStateAction<any>] = useState({
         name: 'Bébé',
         birthDate: dayjs(),
@@ -33,18 +68,70 @@ const SettingsPage = (props: Props) => {
         });
     };
 
-    useEffect(() => { 
-        console.log(settings);
+    function toggleIsBreastFeeding(confirm:boolean) {
+        setSettings((prev: SettingsType) => {
+            return {
+                ...prev,
+                nourriture: confirm ? 'sein' : 'biberon'
+            }
+        });
+    };
+
+    function toggleFunction(name:string, payload: any) {
+        switch (name) {
+            case 'nourriture':
+                setSettings((prev: SettingsType) => {
+                    return {
+                        ...prev,
+                        nourriture: prev['nourriture'] === 'sein' ? 'biberon' : 'sein'
+                    }
+                });            
+                break;
         
-    },[settings]);
+            default:
+                console.log(name);
+            break;
+        }
+    }
+
+    useEffect(() => { console.log(settings);
+    },[settings])
 
     return <Container>
         <H1>Reglages</H1>
+        <Gear />
         <Ul>
-            <Li><input name="name" onChange={handleChange} placeholder="coucou" /></Li>
-            <Li><input name="birthDate" type="date" onChange={handleChange} placeholder={dayjs().toString()} /></Li>
-            <Li>nourriture: sein ou biberon ?<Toggle /></Li>
-            <Li>Si biberon = objectifs de nourriture (ml)</Li>
+            <Li>
+                <FeedingToggle>
+                        <span><b>Name: </b></span>
+                        <Input name="name" id="nameInput" onChange={handleChange} placeholder="coucou" />
+                </FeedingToggle>
+                {/* <Toggle name="name" toggleFunction={toggleFunction} /> */}
+            </Li>
+            <Li>
+                <FeedingToggle>
+                        <span><b>Birthday: </b></span>
+                        <Input name="birthDate" id="birthDateInput" type="date" onChange={handleChange} placeholder={dayjs().toString()} />
+                </FeedingToggle>
+                {/* <Toggle name="birthDate" toggleFunction={toggleFunction} /> */}
+            </Li>
+            <Li>
+                <span><b>Feeding:</b></span>
+                <FeedingToggle className="feeding">
+                    <Sein>
+                        <Tetee />
+                    </Sein>
+                    <Toggle name="nourriture" toggleFunction={toggleFunction} />    
+                    <Biberon>
+                        <Nourriture />
+                    </Biberon>
+                </FeedingToggle>
+            </Li>
+            <Li>
+                <span><b>Objectif: </b></span>
+                <Input type="number" name="objectif" step="5" min={10} max={1000} />
+                {/* <Toggle name="objectif" toggleFunction={toggleFunction} /> */}
+            </Li>
         </Ul>
     </Container>;
 };

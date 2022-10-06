@@ -1,77 +1,54 @@
 import styled from "styled-components";
+
 export const Container = styled.div`
 	width: 100%;
 	height: 100%;
+
+	padding: 0 1rem;
 `;
 
 export const H1 = styled.h1`
-    margin: 4rem 0;
+    margin: 4rem 0 1.618rem 0;
 `;
 
 export const Ul = styled.ul`
-	text-align: left;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1fr 1fr 1fr 1fr;
+	grid-auto-rows: 1fr;
+	gap: 0px 0px;
+	grid-auto-flow: row;
+
+	justify-items: start;
+	list-style: none;
+	place-items: stretch start;
+	place-content: stretch start;
+
+
+	padding-inline-start: 0;
 `;
 
 export const Li = styled.li`
-	text-align: left;
-    margin-bottom: 16px;
-`;
+	grid-column: 1 / span 2;
 
-const ToggleContainer = styled.div`
-	& > .toggle {
-		position: relative;
-		display: inline-block;
-		width: 100px;
-		height: 52px;
-		background-color: red;
-		border-radius: 30px;
-		border: 2px solid gray;
-	}
+	width: 100%;
+	height: 6.18vh;
+	margin-bottom: 1rem;
 
-	/* After slide changes */
-	& > .toggle:after {
-		content: '';
-		position: absolute;
-		width: 50px;
-		height: 50px;
-		border-radius: 50%;
-		background-color: gray;
-		top: 1px;
-		left: 1px;
-		transition: all 0.5s;
-	}
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
 
-	/* Toggle text */
-	p {
-		font-family: Arial, Helvetica, sans-serif;
-		font-weight: bold;
-	}
 
-	/* Checkbox checked effect */
-	& > .checkbox:checked + .toggle::after {
-		left: 49px;
-	}
+	& > label {
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: flex-start;
+		width: 100%;
 
-	/* Checkbox checked toggle label bg color */
-	& > .checkbox:checked + .toggle {
-		background-color: green;
-	}
-
-	/* Checkbox vanished */
-	& > .checkbox {
-		display: none;
+		& > span {
+			border: 1px solid green;
+		}
 	}
 `;
-
-export const Toggle = () => {
-    return (
-        <ToggleContainer>
-            <input type="checkbox" id="switch" className="checkbox" />
-            <label for="switch" className="toggle">
-                <p>OFF ON</p>
-            </label>
-        </ToggleContainer>
-    );
-};
-
-

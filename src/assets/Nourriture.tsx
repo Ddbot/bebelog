@@ -1,6 +1,6 @@
 import styled from "styled-components";
 const SVG = styled.svg`
-    stroke-width: 2rem;
+    // stroke-width: 2rem;
     stroke: black;
 `;
 const Path = styled.path`
