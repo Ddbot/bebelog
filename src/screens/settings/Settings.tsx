@@ -103,17 +103,15 @@ const SettingsPage = (props: Props): JSX.Element => {
         <Ul>
             <Li>
                 <FeedingToggle>
-                        <span><b>Name: </b></span>
-                        <Input name="name" id="nameInput" onChange={handleChange} placeholder="coucou" />
+                    <span><b>Name: </b></span>
+                    <Input name="name" id="nameInput" onChange={handleChange} placeholder="coucou" />
                 </FeedingToggle>
-                {/* <Toggle name="name" toggleFunction={toggleFunction} /> */}
             </Li>
             <Li>
                 <FeedingToggle>
-                        <span><b>Birthday: </b></span>
-                        <Input name="birthDate" id="birthDateInput" type="date" onChange={handleChange} placeholder={dayjs().toString()} />
+                    <span><b>Birthday: </b></span>
+                    <Input name="birthDate" id="birthDateInput" type="date" onChange={handleChange} placeholder={dayjs().toString()} />
                 </FeedingToggle>
-                {/* <Toggle name="birthDate" toggleFunction={toggleFunction} /> */}
             </Li>
             <Li>
                 <span><b>Feeding:</b></span>
@@ -130,7 +128,6 @@ const SettingsPage = (props: Props): JSX.Element => {
             <Li>
                 <span><b>Objectif: </b></span>
                 <Input type="number" name="objectif" step="5" min={10} max={1000} />
-                {/* <Toggle name="objectif" toggleFunction={toggleFunction} /> */}
             </Li>
         </Ul>
     </Container>;
