@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { SetStateAction, useEffect, useState } from "react";
 import styled from "styled-components";
 import { CancelButton, Container, EditButton, H1, Ul, Li, H1Link } from './styled-components';
 import dayjs from 'dayjs';
@@ -45,6 +45,7 @@ const Input = styled.input`
 
 const SettingsPage = (props: Props): JSX.Element => { 
     const { settings, setSettings } = useSettings();
+    const [isEditMode, setIsEditMode] = useState(false);
 
     function handleChange(event:React.ChangeEvent<HTMLInputElement>) {
         const { name, value } = event.currentTarget;
@@ -55,6 +56,10 @@ const SettingsPage = (props: Props): JSX.Element => {
             }
         });
     };
+
+    function handleClick(event:React.MouseEvent<HTMLButtonElement>) {
+        setIsEditMode(prev => !prev);
+    }
 
     function toggleFunction(name:string, payload: any) {
         switch (name) {
@@ -108,7 +113,8 @@ const SettingsPage = (props: Props): JSX.Element => {
                 <Input type="number" name="objectif" step="10" min={10} max={1000} onChange={handleChange} />
             </Li>
             <Li>
-                <CancelButton>Cancel</CancelButton><EditButton>Edit</EditButton>
+                {isEditMode && <CancelButton>Cancel</CancelButton>}
+                <EditButton onClick={handleClick}>Edit</EditButton>
             </Li>
         </Ul>
     </Container>;

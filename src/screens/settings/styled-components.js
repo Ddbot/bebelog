@@ -56,18 +56,15 @@ export const Ul = styled.ul`
 
 export const EditButton = styled.button`
 	height: 80%;
-	width: 30%;
-	margin-left: 1rem;
+	width: 25%;
 `;
 
-export const CancelButton = styled.button`
-	height: 80%;
-	width: 30%;
+export const CancelButton = styled(EditButton)`
+	margin-right: 10%;
 `;
 
 export const Li = styled.li`
 	grid-column: 1 / span 2;
-	border: 1px solid red;
 
 	width: 100%;
 	height: 6.18vh;
