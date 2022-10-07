@@ -84,7 +84,8 @@ const SettingsPage = (props: Props): JSX.Element => {
 
     function submitSettings(event:React.MouseEvent) {
         setSettings(bufferizedSettings);
-        setIsEditMode(false)
+        setIsEditMode(false);
+        localStorage.setItem('userSettings', JSON.stringify(bufferizedSettings));
     }
 
     useEffect(() => { console.log(settings);
