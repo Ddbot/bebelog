@@ -17,11 +17,12 @@ export const Container = styled.div`
 `;
 
 export const H1 = styled.h1`
-	// margin: 0 0 1.618rem 0;
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: space-between;
 	align-items: center;
+
+	transform: translateY(-75%);
 
 	& button {
 		width: 2.4rem;

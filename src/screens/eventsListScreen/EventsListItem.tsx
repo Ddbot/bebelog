@@ -11,7 +11,7 @@ type Props = {
 
 
 const Card = styled(Link)`
-    place-self: start stretch;
+    // place-self: start stretch;
 
     width: 100%;
     height: 3rem;
@@ -41,7 +41,7 @@ const Li = styled.li`
     justify-content: space-between;
     align-items: center;
 
-    background: papayawhip;
+    background: silver;
 `;
 
 const ArrowContainer = styled.span`

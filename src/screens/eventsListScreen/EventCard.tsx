@@ -136,7 +136,6 @@ const EventCard = () => {
             newAr = events.filter((event: any) => {
                 return event.id !== Number(id);
             });   
-            console.log(id, events, newAr)
         }
 
         const { data, error } = await supabase.from('events').delete().match({ id });     

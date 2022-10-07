@@ -23,6 +23,7 @@ const List = styled.ul`
     gap: 0px 0px;
     grid-auto-flow: row;
     place-items: start;
+    place-content: start;
     align-items: start;
     align-content: start;
 `;

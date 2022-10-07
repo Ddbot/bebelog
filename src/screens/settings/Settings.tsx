@@ -1,9 +1,7 @@
-import React, { SetStateAction, useEffect, useState } from "react";
-import { Link } from 'react-router-dom';
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Container, H1, Ul, Li, H1Link } from './styled-components';
-import { NourritureType } from "../../models/Event";
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import Toggle from './Toggle';
 import Nourriture from "../../assets/Nourriture";
 import Tetee from "../../assets/Tetee";
