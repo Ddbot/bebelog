@@ -91,14 +91,16 @@ const EventsList = (): JSX.Element => {
             if (error) console.error(error);
             if (data) {
                 setList(data);
-                localStorage.setItem(String(start), JSON.stringify(data));
+                data.length > 0 && localStorage.setItem(String(start), JSON.stringify(data));
             }       
         };        
 
         if (localStorage.getItem(String(start)) !== null && localStorage.getItem(String(start)) !== '[]') {
             let res = JSON.parse(localStorage.getItem(String(start))||"");
             setList(res);
-        } else { 
+                        // fetchEvents();
+
+        } else {
             fetchEvents();
         };
     },[query]);

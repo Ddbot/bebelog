@@ -11,6 +11,7 @@ import { supabase } from './supabase/client';
 import Home from './screens/widgetsScreen/Home';
 
 import { useSettings } from './contexts/SettingsContext';
+import dayjs from 'dayjs';
 
 
 const radius = '0.67cm';
@@ -107,7 +108,8 @@ function App(): JSX.Element {
       }
     });       
   };
-  async function insertEvent(event:any) {
+  async function insertEvent(event: any) {
+
     const { data, error } = await supabase.from('events').insert(event);
 
     if (error) console.error('Erruer lors de linsertion');
@@ -116,12 +118,16 @@ function App(): JSX.Element {
 
   // repere le nb de parametres dans timer et setEventsList accordingly
   useEffect((): void => { 
+    let start = dayjs(timer.start).startOf('D').unix() * 1000;
+
     if (Object.keys(timer).length === 3) {
         insertEvent({
           type: timer.category,
           start: timer.start,
           end: Date.now()
         });
+      
+      localStorage.removeItem(String(start));
   };    
   }, [timer]);
 

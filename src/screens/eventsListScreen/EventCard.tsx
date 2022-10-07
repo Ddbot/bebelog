@@ -128,8 +128,20 @@ const EventCard = () => {
 
     async function deleteEvent(event: React.MouseEvent<Element>) {
         const { id } = event.currentTarget;
-        const { data, error } = await supabase.from('events').delete().match({ id });        
+        const start = String(dayjs(value.start).startOf('D').unix() * 1000);
+        const events = JSON.parse(localStorage.getItem(start) || '');
+        let newAr;
+        
+        if (events.length > 0) {
+            newAr = events.filter((event: any) => {
+                return event.id !== Number(id);
+            });   
+            console.log(id, events, newAr)
+        }
 
+        const { data, error } = await supabase.from('events').delete().match({ id });     
+        newAr.length > 0 && localStorage.setItem(start, JSON.stringify(newAr));
+        
         if (error) console.error(error);
         navigate('/events_list')
     }; 
@@ -208,7 +220,7 @@ const EventCard = () => {
                     <button id={value.id} onClick={() => { navigate('/events_list')}}><BackArrow /></button>
                     <button id={value.id} onClick={deleteEvent}><Trash /></button>
                     { !isInEditMode &&<button id={value.id} onClick={() => { setIsInEditMode(true)}}><Pen /></button>}
-                    { isInEditMode && <button id={value.id} onClick={submitChange}>✔️</button>}
+                    {isInEditMode && <button id={value.id} onClick={submitChange}>✔️</button>}
                 </ButtonContainer>
             </Content>
     </Card>
