@@ -40,16 +40,20 @@ const FeedingToggle = styled.div`
 const Input = styled.input`
     height: 2rem;
     width: 60%;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: right;
 `;
-
 
 const SettingsPage = (props: Props): JSX.Element => { 
     const { settings, setSettings } = useSettings();
     const [isEditMode, setIsEditMode] = useState(false);
+    const [bufferizedSettings, setBufferizedSettings] : [SettingsType,SetStateAction<any>]= useState(settings);
 
     function handleChange(event:React.ChangeEvent<HTMLInputElement>) {
         const { name, value } = event.currentTarget;
-        setSettings((prev: SettingsType) => { 
+        setBufferizedSettings((prev: SettingsType) => { 
             return {
                 ...prev,
                 [name]: value
@@ -59,7 +63,7 @@ const SettingsPage = (props: Props): JSX.Element => {
 
     function handleClick(event:React.MouseEvent<HTMLButtonElement>) {
         setIsEditMode(prev => !prev);
-    }
+    };
 
     function toggleFunction(name:string, payload: any) {
         switch (name) {
@@ -76,6 +80,11 @@ const SettingsPage = (props: Props): JSX.Element => {
                 console.log(name);
             break;
         }
+    };
+
+    function submitSettings(event:React.MouseEvent) {
+        setSettings(bufferizedSettings);
+        setIsEditMode(false)
     }
 
     useEffect(() => { console.log(settings);
@@ -87,18 +96,21 @@ const SettingsPage = (props: Props): JSX.Element => {
             <Li>
                 <FeedingToggle>
                     <span><b>Name: </b></span>
-                    <Input name="name" id="nameInput" onChange={handleChange} defaultValue={settings.name} />
+                    { !isEditMode && <i>{settings.name}</i>}
+                    {isEditMode && <Input name="name" id="nameInput" type="text" onChange={handleChange} value={bufferizedSettings.name} />}
                 </FeedingToggle>
             </Li>
             <Li>
                 <FeedingToggle>
                     <span><b>Birthday: </b></span>
-                    <Input name="birthDate" id="birthDateInput" type="date" onChange={handleChange} placeholder={dayjs().toString()} />
+                    { !isEditMode && <i>{ dayjs(settings.birthDate).format('DD MMMM YYYY')}</i>}
+                    {isEditMode && <Input name="birthDate" id="birthDate" type="date" onChange={handleChange} value={dayjs(bufferizedSettings.birthDate).format('YYYY-MM-DD')} />}
                 </FeedingToggle>
             </Li>
             <Li>
                 <span><b>Feeding:</b></span>
-                <FeedingToggle className="feeding">
+                { !isEditMode && <i>{ settings.nourriture}</i>}
+                {isEditMode && <FeedingToggle className="feeding">
                     <Sein>
                         <Tetee />
                     </Sein>
@@ -106,15 +118,18 @@ const SettingsPage = (props: Props): JSX.Element => {
                     <Biberon>
                         <Nourriture />
                     </Biberon>
-                </FeedingToggle>
+                </FeedingToggle>}
             </Li>
             <Li>
-                <span><b>Objectif: </b></span>
-                <Input type="number" name="objectif" step="10" min={10} max={1000} onChange={handleChange} />
+                <span><b>Objectif: </b>
+                </span>
+                { !isEditMode && <span>{ settings.objectif}</span>}
+                {isEditMode && <Input type="number" name="objectif" id="objectif" step="10" min={10} max={1000} onChange={handleChange} value={ bufferizedSettings.objectif} />}
             </Li>
             <Li>
-                {isEditMode && <CancelButton>Cancel</CancelButton>}
-                <EditButton onClick={handleClick}>Edit</EditButton>
+                {isEditMode && <CancelButton onClick={handleClick}>Cancel</CancelButton>}
+                {isEditMode &&<EditButton type="submit" onClick={submitSettings}>Confirm</EditButton>}
+                {!isEditMode &&<EditButton onClick={handleClick}>Edit</EditButton>}
             </Li>
         </Ul>
     </Container>;
