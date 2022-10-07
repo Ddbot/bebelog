@@ -107,7 +107,7 @@ const SettingsPage = (props: Props): JSX.Element => {
             </Li>
             <Li>
                 <span><b>Objectif: </b></span>
-                <Input type="number" name="objectif" step="5" min={10} max={1000} onChange={handleChange} />
+                <Input type="number" name="objectif" step="10" min={10} max={1000} onChange={handleChange} />
             </Li>
         </Ul>
     </Container>;

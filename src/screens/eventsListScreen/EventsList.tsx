@@ -79,18 +79,28 @@ const EventsList = (): JSX.Element => {
     }
 
     useEffect(() => { 
+        let start = dayjs(query).startOf('D').unix() * 1000;
+        let end = dayjs(query).endOf('D').unix() * 1000;
+        
         async function fetchEvents() {
-            let start = dayjs(query).startOf('D').unix() * 1000;
-            let end = dayjs(query).endOf('D').unix() * 1000;
             const { data, error } = await supabase
                 .from('events')
                 .select()
                 .gte('start', start)
                 .lte('end', end);
             if (error) console.error(error);
-            if (data) setList(data);        
+            if (data) {
+                setList(data);
+                localStorage.setItem(String(start), JSON.stringify(data));
+            }       
         };        
-        fetchEvents();
+
+        if (localStorage.getItem(String(start)) !== null) {
+            let res = JSON.parse(localStorage.getItem(String(start))||"");
+            setList(res);
+        } else { 
+            fetchEvents();
+        };
     },[query]);
 
     return <>

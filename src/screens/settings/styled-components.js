@@ -76,4 +76,10 @@ export const Li = styled.li`
 			border: 1px solid green;
 		}
 	}
+
+	&:last-child {
+		&> input {
+			width: 8ch;
+		}		
+	}
 `;
