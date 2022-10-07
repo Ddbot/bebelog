@@ -95,7 +95,7 @@ const EventsList = (): JSX.Element => {
             }       
         };        
 
-        if (localStorage.getItem(String(start)) !== null) {
+        if (localStorage.getItem(String(start)) !== null && localStorage.getItem(String(start)) !== '[]') {
             let res = JSON.parse(localStorage.getItem(String(start))||"");
             setList(res);
         } else { 
