@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { Container, H1, Ul, Li, H1Link } from './styled-components';
+import { CancelButton, Container, EditButton, H1, Ul, Li, H1Link } from './styled-components';
 import dayjs from 'dayjs';
 import Toggle from './Toggle';
 import Nourriture from "../../assets/Nourriture";
@@ -106,6 +106,9 @@ const SettingsPage = (props: Props): JSX.Element => {
             <Li>
                 <span><b>Objectif: </b></span>
                 <Input type="number" name="objectif" step="10" min={10} max={1000} onChange={handleChange} />
+            </Li>
+            <Li>
+                <CancelButton>Cancel</CancelButton><EditButton>Edit</EditButton>
             </Li>
         </Ul>
     </Container>;

@@ -22,7 +22,7 @@ export const H1 = styled.h1`
 	justify-content: space-between;
 	align-items: center;
 
-	transform: translateY(-75%);
+	// transform: translateY(-50%);
 
 	& button {
 		width: 2.4rem;
@@ -39,7 +39,7 @@ export const H1 = styled.h1`
 export const Ul = styled.ul`
 	display: grid;
 	grid-template-columns: 1fr 1fr;
-	grid-template-rows: 1fr 1fr 1fr 1fr;
+	grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
 	grid-auto-rows: 1fr;
 	gap: 0px 0px;
 	grid-auto-flow: row;
@@ -54,8 +54,20 @@ export const Ul = styled.ul`
 
 `;
 
+export const EditButton = styled.button`
+	height: 80%;
+	width: 30%;
+	margin-left: 1rem;
+`;
+
+export const CancelButton = styled.button`
+	height: 80%;
+	width: 30%;
+`;
+
 export const Li = styled.li`
 	grid-column: 1 / span 2;
+	border: 1px solid red;
 
 	width: 100%;
 	height: 6.18vh;
@@ -79,8 +91,8 @@ export const Li = styled.li`
 	}
 
 	&:last-child {
-		&> input {
-			width: 8ch;
-		}		
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: flex-end;
 	}
 `;
