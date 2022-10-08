@@ -1,5 +1,6 @@
-import { SetStateAction, useEffect, useState } from 'react';
-import styled from 'styled-components';
+import React, { SetStateAction, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import styled, { StyledComponent } from 'styled-components';
 import { Event } from '../../models/Event';
 import { supabase } from '../../supabase/client';
 import dayjs from 'dayjs';
@@ -8,6 +9,33 @@ import EventsListItem from './EventsListItem';
 
 import RightArrow from '../../assets/RighArrow';
 import BackArrow from '../../assets/BackArrow';
+// import { Card } from './EventsListItem';
+
+const AddEventButton = ({ children }: { children : React.ReactNode}) => { 
+    const Container: StyledComponent<any, any> = styled.div`
+        width: 100%;
+        height: 3rem;
+
+        list-style: none;
+
+        margin-bottom:16px; 
+
+        text-decoration: none;
+
+
+        padding: 0 16px;
+        
+        background: green;
+        color: whitesmoke;
+        font-size: 2.4rem;
+
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: center;
+    `;
+    return <Container>{children}</Container>;
+};
 
 const List = styled.ul`
 	max-height: calc(100% - 11rem);
@@ -116,12 +144,22 @@ const EventsList = (): JSX.Element => {
             { (dayjs(query).add(1,'day').isSame(dayjs()) || dayjs(query).add(1,'day').isBefore(dayjs())) && <button onClick={handleClick} data-name="plus"><RightArrow /></button>}
             { dayjs(query).add(1,'day').isAfter(dayjs()) && <button onClick={handleClick} data-name="plus" disabled></button>}
         </TemporaryDateSearchBox>
-            <List>
-                {list?.length > 0 && (
+        <List>
+            <AddEventButton>
+                <Link to="blqblq" style={{
+                    width: '100%',
+                    height: '100%',
+                    textDecoration: 'none',
+                    color: 'whitesmoke'
+                }}>
+                    <span>+</span>
+                </Link>
+            </AddEventButton>
+            {list?.length > 0 && (
                 list?.map((ev: Event, i: number) => {
                     return <EventsListItem event={ev} key={'eventListItem'+i} />
                 })
-                )}
+            )}
             </List>
         </>
 };

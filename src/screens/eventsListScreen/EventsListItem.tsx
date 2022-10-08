@@ -10,7 +10,7 @@ type Props = {
 };
 
 
-const Card = styled(Link)`
+export const Card = styled(Link)`
     width: 100%;
     height: 3rem;
 
