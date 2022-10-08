@@ -48,21 +48,6 @@ align-self: flex-start;
 
 function App(): JSX.Element {
   const { settings } = useSettings();
-  function reducer(state: any, action: Action): any {
-
-    switch (action.type) {
-      case EventType.TIMED:
-        return [...state,
-        action.value
-        ];
-      default:
-        return [...state, {
-          start: Date.now(),
-          end: Date.now(),
-          type: action.type
-        }];
-    };
-  };
 
   const [timer, setTimer]: [any, SetStateAction<any>] = useState({});
 
