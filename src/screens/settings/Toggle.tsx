@@ -26,17 +26,16 @@ const Label = styled.label`
 	}
 `;
 
-const IconContainer = styled.p`
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    align-items: center;
-
-    position: relative;
-    transform: translateY(-90%);
-`;
-
 const ToggleContainer = styled.div`
+	& > fieldset {
+			position: relative;
+		display: inline;
+		width: 5rem;
+		height: 1.5rem;
+		border-radius: .8rem;
+		border: 0.125rem solid black;
+	}
+
 	&:last-of-type {
 		grid-column: 2 / span 1;	
 	}
@@ -48,20 +47,15 @@ const ToggleContainer = styled.div`
 		display: none;
 	}
 
-	/* Toggle text */
-
 	/* Checkbox checked effect */
 	& > .checkbox:checked + .toggle::after {
 		left: 1.04rem;
 	}
-
-	/* Checkbox checked toggle label bg color */
-	& > .checkbox:checked + .toggle {
-		// background-color: green;
-	}
 `;
 
-const Input = styled.input``;
+const Input = styled.input`
+display: inline-flex;
+`;
 
 type Props = {
 	toggleFunction: Function,
@@ -71,26 +65,35 @@ type Props = {
 const Toggle = (props: Props): JSX.Element => {
 	const [isChecked, setIsChecked] = useState(false);
 	function handleClick({ currentTarget }: React.MouseEvent<HTMLInputElement>): void { 
-		setIsChecked(prev => !prev);		
+		// setIsChecked(prev => !prev);	
+		console.log(currentTarget.value);
+		
 	};
 
-	useEffect(() => {
-		props.toggleFunction(isChecked ? 'sein' : 'biberon');
-	 },[isChecked,props]);
+	// useEffect(() => {
+	// 	props.toggleFunction(isChecked ? 'sein' : 'biberon');
+	//  },[isChecked,props]);
 
 	return (
 		<ToggleContainer>
+			<fieldset>
             <Input
-				type="checkbox"
-				id="switch"
+				type="radio"
+				id="sein"
 				className="checkbox"
 				onClick={handleClick}
 				name={props.name}
+				value="sein"
             />
-            <Label htmlFor="switch" className="toggle">
-                <IconContainer>
-                </IconContainer>
-            </Label>
+			            <Input
+				type="radio"
+				id="biberon"
+				className="checkbox"
+				onClick={handleClick}
+				name={props.name}
+				value="biberon"
+            />
+			</fieldset>
 		</ToggleContainer>
 	);
 };
