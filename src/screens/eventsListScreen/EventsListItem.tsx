@@ -11,13 +11,10 @@ type Props = {
 
 
 const Card = styled(Link)`
-    // place-self: start stretch;
-
     width: 100%;
     height: 3rem;
 
     list-style: none;
-    transform: translateX(-1.25rem);
 
     display: flex;
     flex-flow: row nowrap;
@@ -30,11 +27,12 @@ const Card = styled(Link)`
     font-size: 1.1rem;
 
 `;
-const Li = styled.li`
+const Li = styled.li` 
     width: 100%;
     height: 100%;
 
     padding: 0 16px;
+    margin: 0 16px;
 
     display: flex;
     flex-flow: row nowrap;

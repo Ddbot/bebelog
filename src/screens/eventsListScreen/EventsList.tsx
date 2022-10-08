@@ -22,10 +22,13 @@ const List = styled.ul`
     grid-auto-rows: 1fr;
     gap: 0px 0px;
     grid-auto-flow: row;
+
     place-items: start;
     place-content: start;
     align-items: start;
     align-content: start;
+
+    padding: 0;
 `;
 
 const TemporaryDateSearchBox = styled.h2`
