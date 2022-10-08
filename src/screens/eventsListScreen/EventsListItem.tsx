@@ -26,6 +26,10 @@ export const Card = styled(Link)`
     text-decoration: none;
     font-size: 1.1rem;
 
+    &:first-child {
+        margin-top: 3rem;
+    }
+
 `;
 const Li = styled.li` 
     width: 100%;
