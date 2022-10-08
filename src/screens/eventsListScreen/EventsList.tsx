@@ -83,8 +83,6 @@ position: relative;
     align-content: start;
 
     padding: 0 0;
-    // margin-top: 3rem;
-    border: 1px solid red;
 `;
 
 const TemporaryDateSearchBox = styled.h2`
