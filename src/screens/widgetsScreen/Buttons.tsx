@@ -14,7 +14,7 @@ type Props = {
     timerFn: any,
 };
 
-const icons: any = {
+export const icons: any = {
     lavage: <Lavage />,
     change: < Change />,
     medicament:<Medicament />,

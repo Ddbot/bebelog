@@ -27,10 +27,9 @@ const SkeletonListItem = styled.div`
     font-size: 1.1rem;
 `;
 
-const AddEventButton = () => { 
     const Container: StyledComponent<any, any> = styled.div`
-    position: absolute;
-    top: 0;
+        position: absolute;
+        top: 0;
         width: 100%;
         height: 3rem;
 
@@ -52,15 +51,6 @@ const AddEventButton = () => {
         justify-content: center;
         align-items: center;
     `;
-    return <Container>
-        <Link to="/add_event" style={{
-                    width: '100%',
-                    height: '100%',
-                    textDecoration: 'none',
-                    color: 'whitesmoke'
-                }}>
-        <span>+</span></Link></Container>;
-};
 
 const List = styled.ul`
 position: relative;
@@ -117,7 +107,22 @@ const TemporaryDateSearchBox = styled.h2`
 
 const EventsList = (): JSX.Element => { 
     const [list, setList]: [Event[], any] = useState([]);
-    const [query, setQuery]: [any, SetStateAction<any>] = useState(dayjs().unix()*1000);
+    const [query, setQuery]: [any, SetStateAction<any>] = useState(dayjs().unix() * 1000);
+    
+    const AddEventButton = () => { 
+        return <Container>
+            <Link to="/add_event"
+                state={{
+                    query
+                } }
+                style={{
+                        width: '100%',
+                        height: '100%',
+                        textDecoration: 'none',
+                        color: 'whitesmoke'
+                    }}>
+            <span>+</span></Link></Container>;
+    };    
     
     function handleClick(event:React.MouseEvent<HTMLButtonElement>) {
         const name = event.currentTarget.dataset.name;

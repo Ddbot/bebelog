@@ -8,6 +8,7 @@ import dayjs from 'dayjs';
 import Trash from '../../assets/Trash';
 import Pen from '../../assets/Pen';
 import BackArrow from '../../assets/BackArrow';
+import { EventType } from '../../models/Event';
 
 const Card = styled.div`
     width: 100%;
@@ -109,16 +110,21 @@ type Times = {
 type Payload = {
     id?: number,
     start: number,
-    end: number
-}
+    end: number,
+    type: EventType
+};
+
+type Props = {
+    isEditMode?: boolean
+};
 
 
-const EventCard = () => { 
+const EventCard = (props: Props) => { 
     const location = useLocation();
     const { value } = location.state;
     const navigate = useNavigate();
 
-    const [isInEditMode, setIsInEditMode] = useState(false);
+    const [isInEditMode, setIsInEditMode] = useState(props.isEditMode ||false);
     const [time, setTime]:[Times, SetStateAction<any>] = useState({
         start: dayjs(value.start).format('HH:mm'),
         end: dayjs(value.end).format('HH:mm')
@@ -177,10 +183,20 @@ const EventCard = () => {
             
             const { data, error } = await supabase.from('events').update({ start, end }).match({ id });
 
-            if (error) console.error('Erruer lors de linsertion');
+            if (error) console.error('Erruer lors de linsertion', data);
 
             navigate('/events_list');
-        };        
+        }; 
+        
+        async function upsertEvent(payload: Payload) {
+            const { type,start, end } = payload;     
+            
+            const { data, error } = await supabase.from('events').upsert({ type, start, end });
+
+            if (error) console.error('Erruer lors de lupsertion', data);
+
+            navigate('/events_list');
+        };         
         
         Object.keys(time as Object).forEach((key, i) => { 
             let heure: string = time[key];
@@ -190,7 +206,10 @@ const EventCard = () => {
             clonedObj[key] = dayjs(value[key]).hour(Number(hh)).minute(Number(mm)).unix()*1000;
         });
 
-        (dayjs(clonedObj.end).isAfter(clonedObj.start) || dayjs(clonedObj.end).isSame(clonedObj.start)) && isReady && updateEvent(clonedObj);
+        // cree un new Event en upsert
+        (dayjs(clonedObj.end).isAfter(clonedObj.start) || dayjs(clonedObj.end).isSame(clonedObj.start)) && isReady && !!value.isNew && upsertEvent(clonedObj);
+
+        (dayjs(clonedObj.end).isAfter(clonedObj.start) || dayjs(clonedObj.end).isSame(clonedObj.start)) && isReady && !value.isNew && updateEvent(clonedObj);
         if (dayjs(clonedObj.end).isBefore(clonedObj.start)) { 
             clonedObj.end = dayjs(clonedObj.end).add(1, 'day').unix()*1000;
             isReady && updateEvent(clonedObj);

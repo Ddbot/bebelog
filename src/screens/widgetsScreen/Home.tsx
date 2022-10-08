@@ -11,7 +11,6 @@ type Props = {
 };
 
 const Home = ({ handleClick, timerFn }: Props) => {
-    const { settings } = useSettings();
     return <HomeContainer>
     <Buttons timerFn={timerFn} handleClick={handleClick} />
     <FABStats>

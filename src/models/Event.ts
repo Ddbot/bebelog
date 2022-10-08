@@ -12,7 +12,8 @@ export type Event = {
     id?: number;  
     start: number;
     end?: number;
-    type: EventType;
+  type: EventType;
+  isNew?: boolean;
 };
 
 export type TimerType = {
