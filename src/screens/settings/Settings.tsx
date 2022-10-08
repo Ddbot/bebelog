@@ -49,7 +49,12 @@ const Input = styled.input`
 const SettingsPage = (props: Props): JSX.Element => { 
     const { settings, setSettings } = useSettings();
     const [isEditMode, setIsEditMode] = useState(false);
-    const [bufferizedSettings, setBufferizedSettings] : [SettingsType,SetStateAction<any>]= useState(settings);
+    const [bufferizedSettings, setBufferizedSettings] : [SettingsType,SetStateAction<any>]= useState({
+        name: 'Bébé',
+        birthDate: dayjs('10-10-2001'),
+        nourriture: 'sein',
+        objectif: 30
+    });
 
     function handleChange(event:React.ChangeEvent<HTMLInputElement>) {
         const { name, value } = event.currentTarget;
@@ -65,20 +70,21 @@ const SettingsPage = (props: Props): JSX.Element => {
         setIsEditMode(prev => !prev);
     };
 
-    function toggleFunction(food:string) {
-        setSettings((prev: SettingsType) => {
+    function submitSettings(event: React.MouseEvent) {
+        
+        setSettings((prev: any) => {
             return {
-                ...prev,
-                nourriture: food
+                ...bufferizedSettings,
+                nourriture: prev.nourriture
             }
-        });            
+        });
+
+        setIsEditMode(false);
     };
 
-    function submitSettings(event:React.MouseEvent) {
-        setSettings(bufferizedSettings);
-        setIsEditMode(false);
-        localStorage.setItem('userSettings', JSON.stringify(bufferizedSettings));
-    };
+    useEffect(() => {
+        localStorage.setItem('userSettings', JSON.stringify(settings));
+    },[settings])
 
     return <Container>
         <H1><H1Link to="/"><button>◀</button></H1Link><span>Reglages</span><Gear /></H1>
@@ -104,7 +110,7 @@ const SettingsPage = (props: Props): JSX.Element => {
                     <Sein>
                         <Tetee />
                     </Sein>
-                    <Toggle name="nourriture" toggleFunction={toggleFunction} />    
+                    <Toggle name="nourriture" selected={ settings.nourriture} />    
                     <Biberon>
                         <Nourriture />
                     </Biberon>

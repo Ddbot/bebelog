@@ -57,6 +57,11 @@ export const Ul = styled.ul`
 export const EditButton = styled.button`
 	height: 80%;
 	width: 25%;
+
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	align-items: center;
 `;
 
 export const CancelButton = styled(EditButton)`
@@ -74,6 +79,8 @@ export const Li = styled.li`
 	flex-flow: row nowrap;
 	justify-content: space-between;
 	align-items: center;
+
+	padding: 0 0.625rem;
 
 
 	& > label {

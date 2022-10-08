@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Tetee from '../../assets/Tetee';
-import Nourriture from '../../assets/Nourriture';
-
+import { useSettings } from "../../contexts/SettingsContext";
 const Label = styled.label`
 	position: relative;
 	display: inline;
@@ -29,11 +27,17 @@ const Label = styled.label`
 const ToggleContainer = styled.div`
 	& > fieldset {
 			position: relative;
-		display: inline;
-		width: 5rem;
-		height: 1.5rem;
-		border-radius: .8rem;
-		border: 0.125rem solid black;
+
+			display: flex;
+			flex-flow: row wrap;
+			justify-content: space-around;
+			align-items: center;
+
+			width: 5rem;
+			height: 1.5rem;
+			border-radius: .8rem;
+			border: 0.125rem solid black;
+			padding: 0;
 	}
 
 	&:last-of-type {
@@ -55,44 +59,49 @@ const ToggleContainer = styled.div`
 
 const Input = styled.input`
 display: inline-flex;
+border: 1px solid red;
+margin: 0;
 `;
 
 type Props = {
-	toggleFunction: Function,
-	name: string
+	name: string,
+	selected?: string
 };
 
 const Toggle = (props: Props): JSX.Element => {
-	const [isChecked, setIsChecked] = useState(false);
-	function handleClick({ currentTarget }: React.MouseEvent<HTMLInputElement>): void { 
-		// setIsChecked(prev => !prev);	
-		console.log(currentTarget.value);
+	const { setSettings } = useSettings();
+	
+	function handleChange(event: React.ChangeEvent<HTMLInputElement>): void { 
+		console.log('toggle value ', event.currentTarget.value);
 		
+		setSettings((prev: any) => {
+			return { 
+				...prev,
+				nourriture: event.currentTarget.value
+			}
+		});
 	};
-
-	// useEffect(() => {
-	// 	props.toggleFunction(isChecked ? 'sein' : 'biberon');
-	//  },[isChecked,props]);
-
 	return (
 		<ToggleContainer>
 			<fieldset>
-            <Input
-				type="radio"
-				id="sein"
-				className="checkbox"
-				onClick={handleClick}
-				name={props.name}
-				value="sein"
-            />
-			            <Input
-				type="radio"
-				id="biberon"
-				className="checkbox"
-				onClick={handleClick}
-				name={props.name}
-				value="biberon"
-            />
+				<Input
+					type="radio"
+					id="sein"
+					className="checkbox"
+					onChange={handleChange}
+					name={props.name}
+					value="sein"
+					defaultChecked={ props.selected === 'sein'}
+				/>
+							<Input
+					type="radio"
+					id="biberon"
+					className="checkbox"
+					onChange={handleChange}
+					name={props.name}
+					value="biberon"
+					defaultChecked={ props.selected === 'biberon'}
+				/>
 			</fieldset>
 		</ToggleContainer>
 	);
