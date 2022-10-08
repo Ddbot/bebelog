@@ -65,31 +65,20 @@ const SettingsPage = (props: Props): JSX.Element => {
         setIsEditMode(prev => !prev);
     };
 
-    function toggleFunction(name:string, payload: any) {
-        switch (name) {
-            case 'nourriture':
-                setSettings((prev: SettingsType) => {
-                    return {
-                        ...prev,
-                        nourriture: prev['nourriture'] === 'sein' ? 'biberon' : 'sein'
-                    }
-                });            
-                break;
-        
-            default:
-                console.log(name);
-            break;
-        }
+    function toggleFunction(food:string) {
+        setSettings((prev: SettingsType) => {
+            return {
+                ...prev,
+                nourriture: food
+            }
+        });            
     };
 
     function submitSettings(event:React.MouseEvent) {
         setSettings(bufferizedSettings);
         setIsEditMode(false);
         localStorage.setItem('userSettings', JSON.stringify(bufferizedSettings));
-    }
-
-    useEffect(() => { console.log(settings);
-    },[settings])
+    };
 
     return <Container>
         <H1><H1Link to="/"><button>◀</button></H1Link><span>Reglages</span><Gear /></H1>

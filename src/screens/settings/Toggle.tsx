@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Tetee from '../../assets/Tetee';
 import Nourriture from '../../assets/Nourriture';
@@ -69,14 +69,14 @@ type Props = {
 };
 
 const Toggle = (props: Props): JSX.Element => {
-	function handleChange({ currentTarget }: React.ChangeEvent<HTMLInputElement>): void { 
-		props.toggleFunction(props.name);
+	const [isChecked, setIsChecked] = useState(false);
+	function handleClick({ currentTarget }: React.MouseEvent<HTMLInputElement>): void { 
+		setIsChecked(prev => !prev);		
 	};
 
 	useEffect(() => {
-		console.log(props.name);
-		
-	 });
+		props.toggleFunction(isChecked ? 'sein' : 'biberon');
+	 },[isChecked,props]);
 
 	return (
 		<ToggleContainer>
@@ -84,7 +84,7 @@ const Toggle = (props: Props): JSX.Element => {
 				type="checkbox"
 				id="switch"
 				className="checkbox"
-				onChange={handleChange}
+				onClick={handleClick}
 				name={props.name}
             />
             <Label htmlFor="switch" className="toggle">

@@ -1,4 +1,4 @@
-import React, { createContext, SetStateAction, useContext, useState } from "react";
+import React, { createContext, SetStateAction, useContext, useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { NourritureType } from '../models/Event';
 
@@ -23,6 +23,13 @@ const SettingsContext: React.Context<any> = createContext<{ settings: SettingsTy
 function SettingsProvider({ children }: { children : React.ReactNode}) {
     const [settings, setSettings]:[SettingsType, SetStateAction<any>] = useState(initialSettings);
     const value = { settings, setSettings };
+    
+    useEffect(() => {
+    if (localStorage.getItem('userSettings')) {
+        setSettings(JSON.parse(localStorage.getItem('userSettings') || ''));
+    }
+    }, [setSettings]);
+    
     return <SettingsContext.Provider value={ value }>{ children }</SettingsContext.Provider>
 };
 
@@ -32,6 +39,6 @@ function useSettings() {
         throw new Error("useSettings should be used in a SettingsProvider !");        
     }
     return context;
-}
+};
 
 export { SettingsProvider, useSettings };
