@@ -9,10 +9,28 @@ import EventsListItem from './EventsListItem';
 
 import RightArrow from '../../assets/RighArrow';
 import BackArrow from '../../assets/BackArrow';
-// import { Card } from './EventsListItem';
 
-const AddEventButton = ({ children }: { children : React.ReactNode}) => { 
+const SkeletonListItem = styled.div`
+    width: calc(100% - 32px);
+    height: 3rem;
+
+    list-style: none;
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom:16px; 
+
+    text-decoration: none;
+    font-size: 1.1rem;
+`;
+
+const AddEventButton = () => { 
     const Container: StyledComponent<any, any> = styled.div`
+    position: absolute;
+    top: 0;
         width: 100%;
         height: 3rem;
 
@@ -34,10 +52,18 @@ const AddEventButton = ({ children }: { children : React.ReactNode}) => {
         justify-content: center;
         align-items: center;
     `;
-    return <Container>{children}</Container>;
+    return <Container>
+        <Link to="/add_event" style={{
+                    width: '100%',
+                    height: '100%',
+                    textDecoration: 'none',
+                    color: 'whitesmoke'
+                }}>
+        <span>+</span></Link></Container>;
 };
 
 const List = styled.ul`
+position: relative;
 	max-height: calc(100% - 11rem);
 	min-height: calc(100% - 11rem);
 
@@ -56,7 +82,9 @@ const List = styled.ul`
     align-items: start;
     align-content: start;
 
-    padding: 0;
+    padding: 0 0;
+    // margin-top: 3rem;
+    border: 1px solid red;
 `;
 
 const TemporaryDateSearchBox = styled.h2`
@@ -145,21 +173,18 @@ const EventsList = (): JSX.Element => {
             { dayjs(query).add(1,'day').isAfter(dayjs()) && <button onClick={handleClick} data-name="plus" disabled></button>}
         </TemporaryDateSearchBox>
         <List>
-            <AddEventButton>
-                <Link to="blqblq" style={{
-                    width: '100%',
-                    height: '100%',
-                    textDecoration: 'none',
-                    color: 'whitesmoke'
-                }}>
-                    <span>+</span>
-                </Link>
-            </AddEventButton>
-            {list?.length > 0 && (
+            <AddEventButton />
+            {list?.length >= 1 && (
                 list?.map((ev: Event, i: number) => {
                     return <EventsListItem event={ev} key={'eventListItem'+i} />
                 })
             )}
+            { list?.length >= 1 && list?.length < 6 && Array.from({
+                length: 6-list.length
+            }, () => ('')).map((v, i) => {
+                return <SkeletonListItem key={ 'skeleton'+i} />
+            })
+            }
             </List>
         </>
 };
