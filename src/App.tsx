@@ -28,6 +28,8 @@ const MobileShell = styled.div`
   align-items: center;
   justify-content: center;
 
+  text-align: center;
+
 `;
 
 const TopBar = styled.h1`
@@ -118,7 +120,7 @@ function App(): JSX.Element {
   }, [timer]);
 
   return (
-      <MobileShell className='App'>
+      <MobileShell>
       <TopBar><Link to='/' style={{width: '100%', textDecoration: 'none', color: 'black', transform: 'translateY(100%)'}}>{settings.name}</Link></TopBar>
       <Routes>
         <Route path='/' element={
