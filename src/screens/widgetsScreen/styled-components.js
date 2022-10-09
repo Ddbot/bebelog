@@ -42,7 +42,7 @@ export const HomeContainer = styled.div`
 	justify-content: center;
 `;
 
-const FABStatsContainer = styled(Link)`
+const FABStatsContainer = styled.div`
 	aspect-ratio: 1 / 1;
 	width: 6ch;
 	height: 6ch;
@@ -64,23 +64,13 @@ const FABStatsContainer = styled(Link)`
 
 	place-items: start center;
 	place-content: end;
-
-	border: 1px solid red;
-
-	& > ${EyeIcon} {
-		bottom: 0.5rem;
-	}
-
-	& > ${ListIcon} {
-		bottom: calc(6ch + 0.5rem);
-	}
-
-	& > ${Stats} {
-		bottom: calc(12ch + 0.5rem);
-	}
 `;
 
 const FABGearContainer = styled(FABStatsContainer)`
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	align-items: center;
 	right: calc(6ch + 0.5rem);
 `;
 
@@ -89,5 +79,5 @@ export const FABStats = ({ children }) => {
 };
 
 export const FABGears = ({ children }) => {
-	return <FABGearContainer to="/settings">{children}</FABGearContainer>;
+	return <FABGearContainer><Link to="/settings">{children}</Link></FABGearContainer>;
 };

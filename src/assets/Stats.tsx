@@ -2,9 +2,27 @@ import styled from "styled-components";
 import { SVGIcon } from './common-styles';
 
 const MenuButton = styled(SVGIcon)`  
+    &:not(.hidden){
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+      padding: .5ch;
+      border-radius: 50%;
+      visibility: visible;
+      pointer-events: all;
+      transition: all .425s;
+    }
+
+    &.hidden {
+      visibility: hidden;
+      pointer-events: none;
+      transition: all .12s;
+    }
+
     grid-row: 1 / span 1;
 `;
-const Stats = (): JSX.Element => (<MenuButton to="/statsVisualization">
+const Stats = (): JSX.Element => (<MenuButton to="/events_stats" className="hidden">
   <svg
     viewBox="0 0 21 21"
     width={24}

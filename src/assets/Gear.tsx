@@ -1,5 +1,7 @@
 import styled from "styled-components"
-const SVG = styled.svg``;
+const SVG = styled.svg`
+  scale: 1.2;
+`;
 
 const Gear = (): JSX.Element => (
   <SVG
