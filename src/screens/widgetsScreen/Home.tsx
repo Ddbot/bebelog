@@ -4,6 +4,7 @@ import Gear from '../../assets/Gear';
 import Stats from '../../assets/Stats';
 import { Outlet } from 'react-router-dom';
 import ListIcon from '../../assets/ListIcon';
+import EyeIcon from '../../assets/EyeIcon';
 
 type Props = {
     handleClick: any,
@@ -14,8 +15,9 @@ const Home = ({ handleClick, timerFn }: Props) => {
     return <HomeContainer>
     <Buttons timerFn={timerFn} handleClick={handleClick} />
     <FABStats>
-            {/* <Stats /> */}
-            <ListIcon />
+        <Stats />
+        <ListIcon />
+        <EyeIcon />
     </FABStats>
     <FABGears>
         <Gear />

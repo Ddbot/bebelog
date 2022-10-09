@@ -1,6 +1,10 @@
 import styled from "styled-components";
 import { Link } from 'react-router-dom';
 
+import EyeIcon from "../../assets/EyeIcon";
+import Stats from "../../assets/Stats";
+import ListIcon from "../../assets/ListIcon";
+
 export const Widget = styled.button`
 	background: transparent;
 	border-radius: 50%;
@@ -40,8 +44,8 @@ export const HomeContainer = styled.div`
 
 const FABStatsContainer = styled(Link)`
 	aspect-ratio: 1 / 1;
-	// width: 33%;
 	width: 6ch;
+	height: 6ch;
 	border-radius: 50%;
 
 	position: absolute;
@@ -50,12 +54,35 @@ const FABStatsContainer = styled(Link)`
 
 	background: transparent;
 
-	border: 1.8px solid red;
+	// display: flex;
+	// flex-flow: column nowrap;
+	// justify-content: center;
+	// align-items: center;
 
-	display: flex;
-	flex-flow: column nowrap;
-	justify-content: center;
-	align-items: center;
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: 1fr;
+	grid-auto-rows: repeat(3,1fr);
+	gap: 0px 0px;
+	grid-auto-flow: row;
+	justify-items: center;
+
+	place-items: start center;
+	place-content: end;
+
+	border: 1px solid red;
+
+	& > ${EyeIcon} {
+		bottom: 0.5rem;
+	}
+
+	& > ${ListIcon} {
+		bottom: calc(6ch + 0.5rem);
+	}
+
+	& > ${Stats} {
+		bottom: calc(12ch + 0.5rem);
+	}
 `;
 
 const FABGearContainer = styled(FABStatsContainer)`

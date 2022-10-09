@@ -1,5 +1,11 @@
+import styled from "styled-components";
+import { SVGIcon } from './common-styles';
+
+const SVG = styled(SVGIcon)`
+    grid-row: 1 / span 1;
+`;
 const Stats = (): JSX.Element => (
-  <svg
+  <SVG
     viewBox="0 0 21 21"
     width={24}
     xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +38,7 @@ const Stats = (): JSX.Element => (
       d="M0 0h20v20H0z"
       transform="translate(.5 .5)"
     />
-  </svg>
+  </SVG>
 )
 
 export default Stats
