@@ -1,9 +1,23 @@
 import { useState, useEffect, useRef } from 'react';
 import styled from "styled-components";
 
+const hIAA = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
+const categories = ['change', 'nourriture', 'medicament', 'lavage', 'dodo'];
+
+const svgDimensions = {
+    width: 1440,
+    height: 2320
+};
+
 const SVG = styled.svg`
-    width: 100%;
-    height: 100%;
+    height: calc(100% - 3rem);
+    width: 80%;
+`;
+
+const Text = styled.text`
+    font-size: 3.75rem;
+    fill: black;
+    transform: translate(2.08%);
 `;
 
 type Props = {
@@ -11,8 +25,21 @@ type Props = {
 };
 
 const Visualisation = (props: Props) => {
-    return <SVG viewBox='0 0 9 16'>
-        <rect x="0" y="0" width={9} stroke="red" strokeWidth={2} />
+    return <SVG viewBox={`0 0 ${svgDimensions.width} ${svgDimensions.height}`}>
+        <rect x="0" y="0" width={svgDimensions.width} height={svgDimensions.height} stroke="black" fill="rgba(0,0,0,0)" strokeWidth={4} />
+        <g className='hours'>
+            {hIAA.map((h,i) => { 
+                return <g key={ 'line_hour_' + i }>
+                    {h % 3 === 2 && <Text y={h * svgDimensions.height / 24} x={0} dy="3.08%" textLength={'4rem'} lengthAdjust="spacingAndGlyphs">{-h + 23}</Text>}
+                    <line y1={h * svgDimensions.height / 24} y2={h * svgDimensions.height / 24} x1={svgDimensions.width} x2={0} strokeDasharray={5} strokeWidth={5} stroke="black" />
+                </g>
+            })}
+        </g>
+        <g className='categories'>
+            {categories.map((cat, i) => { 
+                return <line x1={(i+1) * svgDimensions.width / 6} x2={(i+1) * svgDimensions.width / 6} y1={svgDimensions.height} y2={0} strokeWidth={5} stroke="gray" />
+            }) }
+        </g>
     </SVG>
 };
 
