@@ -54,11 +54,6 @@ const FABStatsContainer = styled(Link)`
 
 	background: transparent;
 
-	// display: flex;
-	// flex-flow: column nowrap;
-	// justify-content: center;
-	// align-items: center;
-
 	display: grid;
 	grid-template-columns: 1fr;
 	grid-template-rows: 1fr;
