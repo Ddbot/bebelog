@@ -150,7 +150,7 @@ const EventsList = (): JSX.Element => {
                 .from('events')
                 .select()
                 .gte('start', start)
-                .lte('end', end);
+                .lte('start', end);
             if (error) console.error(error);
             if (data) {
                 setList(data);
@@ -166,7 +166,7 @@ const EventsList = (): JSX.Element => {
         } else {
             fetchEvents();
         };
-    },[query]);
+    }, [query]);
 
     return <>
         <TemporaryDateSearchBox>

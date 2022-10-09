@@ -18,6 +18,8 @@ const CreateEventForm = (props: Props) => {
 
     function handleClick( event : React.MouseEvent<HTMLButtonElement>) {
         const { query } = location.state;
+        console.log('Query: ', dayjs(query).format('DD MMMM YYYY'));
+        
 
         navigate('/pick_time', {
             state: {

@@ -134,18 +134,23 @@ const EventCard = (props: Props) => {
 
     async function deleteEvent(event: React.MouseEvent<Element>) {
         const { id } = event.currentTarget;
-        const start = String(dayjs(value.start).startOf('D').unix() * 1000);
-        const events = JSON.parse(localStorage.getItem(start) || '');
+        const start = dayjs(value.start).startOf('D').unix() * 1000;
+        const events = JSON.parse(localStorage.getItem(String(start)) || '');
         let newAr;
+
         
         if (events.length > 0) {
+
             newAr = events.filter((event: any) => {
                 return event.id !== Number(id);
             });   
-        }
+            console.log(newAr.length, events.length);
+        };
+
+        console.log('NEW AR: ', newAr);
 
         const { data, error } = await supabase.from('events').delete().match({ id });     
-        newAr.length > 0 && localStorage.setItem(start, JSON.stringify(newAr));
+        newAr.length > 0 && localStorage.setItem(String(start), JSON.stringify(newAr));
         
         if (error) console.error(error);
         navigate('/events_list')
@@ -179,9 +184,15 @@ const EventCard = (props: Props) => {
         const clonedObj = Object.assign({}, value);
 
         async function updateEvent(payload: Payload) {
-            const { id, start, end } = payload;     
+            const { id, start, end, type } = payload;     
             
             const { data, error } = await supabase.from('events').update({ start, end }).match({ id });
+            const key = dayjs(start).startOf('D').unix() * 1000;
+            // if (localStorage.getItem(String(key))) {
+            //     let newArray = JSON.parse(localStorage.getItem(String(key)) || '');
+            //     newArray.push({ type, start, end });
+            //     localStorage.setItem(String(key), JSON.stringify(newArray));
+            // }            
 
             if (error) console.error('Erruer lors de linsertion', data);
 
@@ -192,6 +203,17 @@ const EventCard = (props: Props) => {
             const { type,start, end } = payload;     
             
             const { data, error } = await supabase.from('events').upsert({ type, start, end });
+            const key = dayjs(start).startOf('D').unix() * 1000;
+            if (localStorage.getItem(String(key))) {
+                let newArray = JSON.parse(localStorage.getItem(String(key)) || '');
+                if(type === 'dodo' || type === 'nourriture'){
+                    newArray.push({ type, start, end });
+                } else {
+                    newArray.push({ type, start, end: start });
+                };
+                
+                localStorage.setItem(String(key), JSON.stringify(newArray));
+            }
 
             if (error) console.error('Erruer lors de lupsertion', data);
 
