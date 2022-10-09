@@ -3,7 +3,7 @@ import { FABGears, FABStats, HomeContainer } from './styled-components';
 import Gear from '../../assets/Gear';
 import Stats from '../../assets/Stats';
 import { Outlet } from 'react-router-dom';
-import { useSettings } from '../../contexts/SettingsContext';
+import ListIcon from '../../assets/ListIcon';
 
 type Props = {
     handleClick: any,
@@ -14,9 +14,10 @@ const Home = ({ handleClick, timerFn }: Props) => {
     return <HomeContainer>
     <Buttons timerFn={timerFn} handleClick={handleClick} />
     <FABStats>
-        <Stats />
+            {/* <Stats /> */}
+            <ListIcon />
     </FABStats>
-        <FABGears>
+    <FABGears>
         <Gear />
     </FABGears>
     <Outlet />

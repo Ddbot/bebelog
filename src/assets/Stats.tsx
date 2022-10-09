@@ -1,7 +1,7 @@
 const Stats = (): JSX.Element => (
   <svg
     viewBox="0 0 21 21"
-    width={36}
+    width={24}
     xmlns="http://www.w3.org/2000/svg"
     xmlSpace="preserve"
     style={{

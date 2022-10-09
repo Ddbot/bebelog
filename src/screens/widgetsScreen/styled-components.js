@@ -40,7 +40,8 @@ export const HomeContainer = styled.div`
 
 const FABStatsContainer = styled(Link)`
 	aspect-ratio: 1 / 1;
-	width: 33%;
+	// width: 33%;
+	width: 6ch;
 	border-radius: 50%;
 
 	position: absolute;
@@ -49,7 +50,7 @@ const FABStatsContainer = styled(Link)`
 
 	background: transparent;
 
-	// border: 1.8px solid black;
+	border: 1.8px solid red;
 
 	display: flex;
 	flex-flow: column nowrap;
@@ -58,7 +59,7 @@ const FABStatsContainer = styled(Link)`
 `;
 
 const FABGearContainer = styled(FABStatsContainer)`
-	right: calc(25% + 0.5rem);
+	right: calc(6ch + 0.5rem);
 `;
 
 export const FABStats = ({ children }) => {

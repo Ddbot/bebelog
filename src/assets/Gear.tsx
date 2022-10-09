@@ -3,7 +3,7 @@ const SVG = styled.svg``;
 
 const Gear = (): JSX.Element => (
   <SVG
-    width={36}
+    width={24}
         viewBox="0 0 512 512"
     fill="none"
     xmlns="http://www.w3.org/2000/svg">
