@@ -5,6 +5,13 @@ export const H1Link = styled(Link)`
 	display: flex;
 	flex-flow: row nowrap;
 	align-items: center;
+	text-decoration: none;
+
+	& > button {
+		background: white;
+		border-radius: 4px;
+		border-width: 1px;
+	}
 `;
 
 export const Container = styled.div`

@@ -85,6 +85,7 @@ const FABGearContainer = styled(FABStatsContainer)`
 	justify-content: center;
 	align-items: center;
 	right: calc(6ch + 0.5rem);
+	z-index: 3;
 `;
 
 export const FABStats = ({ children }) => {
