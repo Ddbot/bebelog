@@ -42,7 +42,7 @@ const SkeletonListItem = styled.div`
 
         padding: 0 16px;
         
-        background: green;
+        background: #03A29E;
         color: whitesmoke;
         font-size: 2.4rem;
 
