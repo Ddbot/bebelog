@@ -29,6 +29,7 @@ const MobileShell = styled.div`
   justify-content: center;
 
   text-align: center;
+  overflow: hidden;
 
 `;
 
@@ -45,8 +46,10 @@ align-self: flex-start;
   font-size: 1.7rem;
 
   margin: 0;
-  // border-bottom: 2px solid black;
+  background: transparent;
   color: black;
+
+  z-index: 2;
 `;
 
 function App(): JSX.Element {
@@ -121,7 +124,8 @@ function App(): JSX.Element {
 
   return (
       <MobileShell>
-      <TopBar><Link to='/' style={{width: '100%', textDecoration: 'none', color: 'black', transform: 'translateY(100%)'}}>{settings.name}</Link></TopBar>
+      <TopBar><Link to='/' style={{   background: 'transparent',
+width: '100%', textDecoration: 'none', color: 'black', transform: 'translateY(100%)'}}>{settings.name}</Link></TopBar>
       <Routes>
         <Route path='/' element={
           <Home handleClick={handleClick} timerFn={timerFn} />} />

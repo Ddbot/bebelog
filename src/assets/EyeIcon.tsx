@@ -6,7 +6,12 @@ const Container = styled.button`
     transform: translateY(-.75ch);
     aspect-ratio: 1 /1 ;
     border-radius: 50%;
+    background: white;
+    z-index: 3;
 `;
+
+const scales = [0.7, 0.56, 1.2, 1.7, 0.4];
+const backgrounds = ['#03a29e','#FFA6D5','#FF5C58','#FFBD9B','#2C2891'];
 
 const EyeIcon = () => {
     const [open, setOpen] = useState(true);
@@ -16,23 +21,39 @@ const EyeIcon = () => {
         
         setOpen(prev => !prev);
 
-        let as = currentTarget.closest('div')?.querySelectorAll('a');
-        let buttons = currentTarget.closest('div')?.parentElement?.querySelector('div');
-
+        let aS = currentTarget.closest('div')?.querySelectorAll('a');
+        let buttonsContainer = currentTarget.closest('div')?.parentElement?.querySelector('div');  
+        let buttons = Array.from(buttonsContainer!.querySelectorAll('button'));
+        
         if (open) {
-            buttons!.style.filter = 'blur(10px)';
-            buttons!.style.opacity = '0.5';
-            buttons!.style.scale = '1.8';
-            buttons!.style.transform = 'rotateZ(14deg)';
+            buttonsContainer!.style.filter = 'blur(10px)';
+            buttonsContainer!.style.opacity = '0.15';
+            buttonsContainer!.style.scale = '1.8';
+            buttonsContainer!.style.transform = 'rotateZ(14deg)';
+
+            buttons.forEach((b, i) => { 
+                b.style.background = backgrounds[i];
+                b.style.scale = String(scales[i]);
+            });
+            // Array.from(aS!).forEach((a, i) => { 
+            //     a.classList.toggle('visible');
+            // });
         };
         if (!open) {
-            buttons!.style.filter = 'none';
-            buttons!.style.opacity = '1';
-            buttons!.style.scale = '1';
-            buttons!.style.transform = 'rotateZ(0deg)';
+            buttonsContainer!.style.filter = 'none';
+            buttonsContainer!.style.opacity = '1';
+            buttonsContainer!.style.scale = '1';
+            buttonsContainer!.style.transform = 'rotateZ(0deg)';
+            buttons.forEach((b, i) => { 
+                b.style.background = 'transparent';
+                b.style.scale = '1';
+            });    
+            // Array.from(aS!).forEach((a, i) => { 
+            //     a.classList.toggle('visible');
+            // });
         };
 
-        as?.forEach(link => { 
+        aS?.forEach(link => { 
             link.classList.toggle('hidden');
         });
     };

@@ -12,11 +12,14 @@ const MenuButton = styled(SVGIcon)`
       visibility: visible;
       pointer-events: all;
       transition: all .425s;
+      scale: 1.6;
+      z-index: 3;
     }
 
     &.hidden {
       visibility: hidden;
       pointer-events: none;
+      scale: 1;
       transition: all .12s;
     }
 
@@ -35,6 +38,7 @@ const Stats = (): JSX.Element => (<MenuButton to="/events_stats" className="hidd
       strokeLinejoin: "round",
       strokeMiterlimit: 1.5,
     }}
+    pointerEvents={'all'}
   >
     <path
       d="m0 10.032 5.59-.012 3.106-3.097 3.228 5.613 2.61-2.523L20 10"

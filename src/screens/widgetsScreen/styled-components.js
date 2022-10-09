@@ -21,6 +21,15 @@ export const Widget = styled.button`
 	&:nth-of-type(5) {
 		margin: 0 8px;
 	}
+
+		// &:not(.visible){
+		// 	scale: 1;
+		// }
+
+		// &.visible{
+		// 	scale: 2;
+		// }
+
 `;
 export const ButtonsGroup = styled.div`
 	align-self: flex-start;
@@ -31,7 +40,8 @@ export const ButtonsGroup = styled.div`
 	flex-flow: row wrap;
 	justify-content: center;
 
-	transition: all .4s;
+	transition: all .225s;
+	z-index: 1;
 `;
 
 export const HomeContainer = styled.div`
@@ -42,6 +52,7 @@ export const HomeContainer = styled.div`
 	display: flex;
 	flex-flow: column nowrap;
 	justify-content: center;
+	background: white;
 `;
 
 const FABStatsContainer = styled.div`

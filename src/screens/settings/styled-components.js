@@ -14,6 +14,8 @@ export const Container = styled.div`
 	flex-flow: column nowrap;
 	justify-content: space-between;
 	padding: 0 1rem;
+
+	background: white;
 `;
 
 export const H1 = styled.h1`
