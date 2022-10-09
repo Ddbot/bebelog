@@ -30,6 +30,8 @@ export const ButtonsGroup = styled.div`
     display: flex;
 	flex-flow: row wrap;
 	justify-content: center;
+
+	transition: all .4s;
 `;
 
 export const HomeContainer = styled.div`

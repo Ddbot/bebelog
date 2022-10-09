@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from "styled-components";
 
 const Container = styled.button`
@@ -8,16 +8,39 @@ const Container = styled.button`
     border-radius: 50%;
 `;
 
-function handleClick(event: React.PointerEvent<HTMLButtonElement>) {
-    const { currentTarget } = event;    
-    let as = currentTarget.closest('div')?.querySelectorAll('a');
-    as?.forEach(link => { 
-        link.classList.toggle('hidden');
-    });
-    
-};
-
 const EyeIcon = () => {
+    const [open, setOpen] = useState(true);
+
+    function handleClick(event: React.PointerEvent<HTMLButtonElement>) {    
+        const { currentTarget } = event;    
+        
+        setOpen(prev => !prev);
+
+        let as = currentTarget.closest('div')?.querySelectorAll('a');
+        let buttons = currentTarget.closest('div')?.parentElement?.querySelector('div');
+
+        if (open) {
+            buttons!.style.filter = 'blur(10px)';
+            buttons!.style.opacity = '0.5';
+            buttons!.style.scale = '1.8';
+            buttons!.style.transform = 'rotateZ(14deg)';
+        };
+        if (!open) {
+            buttons!.style.filter = 'none';
+            buttons!.style.opacity = '1';
+            buttons!.style.scale = '1';
+            buttons!.style.transform = 'rotateZ(0deg)';
+        };
+
+        as?.forEach(link => { 
+            link.classList.toggle('hidden');
+        });
+    };
+
+    useEffect(() => { 
+        
+    }, [open]);
+    
     return <Container onClick={ handleClick }>
     <svg viewBox='0 0 24 24' width={36} fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
