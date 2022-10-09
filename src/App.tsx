@@ -13,6 +13,7 @@ import Home from './screens/widgetsScreen/Home';
 import { useSettings } from './contexts/SettingsContext';
 import dayjs from 'dayjs';
 import CreateEventForm from './screens/eventsListScreen/CreateEventForm';
+import Visualisation from './screens/eventsVizScreen/Visualisation';
 
 
 const radius = '0.67cm';
@@ -133,7 +134,8 @@ width: '100%', textDecoration: 'none', color: 'black', transform: 'translateY(10
         <Route path="events_list/:id" element={<EventCard isEditMode={ false } />} />
         <Route path="settings" element={<SettingsPage />} />
         <Route path="add_event" element={<CreateEventForm />} />
-        <Route path="pick_time" element={<EventCard isEditMode={ true } />} />
+        <Route path="pick_time" element={<EventCard isEditMode={true} />} />
+        <Route path="events_stats" element={ <Visualisation />} />
       </Routes>
     </MobileShell>
     );
