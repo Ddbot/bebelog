@@ -165,14 +165,14 @@ width: '100%', textDecoration: 'none', color: 'black', transform: 'translateY(10
         <Route path="events_stats" element={ <Visualisation />} />
       </Routes>
       <BottomBar>
+        <FABGears>
+            <Gear />
+        </FABGears>        
         <FABStats>
             <Stats toggleClass={ toggleClass }/>
             <ListIcon toggleClass={ toggleClass }/>
             <EyeIcon />
         </FABStats>
-        <FABGears>
-            <Gear />
-        </FABGears>
       </BottomBar>
     </MobileShell>
     );
