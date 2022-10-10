@@ -1,6 +1,6 @@
 import React, { SetStateAction, useEffect, useState } from 'react';
 import { Action, EventType, TimerType } from './models/Event';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Link, Outlet } from 'react-router-dom';
 import EventsList from './screens/eventsListScreen/EventsList';
 import EventCard from './screens/eventsListScreen/EventCard';
 import SettingsPage from './screens/settings/Settings';
@@ -9,6 +9,11 @@ import styled from 'styled-components';
 import './App.css';
 import { supabase } from './supabase/client'; 
 import Home from './screens/widgetsScreen/Home';
+import { FABGears, FABStats } from './screens/widgetsScreen/styled-components';
+import EyeIcon from './assets/EyeIcon';
+import Gear from './assets/Gear';
+import Stats from './assets/Stats';
+import ListIcon from './assets/ListIcon';
 
 import { useSettings } from './contexts/SettingsContext';
 import dayjs from 'dayjs';
@@ -31,6 +36,7 @@ const MobileShell = styled.div`
   text-align: center;
   overflow: hidden;
 
+  position: relative;
 `;
 
 const TopBar = styled.h1`
@@ -135,6 +141,15 @@ width: '100%', textDecoration: 'none', color: 'black', transform: 'translateY(10
         <Route path="add_event" element={<CreateEventForm />} />
         <Route path="pick_time" element={<EventCard isEditMode={ true } />} />
       </Routes>
+      <FABStats>
+          <Stats />
+          <ListIcon />
+          <EyeIcon />
+      </FABStats>
+      <FABGears>
+          <Gear />
+      </FABGears>
+      {/* <Outlet />       */}
     </MobileShell>
     );
   }

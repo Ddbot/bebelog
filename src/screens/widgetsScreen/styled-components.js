@@ -77,6 +77,8 @@ const FABStatsContainer = styled.div`
 
 	place-items: start center;
 	place-content: end;
+
+	position: absolute;
 `;
 
 const FABGearContainer = styled(FABStatsContainer)`
