@@ -41,7 +41,7 @@ export const ButtonsGroup = styled.div`
 	justify-content: center;
 
 	transition: all .225s;
-	z-index: 1;
+	// z-index: 1;
 `;
 
 export const HomeContainer = styled.div`
@@ -53,6 +53,7 @@ export const HomeContainer = styled.div`
 	flex-flow: column nowrap;
 	justify-content: center;
 	background: white;
+	z-index: 2;
 `;
 
 const FABStatsContainer = styled.div`

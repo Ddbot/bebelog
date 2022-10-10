@@ -1,6 +1,6 @@
 import React, { SetStateAction, useEffect, useState } from 'react';
 import { Action, EventType, TimerType } from './models/Event';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Link, Outlet } from 'react-router-dom';
 import EventsList from './screens/eventsListScreen/EventsList';
 import EventCard from './screens/eventsListScreen/EventCard';
 import SettingsPage from './screens/settings/Settings';
@@ -14,7 +14,11 @@ import { useSettings } from './contexts/SettingsContext';
 import dayjs from 'dayjs';
 import CreateEventForm from './screens/eventsListScreen/CreateEventForm';
 import Visualisation from './screens/eventsVizScreen/Visualisation';
-
+import { FABGears, FABStats } from "./screens/widgetsScreen/styled-components";
+import ListIcon from './assets/ListIcon';
+import EyeIcon from './assets/EyeIcon';
+import Gear from './assets/Gear';
+import Stats from './assets/Stats';
 
 const radius = '0.67cm';
 
@@ -32,10 +36,13 @@ const MobileShell = styled.div`
   text-align: center;
   overflow: hidden;
 
+  position: relative;
+  z-index: 2;
+
 `;
 
-const TopBar = styled.h1`
-align-self: flex-start;
+const TopBar = styled.nav`
+  align-self: flex-start;
   width: calc(100vw - 20px);
   height: 3rem;
 
@@ -51,6 +58,10 @@ align-self: flex-start;
   color: black;
 
   z-index: 2;
+`;
+
+const BottomBar = styled(TopBar)`
+
 `;
 
 function App(): JSX.Element {
@@ -100,6 +111,12 @@ function App(): JSX.Element {
       }
     });       
   };
+
+  function toggleClass() {
+    const boutons_de_menu_dans_Eye_icon = document.querySelectorAll('.menuBtn');
+    boutons_de_menu_dans_Eye_icon.forEach(bouton => { bouton.classList.toggle('hidden'); } );
+  };
+  
   async function insertEvent(event: any) {
 
     const { data, error } = await supabase.from('events').insert(event);
@@ -137,6 +154,17 @@ width: '100%', textDecoration: 'none', color: 'black', transform: 'translateY(10
         <Route path="pick_time" element={<EventCard isEditMode={true} />} />
         <Route path="events_stats" element={ <Visualisation />} />
       </Routes>
+      <BottomBar>
+        <FABStats>
+        <Stats toggleClass={ toggleClass }/>
+        <ListIcon toggleClass={ toggleClass }/>
+        <EyeIcon />
+    </FABStats>
+    <FABGears>
+        <Gear />
+    </FABGears>
+        {/* <Outlet /> */}
+      </BottomBar>
     </MobileShell>
     );
   }

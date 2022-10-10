@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from "styled-components";
 
 const Container = styled.button`
@@ -15,45 +16,44 @@ const backgrounds = ['#03a29e','#FFA6D5','#FF5C58','#FFBD9B','#2C2891'];
 
 const EyeIcon = () => {
     const [open, setOpen] = useState(true);
+    const params = useParams();
 
     function handleClick(event: React.PointerEvent<HTMLButtonElement>) {    
         const { currentTarget } = event;    
         
         setOpen(prev => !prev);
 
-        let aS = currentTarget.closest('div')?.querySelectorAll('a');
-        let buttonsContainer = currentTarget.closest('div')?.parentElement?.querySelector('div');  
-        let buttons = Array.from(buttonsContainer!.querySelectorAll('button'));
-        
-        if (open) {
-            buttonsContainer!.style.filter = 'blur(10px)';
-            buttonsContainer!.style.opacity = '0.15';
-            buttonsContainer!.style.scale = '1.8';
-            buttonsContainer!.style.transform = 'rotateZ(14deg)';
+        // let boutons_dans_EyeIcon = Array.from(document.querySelectorAll('.hidden'));
+        let bc = currentTarget.closest('div')?.parentElement?.querySelector('div');  
+        let boutons_de_categories: any = document.querySelector('.categoriesBtns');
+        let eye_menu_buttons = Array.from(bc!.querySelectorAll('a'));
 
-            buttons.forEach((b, i) => { 
+        console.log('params ', params);
+        
+        
+        if (!!boutons_de_categories && open) {
+            boutons_de_categories!.style.filter = 'blur(10px)';
+            boutons_de_categories!.style.opacity = '0.15';
+            boutons_de_categories!.style.scale = '1.8';
+            boutons_de_categories!.style.transform = 'rotateZ(14deg)';
+
+            boutons_de_categories.querySelectorAll('button').forEach((b: any, i: number) => { 
                 b.style.background = backgrounds[i];
                 b.style.scale = String(scales[i]);
             });
-            // Array.from(aS!).forEach((a, i) => { 
-            //     a.classList.toggle('visible');
-            // });
         };
-        if (!open) {
-            buttonsContainer!.style.filter = 'none';
-            buttonsContainer!.style.opacity = '1';
-            buttonsContainer!.style.scale = '1';
-            buttonsContainer!.style.transform = 'rotateZ(0deg)';
-            buttons.forEach((b, i) => { 
+        if (!!boutons_de_categories && !open) {
+            boutons_de_categories!.style.filter = 'none';
+            boutons_de_categories!.style.opacity = '1';
+            boutons_de_categories!.style.scale = '1';
+            boutons_de_categories!.style.transform = 'rotateZ(0deg)';
+            boutons_de_categories.querySelectorAll('button').forEach((b: any, i: number) => { 
                 b.style.background = 'transparent';
                 b.style.scale = '1';
             });    
-            // Array.from(aS!).forEach((a, i) => { 
-            //     a.classList.toggle('visible');
-            // });
         };
 
-        aS?.forEach(link => { 
+        eye_menu_buttons.forEach(link => { 
             link.classList.toggle('hidden');
         });
     };

@@ -13,8 +13,8 @@ type Props = {
 
 const Home = ({ handleClick, timerFn }: Props) => {
     return <HomeContainer>
-    <Buttons timerFn={timerFn} handleClick={handleClick} />
-    <FABStats>
+        <Buttons timerFn={timerFn} handleClick={handleClick} />
+    {/* <FABStats>
         <Stats />
         <ListIcon />
         <EyeIcon />
@@ -22,6 +22,6 @@ const Home = ({ handleClick, timerFn }: Props) => {
     <FABGears>
         <Gear />
     </FABGears>
-    <Outlet />
+    <Outlet /> */}
 </HomeContainer>};
 export default Home;        

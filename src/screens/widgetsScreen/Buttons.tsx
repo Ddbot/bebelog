@@ -23,7 +23,7 @@ export const icons: any = {
 };
 
 const Buttons = ({ handleClick, timerFn }: Props): JSX.Element => { 
-    return <ButtonsGroup>
+    return <ButtonsGroup className='categoriesBtns'>
               {
             Object.entries(EventType)
                 .filter((button: [string, EventType]) => { 
