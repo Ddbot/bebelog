@@ -8,6 +8,6 @@ type Props = {
 
 const Home = ({ handleClick, timerFn }: Props) => {
     return <HomeContainer>
-    <Buttons timerFn={timerFn} handleClick={handleClick} />
-</HomeContainer>};
+            <Buttons timerFn={timerFn} handleClick={handleClick} />
+    </HomeContainer>};
 export default Home;        

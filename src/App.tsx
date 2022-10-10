@@ -149,7 +149,6 @@ width: '100%', textDecoration: 'none', color: 'black', transform: 'translateY(10
       <FABGears>
           <Gear />
       </FABGears>
-      {/* <Outlet />       */}
     </MobileShell>
     );
   }
