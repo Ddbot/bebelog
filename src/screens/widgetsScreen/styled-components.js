@@ -46,7 +46,7 @@ export const ButtonsGroup = styled.div`
 
 export const HomeContainer = styled.div`
 	width: 100%;
-	height: calc(100% - 3rem);
+	height: calc(100% - 6rem);
 	position: relative;
 
 	display: flex;
@@ -58,13 +58,13 @@ export const HomeContainer = styled.div`
 
 const FABStatsContainer = styled.div`
 	aspect-ratio: 1 / 1;
-	width: 6ch;
-	height: 6ch;
+	width: min(3rem, 6ch);
+	height: min(3rem, 6ch);
 	border-radius: 50%;
 
-	position: absolute;
-	right: 0.5rem;
-	bottom: 0.5rem;
+	// position: absolute;
+	// right: 0.5rem;
+	// bottom: 0.25rem;
 
 	background: transparent;
 
@@ -81,10 +81,10 @@ const FABStatsContainer = styled.div`
 `;
 
 const FABGearContainer = styled(FABStatsContainer)`
-	display: flex;
-	flex-flow: row nowrap;
-	justify-content: center;
-	align-items: center;
+	// display: flex;
+	// flex-flow: row nowrap;
+	// justify-content: center;
+	// align-items: center;
 	right: calc(6ch + 0.5rem);
 	z-index: 3;
 `;

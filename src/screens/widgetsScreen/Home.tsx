@@ -14,14 +14,5 @@ type Props = {
 const Home = ({ handleClick, timerFn }: Props) => {
     return <HomeContainer>
         <Buttons timerFn={timerFn} handleClick={handleClick} />
-    {/* <FABStats>
-        <Stats />
-        <ListIcon />
-        <EyeIcon />
-    </FABStats>
-    <FABGears>
-        <Gear />
-    </FABGears>
-    <Outlet /> */}
-</HomeContainer>};
+    </HomeContainer>};
 export default Home;        

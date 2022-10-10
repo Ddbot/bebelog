@@ -1,6 +1,6 @@
 import React, { SetStateAction, useEffect, useState } from 'react';
-import { Action, EventType, TimerType } from './models/Event';
-import { Routes, Route, Link, Outlet } from 'react-router-dom';
+import { TimerType } from './models/Event';
+import { Routes, Route, Link } from 'react-router-dom';
 import EventsList from './screens/eventsListScreen/EventsList';
 import EventCard from './screens/eventsListScreen/EventCard';
 import SettingsPage from './screens/settings/Settings';
@@ -60,8 +60,18 @@ const TopBar = styled.nav`
   z-index: 2;
 `;
 
-const BottomBar = styled(TopBar)`
+const BottomBar = styled.nav`
+align-self: start;
+align-self: flex-start;
 
+    width: calc(100vw - 20px);
+    height: 3rem;
+    border: 1px solid red;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-end;
+    justify-content: space-evenly;
+    z-index: 2;
 `;
 
 function App(): JSX.Element {
@@ -156,14 +166,13 @@ width: '100%', textDecoration: 'none', color: 'black', transform: 'translateY(10
       </Routes>
       <BottomBar>
         <FABStats>
-        <Stats toggleClass={ toggleClass }/>
-        <ListIcon toggleClass={ toggleClass }/>
-        <EyeIcon />
-    </FABStats>
-    <FABGears>
-        <Gear />
-    </FABGears>
-        {/* <Outlet /> */}
+            <Stats toggleClass={ toggleClass }/>
+            <ListIcon toggleClass={ toggleClass }/>
+            <EyeIcon />
+        </FABStats>
+        <FABGears>
+            <Gear />
+        </FABGears>
       </BottomBar>
     </MobileShell>
     );
