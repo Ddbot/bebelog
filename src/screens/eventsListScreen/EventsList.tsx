@@ -21,41 +21,40 @@ const SkeletonListItem = styled.div`
     justify-content: space-between;
     align-items: center;
 
-    margin-bottom:16px; 
+    margin: 0 16px; 
 
     text-decoration: none;
     font-size: 1.1rem;
 `;
 
-    const Container: StyledComponent<any, any> = styled.div`
-        position: absolute;
-        top: 0;
-        width: 100%;
-        height: 6vh;
+const Container: StyledComponent<any, any> = styled.div`
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 6vh;
 
-        list-style: none;
+    list-style: none;
 
-        margin-bottom:16px; 
+    margin-bottom:16px; 
 
-        text-decoration: none;
+    text-decoration: none;
 
 
-        padding: 0 16px;
-        
-        background: #03A29E;
-        color: whitesmoke;
-        font-size: 2.4rem;
+    padding: 0 16px;
+    
+    background: #03A29E;
+    color: whitesmoke;
+    font-size: 2.4rem;
 
-        display: flex;
-        flex-flow: row nowrap;
-        justify-content: center;
-        align-items: center;
-    `;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+`;
 
 const List = styled.ul`
-position: relative;
-	max-height: calc(100% - 14rem);
-	min-height: calc(100% - 14rem);
+    position: relative;
+	max-height: 37vh;
 
     overflow-y: scroll;
     width: 100%;
@@ -73,17 +72,25 @@ position: relative;
     align-content: start;
 
     padding: 0 0;
+
+    padding-top: 8vh;
+    margin-block: 0;
+    transition: all 0.225s;
+
+    &.blur {
+        filter: blur(10px);
+        opacity: 0.3;
+    }
 `;
 
 const TemporaryDateSearchBox = styled.h2`
     width: 100%;
-    height: 4rem;
+    height: 10vh;
 
     font-size: 1.3rem;
     margin: 0;
 
     position: relative;
-    transform: translateY(25%);
 
 	display: flex;
 	flex-flow: row nowrap;
@@ -175,7 +182,7 @@ const EventsList = (): JSX.Element => {
             { (dayjs(query).add(1,'day').isSame(dayjs()) || dayjs(query).add(1,'day').isBefore(dayjs())) && <button onClick={handleClick} data-name="plus"><RightArrow /></button>}
             { dayjs(query).add(1,'day').isAfter(dayjs()) && <button onClick={handleClick} data-name="plus" disabled></button>}
         </TemporaryDateSearchBox>
-        <List>
+        <List className='listView'>
             <AddEventButton />
             {list?.length >= 1 && (
                 list?.map((ev: Event, i: number) => {
@@ -188,7 +195,7 @@ const EventsList = (): JSX.Element => {
                 return <SkeletonListItem key={ 'skeleton'+i} />
             })
             }
-            </List>
+        </List>
         </>
 };
 

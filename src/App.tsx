@@ -54,16 +54,15 @@ const TopBar = styled.nav`
   font-size: 1.7rem;
 
   margin: 0;
-  background: transparent;
+  background: white;
   color: black;
 
-  z-index: 2;
+  z-index: 999;
 `;
 
 const BottomBar = styled.nav`
     width: calc(100vw - 1.25rem);
-
-    border: 1px solid red;
+  background: white;
 
     display: flex;
     flex-flow: row wrap;
@@ -125,7 +124,12 @@ function App(): JSX.Element {
 
   function toggleClass() {
     const boutons_de_menu_dans_Eye_icon = document.querySelectorAll('.menuBtn');
-    boutons_de_menu_dans_Eye_icon.forEach(bouton => { bouton.classList.toggle('hidden'); } );
+    boutons_de_menu_dans_Eye_icon.forEach(bouton => { bouton.classList.toggle('hidden'); });
+    let viz = document.querySelector('.viz');
+    let listView = document.querySelector('.listView');
+        viz?.classList.toggle('blur');
+        listView?.classList.toggle('blur');
+
   };
   
   async function insertEvent(event: any) {

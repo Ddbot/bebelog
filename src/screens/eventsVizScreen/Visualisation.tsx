@@ -33,10 +33,6 @@ const IconsGroup = styled.ul`
     align-items: flex-start;
     list-style: none;
 
-    // &:nth-of-type(2){
-    //     align-items: flex-start;
-    // }
-
     & > li {
         display: flex;
         flex-flow: row nowrap;  
@@ -67,6 +63,10 @@ const VizContainer = styled.div`
     flex-flow: column nowrap;
     justify-content: flex-end;
     align-items: center;
+    background: white;
+    &.blur {
+        filter: blur(10px);
+    }
 `;
 
 type Props = {
@@ -74,14 +74,7 @@ type Props = {
 };
 
 const Visualisation = (props: Props) => {
-    return <VizContainer>
-        {/* <IconsGroup className='icones'>
-            {categories.map((cat, i) => { 
-                return <li key={'categorie_icone_' + cat}>
-                    { icons[cat]}
-                    </li>
-            }) }
-        </IconsGroup>   */}
+    return <VizContainer className='viz'> 
         <SVG viewBox={`0 0 ${svgDimensions.width} ${svgDimensions.height}`}>
         <rect x="0" y="0" width={svgDimensions.width} height={svgDimensions.height} stroke="black" fill="rgba(0,0,0,0)" strokeWidth={4} />
         {/* lines */}

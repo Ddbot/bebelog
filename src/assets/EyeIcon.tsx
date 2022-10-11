@@ -5,7 +5,7 @@ import styled from "styled-components";
 const Container = styled.button`
     aspect-ratio: 1 / 1;
     max-width: 3rem;
-position: absolute;
+    position: absolute;
     background: white;
     z-index: 10;
 
@@ -24,14 +24,15 @@ const EyeIcon = () => {
     const params = useParams();
 
     function handleClick(event: React.PointerEvent<HTMLButtonElement>) {    
-        const { currentTarget } = event;    
-        
         setOpen(prev => !prev);
 
-        // let boutons_dans_EyeIcon = Array.from(document.querySelectorAll('.hidden'));
-        let bc = currentTarget.closest('div')?.parentElement?.querySelector('div');  
         let boutons_de_categories: any = document.querySelector('.categoriesBtns');
         let eye_menu_buttons = Array.from(document.querySelectorAll('a[href^="/events"'));
+        let viz = document.querySelector('.viz');
+                let listView = document.querySelector('.listView');
+        viz?.classList.toggle('blur');
+
+        listView?.classList.toggle('blur');
 
         console.log('eye_menu_buttons ', eye_menu_buttons);
         
