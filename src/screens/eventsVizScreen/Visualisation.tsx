@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import styled from "styled-components";
 import { icons } from '../widgetsScreen/Buttons';
 import { useLocation } from 'react-router-dom';
+import { EventType } from '../../models/Event';
 import {
     SVG,
     Text,
@@ -19,9 +20,26 @@ const svgDimensions = {
 
 type Props = {};
 
+function getCoordinates(event: Event) {
+    function getX(type: Event['type']): number {
+        const index = categories.indexOf(type);
+        return index;
+    };
+}
+
 const Visualisation = (props: Props) => {
     const [data, setData] = useState([]);
-    
+
+    useEffect(() => { 
+        let date = JSON.parse(localStorage.getItem('currentDate') || '');
+        let result = JSON.parse(localStorage.getItem(date) || '');
+        result !== '' && setData(result);
+    }, []);
+
+    useEffect(() => { 
+        console.log('ily a des data ', data);
+    }, [data]);
+
     return <VizContainer className='viz'> 
         <SVG viewBox={`0 0 ${svgDimensions.width} ${svgDimensions.height}`}>
         <rect x="0" y="0" width={svgDimensions.width} height={svgDimensions.height} stroke="black" fill="rgba(0,0,0,0)" strokeWidth={4} />
@@ -37,10 +55,14 @@ const Visualisation = (props: Props) => {
         <g className='categories'>
             {categories.map((cat, i) => { 
                 return <g key={'categorie_icone_' + cat}>
-                        <line x1={(i + 1) * svgDimensions.width / 6} x2={(i + 1) * svgDimensions.width / 6} y1={svgDimensions.height} y2={0} strokeWidth={5} stroke="gray" />
-                    </g>
+                    <line x1={(i + 1) * svgDimensions.width / 6} x2={(i + 1) * svgDimensions.width / 6} y1={svgDimensions.height} y2={0} strokeWidth={5} stroke="gray" />
+                </g>
             }) }
-        </g>      
+            </g>
+            {/* DATA */}
+            <g>
+
+            </g>
         </SVG>
             <IconsGroup className='icones'>
             {categories.map((cat, i) => { 
