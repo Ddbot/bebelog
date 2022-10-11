@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { SVGIcon } from './common-styles';
+import { useLocation } from "react-router-dom";
 
 const MenuButton = styled(SVGIcon)`  
 position: absolute;
@@ -32,12 +33,10 @@ position: absolute;
     grid-row: 1 / span 1;
 `;
 const Stats = ({ toggleClass }: any): JSX.Element => {
-  function h({ currentTarget }: any ) {
-    console.log(currentTarget!.href);
-      
-  };
+  const location = useLocation();
+  const pathname = location.pathname;
 
-  return <MenuButton to="/events_stats" className="menuBtn hidden" onClick={ h }>
+  return <MenuButton to="/events_stats" className="menuBtn hidden" onClick={toggleClass} >
     <svg
       viewBox="0 0 21 21"
       width={24}

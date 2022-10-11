@@ -168,12 +168,17 @@ const EventsList = (props: any): JSX.Element => {
         if (localStorage.getItem(String(start)) !== null && localStorage.getItem(String(start)) !== '[]') {
             let res = JSON.parse(localStorage.getItem(String(start))||"");
             setList(res);
-                        // fetchEvents();
-
         } else {
             fetchEvents();
         };
+
     }, [query]);
+
+    useEffect(() => { 
+        if (query) {
+            localStorage.setItem('currentDate', JSON.stringify(dayjs(query).startOf('D').unix() * 1000));
+        };
+    }, [query]);    
 
     return <>
         <TemporaryDateSearchBox>
