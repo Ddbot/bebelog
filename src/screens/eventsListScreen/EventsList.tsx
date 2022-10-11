@@ -12,7 +12,7 @@ import BackArrow from '../../assets/BackArrow';
 
 const SkeletonListItem = styled.div`
     width: calc(100% - 32px);
-    height: 3rem;
+    height: 6vh;
 
     list-style: none;
 
@@ -31,7 +31,7 @@ const SkeletonListItem = styled.div`
         position: absolute;
         top: 0;
         width: 100%;
-        height: 3rem;
+        height: 6vh;
 
         list-style: none;
 
@@ -54,8 +54,8 @@ const SkeletonListItem = styled.div`
 
 const List = styled.ul`
 position: relative;
-	max-height: calc(100% - 11rem);
-	min-height: calc(100% - 11rem);
+	max-height: calc(100% - 14rem);
+	min-height: calc(100% - 14rem);
 
     overflow-y: scroll;
     width: 100%;

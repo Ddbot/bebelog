@@ -11,7 +11,7 @@ const svgDimensions = {
 };
 
 const SVG = styled.svg`
-    height: calc(100% - 3rem);
+    height: 88%;
     width: 80%;
 `;
 
@@ -23,19 +23,19 @@ const Text = styled.text`
 
 const IconsGroup = styled.ul`
     width: 80%;
-    height: 3rem;
+    height: 6vh;
     margin: 0 10%;
     padding: 0 0 .25rem 13.33%;
 
     display: flex;
     flex-flow: row nowrap;  
     justify-content: space-around;
-    align-items: flex-end;
+    align-items: flex-start;
     list-style: none;
 
-    &:nth-of-type(2){
-        align-items: flex-start;
-    }
+    // &:nth-of-type(2){
+    //     align-items: flex-start;
+    // }
 
     & > li {
         display: flex;
@@ -62,19 +62,26 @@ const IconsGroup = styled.ul`
     }
 `;
 
+const VizContainer = styled.div`
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-end;
+    align-items: center;
+`;
+
 type Props = {
 
 };
 
 const Visualisation = (props: Props) => {
-    return <div>
-        <IconsGroup className='icones'>
+    return <VizContainer>
+        {/* <IconsGroup className='icones'>
             {categories.map((cat, i) => { 
                 return <li key={'categorie_icone_' + cat}>
                     { icons[cat]}
                     </li>
             }) }
-        </IconsGroup>  
+        </IconsGroup>   */}
         <SVG viewBox={`0 0 ${svgDimensions.width} ${svgDimensions.height}`}>
         <rect x="0" y="0" width={svgDimensions.width} height={svgDimensions.height} stroke="black" fill="rgba(0,0,0,0)" strokeWidth={4} />
         {/* lines */}
@@ -101,7 +108,7 @@ const Visualisation = (props: Props) => {
                     </li>
             }) }
         </IconsGroup>  
-    </div>
+    </VizContainer>
 };
 
 export default Visualisation;

@@ -2,9 +2,11 @@ import styled from "styled-components";
 import { SVGIcon } from './common-styles';
 
 const MenuButton = styled(SVGIcon)`  
+position: absolute;
+
   &:not(.hidden){
     grid-row: 2 / span 1;
-    margin: 1.5ch 0 2.25ch 0;
+    // margin: 1.5ch 0 2.25ch 0;
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
@@ -15,12 +17,14 @@ const MenuButton = styled(SVGIcon)`
     pointer-events: all;
     transition: all .425s;
     scale: 1.6;
-    z-index: 3;
+    opacity: 1;
+    z-index: 10;
+          transform: translateY(-100%);
   }
 
 
     &.hidden {
-      visibility: hidden;
+opacity: 0;
       pointer-events: none;
       transition: all .12s;
       scale: 1;

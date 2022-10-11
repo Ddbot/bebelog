@@ -1,14 +1,10 @@
 import styled from "styled-components";
 import { Link } from 'react-router-dom';
 
-import EyeIcon from "../../assets/EyeIcon";
-import Stats from "../../assets/Stats";
-import ListIcon from "../../assets/ListIcon";
-
 export const Widget = styled.button`
 	background: transparent;
 	border-radius: 50%;
-	width: 30%;
+	aspect-ratio: 1 / 1;
 	height: 30%;
 	&:nth-of-type(1),
 	&:nth-of-type(3) {
@@ -21,15 +17,6 @@ export const Widget = styled.button`
 	&:nth-of-type(5) {
 		margin: 0 8px;
 	}
-
-		// &:not(.visible){
-		// 	scale: 1;
-		// }
-
-		// &.visible{
-		// 	scale: 2;
-		// }
-
 `;
 export const ButtonsGroup = styled.div`
 	align-self: flex-start;
@@ -39,6 +26,7 @@ export const ButtonsGroup = styled.div`
     display: flex;
 	flex-flow: row wrap;
 	justify-content: center;
+	align-items: center;
 
 	transition: all .225s;
 	// z-index: 1;
@@ -58,35 +46,23 @@ export const HomeContainer = styled.div`
 
 const FABStatsContainer = styled.div`
 	aspect-ratio: 1 / 1;
-	width: min(3rem, 6ch);
-	height: min(3rem, 6ch);
 	border-radius: 50%;
+	position: relative;
+	scale: 1;
 
-	// position: absolute;
-	// right: 0.5rem;
-	// bottom: 0.25rem;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: flex-end;
+	align-items: center;
 
-	background: transparent;
-
-	display: grid;
-	grid-template-columns: 1fr;
-	grid-template-rows: 1fr;
-	grid-auto-rows: repeat(3,1fr);
-	gap: 0px 0px;
-	grid-auto-flow: row;
-	justify-items: center;
-
-	place-items: start center;
-	place-content: end;
+	background: white;
+	padding-bottom: 8px;
+	margin: 0 0.4rem;
 `;
 
 const FABGearContainer = styled(FABStatsContainer)`
-	// display: flex;
-	// flex-flow: row nowrap;
-	// justify-content: center;
-	// align-items: center;
-	right: calc(6ch + 0.5rem);
 	z-index: 3;
+	margin: 0 1.618rem;
 `;
 
 export const FABStats = ({ children }) => {

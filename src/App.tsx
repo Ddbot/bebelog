@@ -30,7 +30,7 @@ const MobileShell = styled.div`
 
   display: flex;
   flex-flow: row wrap;
-  align-items: center;
+  align-items: space-between;
   justify-content: center;
 
   text-align: center;
@@ -44,7 +44,7 @@ const MobileShell = styled.div`
 const TopBar = styled.nav`
   align-self: flex-start;
   width: calc(100vw - 20px);
-  height: 3rem;
+  height: 6vh;
 
   display: flex;
   flex-flow: row wrap;
@@ -61,17 +61,18 @@ const TopBar = styled.nav`
 `;
 
 const BottomBar = styled.nav`
-align-self: start;
-align-self: flex-start;
+    width: calc(100vw - 1.25rem);
 
-    width: calc(100vw - 20px);
-    height: 3rem;
     border: 1px solid red;
+
     display: flex;
     flex-flow: row wrap;
     align-items: flex-end;
-    justify-content: space-evenly;
+    justify-content: flex-end;
+    
     z-index: 2;
+
+    padding: 0 1rem;
 `;
 
 function App(): JSX.Element {

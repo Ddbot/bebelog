@@ -3,12 +3,17 @@ import { useParams } from 'react-router-dom';
 import styled from "styled-components";
 
 const Container = styled.button`
-    grid-row: 3 / span 1;
-    max-height: 3rem;
-    aspect-ratio: 1 /1 ;
-    border-radius: 50%;
+    aspect-ratio: 1 / 1;
+    max-width: 3rem;
+position: absolute;
     background: white;
     z-index: 10;
+
+    border: none;
+    & > svg {
+        scale: 1.618;
+    }
+
 `;
 
 const scales = [0.7, 0.56, 1.2, 1.7, 0.4];
@@ -26,9 +31,9 @@ const EyeIcon = () => {
         // let boutons_dans_EyeIcon = Array.from(document.querySelectorAll('.hidden'));
         let bc = currentTarget.closest('div')?.parentElement?.querySelector('div');  
         let boutons_de_categories: any = document.querySelector('.categoriesBtns');
-        let eye_menu_buttons = Array.from(bc!.querySelectorAll('a'));
+        let eye_menu_buttons = Array.from(document.querySelectorAll('a[href^="/events"'));
 
-        console.log('params ', params);
+        console.log('eye_menu_buttons ', eye_menu_buttons);
         
         
         if (!!boutons_de_categories && open) {
@@ -56,7 +61,10 @@ const EyeIcon = () => {
         eye_menu_buttons.forEach(link => { 
             link.classList.toggle('hidden');
         });
+            console.log('HIDDEN: ', eye_menu_buttons);
     };
+
+    
 
     useEffect(() => { 
         

@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { SVGIcon } from './common-styles';
 
 const MenuButton = styled(SVGIcon)`  
+position: absolute;
+
     &:not(.hidden){
       display: flex;
       flex-flow: row nowrap;
@@ -13,13 +15,17 @@ const MenuButton = styled(SVGIcon)`
       pointer-events: all;
       transition: all .425s;
       scale: 1.6;
-      z-index: 3;
+      z-index: 10;
+      opacity:1;
+
+      transform: translateY(-200%);
+
     }
 
     &.hidden {
-      visibility: hidden;
+      opacity: 0;
       pointer-events: none;
-      scale: 1;
+      scale:1;
       transition: all .12s;
     }
 

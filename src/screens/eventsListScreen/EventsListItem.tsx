@@ -12,7 +12,7 @@ type Props = {
 
 export const Card = styled(Link)`
     width: 100%;
-    height: 3rem;
+    height: 6vh;
 
     list-style: none;
 
