@@ -112,7 +112,7 @@ const TemporaryDateSearchBox = styled.h2`
     }
 `;
 
-const EventsList = (): JSX.Element => { 
+const EventsList = (props: any): JSX.Element => { 
     const [list, setList]: [Event[], any] = useState([]);
     const [query, setQuery]: [any, SetStateAction<any>] = useState(dayjs().unix() * 1000);
     

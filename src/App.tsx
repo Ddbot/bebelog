@@ -1,6 +1,6 @@
 import React, { SetStateAction, useEffect, useState } from 'react';
 import { TimerType } from './models/Event';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import EventsList from './screens/eventsListScreen/EventsList';
 import EventCard from './screens/eventsListScreen/EventCard';
 import SettingsPage from './screens/settings/Settings';
@@ -78,6 +78,9 @@ function App(): JSX.Element {
   const { settings } = useSettings();
 
   const [timer, setTimer]: [any, SetStateAction<any>] = useState({});
+
+  const location = useLocation();
+  const pathname = location.pathname;
 
   function handleClick(event: React.MouseEvent<HTMLButtonElement>): void {
     const currentTarget: HTMLButtonElement = event.currentTarget;
@@ -174,8 +177,8 @@ width: '100%', textDecoration: 'none', color: 'black', transform: 'translateY(10
             <Gear />
         </FABGears>        
         <FABStats>
-            <Stats toggleClass={ toggleClass }/>
-            <ListIcon toggleClass={ toggleClass }/>
+          {pathname !== '/events_stats' && <Stats toggleClass={toggleClass} />}
+            { pathname !== '/events_list' && <ListIcon toggleClass={ toggleClass }/>}
             <EyeIcon />
         </FABStats>
       </BottomBar>

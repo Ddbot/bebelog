@@ -32,7 +32,12 @@ position: absolute;
     grid-row: 1 / span 1;
 `;
 const Stats = ({ toggleClass }: any): JSX.Element => {
-  return <MenuButton to="/events_stats" className="menuBtn hidden" onClick={ toggleClass }>
+  function h({ currentTarget }: any ) {
+    console.log(currentTarget!.href);
+      
+  };
+
+  return <MenuButton to="/events_stats" className="menuBtn hidden" onClick={ h }>
     <svg
       viewBox="0 0 21 21"
       width={24}
