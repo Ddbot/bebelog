@@ -9,14 +9,6 @@ type Props = {
 };
 
 const Home = ({ handleClick, timerFn }: Props) => {
-    useEffect(() => {
-        const query = JSON.stringify(dayjs().startOf('D').unix() * 1000);
-        
-        if (!localStorage.getItem('currentDate')) { 
-            localStorage.setItem('currentDate', query);
-        };
-
-     }, []);
     return <HomeContainer>
         <Buttons timerFn={timerFn} handleClick={handleClick} />
     </HomeContainer>};
