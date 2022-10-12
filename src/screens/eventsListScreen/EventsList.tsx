@@ -10,59 +10,41 @@ import EventsListItem from './EventsListItem';
 import RightArrow from '../../assets/RighArrow';
 import BackArrow from '../../assets/BackArrow';
 
-const SkeletonListItem = styled.div`
-    width: calc(100% - 32px);
-    height: 3rem;
+const Container: StyledComponent<any, any> = styled.div`
+    grid-row: 1 / span 1;
+    top: 0;
+    width: 100%;
+    height: 6vh;
 
     list-style: none;
-
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    align-items: center;
 
     margin-bottom:16px; 
 
     text-decoration: none;
-    font-size: 1.1rem;
+
+
+    padding: 0 16px;
+    
+    background: #03A29E;
+    color: whitesmoke;
+    font-size: 2.4rem;
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
 `;
 
-    const Container: StyledComponent<any, any> = styled.div`
-        position: absolute;
-        top: 0;
-        width: 100%;
-        height: 3rem;
-
-        list-style: none;
-
-        margin-bottom:16px; 
-
-        text-decoration: none;
-
-
-        padding: 0 16px;
-        
-        background: #03A29E;
-        color: whitesmoke;
-        font-size: 2.4rem;
-
-        display: flex;
-        flex-flow: row nowrap;
-        justify-content: center;
-        align-items: center;
-    `;
-
 const List = styled.ul`
-position: relative;
-	max-height: calc(100% - 11rem);
-	min-height: calc(100% - 11rem);
+    position: relative;
+	max-height: 37vh;
 
     overflow-y: scroll;
     width: 100%;
 
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr;
+    grid-template-rows: repeat(5,1fr);
     grid-auto-rows: 1fr;
     gap: 0px 0px;
     grid-auto-flow: row;
@@ -73,17 +55,24 @@ position: relative;
     align-content: start;
 
     padding: 0 0;
+
+    margin-block: 0;
+    transition: all 0.225s;
+
+    &.blur {
+        filter: blur(10px);
+        opacity: 0.3;
+    }
 `;
 
 const TemporaryDateSearchBox = styled.h2`
     width: 100%;
-    height: 4rem;
+    height: 10vh;
 
     font-size: 1.3rem;
     margin: 0;
 
     position: relative;
-    transform: translateY(25%);
 
 	display: flex;
 	flex-flow: row nowrap;
@@ -105,7 +94,7 @@ const TemporaryDateSearchBox = styled.h2`
     }
 `;
 
-const EventsList = (): JSX.Element => { 
+const EventsList = (props: any): JSX.Element => { 
     const [list, setList]: [Event[], any] = useState([]);
     const [query, setQuery]: [any, SetStateAction<any>] = useState(dayjs().unix() * 1000);
     
@@ -154,19 +143,12 @@ const EventsList = (): JSX.Element => {
             if (error) console.error(error);
             if (data) {
                 setList(data);
-                data.length > 0 && localStorage.setItem(String(start), JSON.stringify(data));
             }       
         };        
 
-        if (localStorage.getItem(String(start)) !== null && localStorage.getItem(String(start)) !== '[]') {
-            let res = JSON.parse(localStorage.getItem(String(start))||"");
-            setList(res);
-                        // fetchEvents();
+        fetchEvents();
 
-        } else {
-            fetchEvents();
-        };
-    }, [query]);
+    }, [query]);  
 
     return <>
         <TemporaryDateSearchBox>
@@ -175,20 +157,14 @@ const EventsList = (): JSX.Element => {
             { (dayjs(query).add(1,'day').isSame(dayjs()) || dayjs(query).add(1,'day').isBefore(dayjs())) && <button onClick={handleClick} data-name="plus"><RightArrow /></button>}
             { dayjs(query).add(1,'day').isAfter(dayjs()) && <button onClick={handleClick} data-name="plus" disabled></button>}
         </TemporaryDateSearchBox>
-        <List>
+        <List className='listView'>
             <AddEventButton />
             {list?.length >= 1 && (
                 list?.map((ev: Event, i: number) => {
                     return <EventsListItem event={ev} key={'eventListItem'+i} />
                 })
             )}
-            { list?.length >= 1 && list?.length < 6 && Array.from({
-                length: 6-list.length
-            }, () => ('')).map((v, i) => {
-                return <SkeletonListItem key={ 'skeleton'+i} />
-            })
-            }
-            </List>
+        </List>
         </>
 };
 

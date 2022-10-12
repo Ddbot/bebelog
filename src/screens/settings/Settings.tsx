@@ -82,10 +82,6 @@ const SettingsPage = (props: Props): JSX.Element => {
         setIsEditMode(false);
     };
 
-    useEffect(() => {
-        localStorage.setItem('userSettings', JSON.stringify(settings));
-    },[settings])
-
     return <Container>
         <H1><H1Link to="/"><button>◀</button></H1Link><span>Reglages</span><Gear /></H1>
         <Ul>

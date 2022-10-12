@@ -117,8 +117,6 @@ function App(): JSX.Element {
           start: timer.start,
           end: Date.now()
         });
-      
-      localStorage.removeItem(String(start));
   };    
   }, [timer]);
 
