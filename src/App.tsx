@@ -1,9 +1,11 @@
 import React, { SetStateAction, useEffect, useState } from 'react';
-import { Action, EventType, TimerType } from './models/Event';
+import { TimerType } from './models/Event';
 import { Routes, Route, Link } from 'react-router-dom';
 import EventsList from './screens/eventsListScreen/EventsList';
 import EventCard from './screens/eventsListScreen/EventCard';
 import SettingsPage from './screens/settings/Settings';
+
+import { EventsProvider } from './contexts/EventsContext';
 
 import styled from 'styled-components';
 import './App.css';
@@ -11,7 +13,6 @@ import { supabase } from './supabase/client';
 import Home from './screens/widgetsScreen/Home';
 
 import { useSettings } from './contexts/SettingsContext';
-import dayjs from 'dayjs';
 import CreateEventForm from './screens/eventsListScreen/CreateEventForm';
 
 
@@ -126,7 +127,7 @@ function App(): JSX.Element {
   };    
   }, [timer]);
 
-  return (
+  return (<EventsProvider>
     <MobileShell>
       <TopBar>
         <AppTitle to='/'>{settings.name}</AppTitle>
@@ -141,6 +142,7 @@ function App(): JSX.Element {
         <Route path="pick_time" element={<EventCard isEditMode={ true } />} />
       </Routes>
     </MobileShell>
+    </EventsProvider>
     );
   }
 export default App;
