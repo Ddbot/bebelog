@@ -31,12 +31,6 @@ const Visualisation = (props: Props) => {
     const [data, setData] = useState([]);
 
     useEffect(() => { 
-        let date = JSON.parse(localStorage.getItem('currentDate') || '');
-        let result = JSON.parse(localStorage.getItem(date) || '');
-        result !== '' && setData(result);
-    }, []);
-
-    useEffect(() => { 
         console.log('ily a des data ', data);
     }, [data]);
 
