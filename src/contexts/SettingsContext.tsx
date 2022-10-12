@@ -24,12 +24,6 @@ function SettingsProvider({ children }: { children : React.ReactNode}) {
     const [settings, setSettings]:[SettingsType, SetStateAction<any>] = useState(initialSettings);
     const value = { settings, setSettings };
     
-    useEffect(() => {
-    if (localStorage.getItem('userSettings')) {
-        setSettings(JSON.parse(localStorage.getItem('userSettings') || ''));
-    }
-    }, [setSettings]);
-    
     return <SettingsContext.Provider value={ value }>{ children }</SettingsContext.Provider>
 };
 
