@@ -11,6 +11,7 @@ import { supabase } from './supabase/client';
 import Home from './screens/widgetsScreen/Home';
 
 import { useSettings } from './contexts/SettingsContext';
+import { DataType } from './contexts/DataContext';
 import CreateEventForm from './screens/eventsListScreen/CreateEventForm';
 import Visualisation from './screens/eventsVizScreen/Visualisation';
 import { FABGears, FABStats } from "./screens/widgetsScreen/styled-components";
@@ -148,7 +149,12 @@ function App(): JSX.Element {
   async function insertEvent(event: any) {
 
     const { data, error } = await supabase.from('events').insert(event);
-
+    setData((prev: DataType) => { 
+      return [
+        ...prev,
+        event
+      ]
+    });
 
     if (error) console.error('Erruer lors de linsertion');
     if (data) console.log('Inséré ', data);

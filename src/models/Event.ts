@@ -11,7 +11,7 @@ export type Action = {
 export type Event = { 
     id?: string;  
     start: number;
-    end?: number;
+    end: number;
   type: EventType;
   isNew?: boolean;
 };

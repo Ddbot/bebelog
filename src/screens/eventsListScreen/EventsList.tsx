@@ -11,6 +11,7 @@ import RightArrow from '../../assets/RighArrow';
 import BackArrow from '../../assets/BackArrow';
 
 import { useData } from '../../contexts/DataContext';
+import { isTaggedTemplateExpression } from 'typescript';
 
 const Container: StyledComponent<any, any> = styled.div`
     grid-row: 1 / span 1;
@@ -99,6 +100,7 @@ const TemporaryDateSearchBox = styled.h2`
 const EventsList = (props: any): JSX.Element => { 
     const [query, setQuery]: [number, Dispatch<SetStateAction<number>>] = useState(dayjs().unix() * 1000);
     const { data, setData } = useData();
+    const previousData = structuredClone(data);
     
     const AddEventButton = () => { 
         return <Container>
@@ -145,7 +147,7 @@ const EventsList = (props: any): JSX.Element => {
             if (error) console.error(error);
             if (data) {
                 setData(data);
-            }       
+            }
         };        
 
             fetchEvents();
@@ -162,7 +164,11 @@ const EventsList = (props: any): JSX.Element => {
         <List className='listView'>
             <AddEventButton />
             {data?.length >= 1 && (
-                data?.map((ev: Event, i: number) => {
+                data?.filter((d: Event) => { 
+                    const start = dayjs(query).startOf('D').unix() * 1000;
+                    return d.start >= start
+                })
+                .map((ev: Event, i: number) => {
                     return <EventsListItem event={ev} key={'eventListItem'+i} />
                 })
             )}

@@ -1,7 +1,7 @@
-import { createContext, Dispatch, SetStateAction, useContext, useState } from "react";
+import { createContext, Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import { Event, EventType } from "../models/Event";
 
-type DataType = Event[] | [];
+export type DataType = Event[] | [];
 type SetDataType = Function;
 
 const initialData: Event[] = [
@@ -18,6 +18,11 @@ const DataContext: React.Context<any> = createContext<{ data: DataType; setData:
 const DataProvider = ({ children }: { children: React.ReactNode }) => {
     const [data, setData]:[Event[]|[], Dispatch<SetStateAction<Event[]>>] = useState<Event[]>(initialData);
     const value = { data, setData };
+
+    useEffect(() => { 
+        if(data) console.log('new data ',data);
+        
+    }, [data]);
 
     return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
 };

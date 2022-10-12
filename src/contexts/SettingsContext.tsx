@@ -23,7 +23,7 @@ const initialSettings: SettingsType = {
 const SettingsContext: React.Context<any> = createContext<{ settings: SettingsType; setSettings: SetSettings} | undefined>(undefined);
 
 function SettingsProvider({ children }: { children : React.ReactNode}) {
-    const [settings, setSettings]:[SettingsType, SetStateAction<any>] = useState(initialSettings);
+    const [settings, setSettings]:[SettingsType, SetStateAction<{}>] = useState(initialSettings);
     const value = { settings, setSettings };
     
     return <SettingsContext.Provider value={ value }>{ children }</SettingsContext.Provider>
