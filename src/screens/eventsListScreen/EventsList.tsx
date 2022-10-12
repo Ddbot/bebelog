@@ -4,6 +4,7 @@ import styled, { StyledComponent } from 'styled-components';
 import { Event } from '../../models/Event';
 import { supabase } from '../../supabase/client';
 import dayjs from 'dayjs';
+import { useData } from '../../contexts/DataContext';
 
 import EventsListItem from './EventsListItem';
 
@@ -97,6 +98,7 @@ const TemporaryDateSearchBox = styled.h2`
 const EventsList = (props: any): JSX.Element => { 
     const [list, setList]: [Event[], any] = useState([]);
     const [query, setQuery]: [any, SetStateAction<any>] = useState(dayjs().unix() * 1000);
+    const { data, setData } = useData();
     
     const AddEventButton = () => { 
         return <Container>
@@ -142,13 +144,12 @@ const EventsList = (props: any): JSX.Element => {
                 .lte('start', end);
             if (error) console.error(error);
             if (data) {
-                setList(data);
+                setData(data);
             }       
         };        
 
-        fetchEvents();
-
-    }, [query]);  
+        if(data.length === 0) fetchEvents();
+    }, [query, data, setData]);
 
     return <>
         <TemporaryDateSearchBox>

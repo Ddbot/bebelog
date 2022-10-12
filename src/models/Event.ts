@@ -9,10 +9,10 @@ export type Action = {
 };
 
 export type Event = { 
-    id?: number;  
-    start: number;
+    id?: string;  
+    start?: number;
     end?: number;
-  type: EventType;
+  type?: EventType;
   isNew?: boolean;
 };
 

@@ -5,7 +5,7 @@ import EventsList from './screens/eventsListScreen/EventsList';
 import EventCard from './screens/eventsListScreen/EventCard';
 import SettingsPage from './screens/settings/Settings';
 
-import { EventsProvider } from './contexts/EventsContext';
+import { DataProvider } from './contexts/DataContext';
 
 import styled from 'styled-components';
 import './App.css';
@@ -127,7 +127,7 @@ function App(): JSX.Element {
   };    
   }, [timer]);
 
-  return (<EventsProvider>
+  return (
     <MobileShell>
       <TopBar>
         <AppTitle to='/'>{settings.name}</AppTitle>
@@ -142,7 +142,6 @@ function App(): JSX.Element {
         <Route path="pick_time" element={<EventCard isEditMode={ true } />} />
       </Routes>
     </MobileShell>
-    </EventsProvider>
     );
   }
 export default App;
