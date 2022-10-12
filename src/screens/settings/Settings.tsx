@@ -53,7 +53,8 @@ const SettingsPage = (props: Props): JSX.Element => {
         name: 'Bébé',
         birthDate: dayjs('10-10-2001'),
         nourriture: 'sein',
-        objectif: 30
+        objectif: 30,
+        query: dayjs()
     });
 
     function handleChange(event:React.ChangeEvent<HTMLInputElement>) {

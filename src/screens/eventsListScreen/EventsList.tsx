@@ -1,4 +1,4 @@
-import React, { SetStateAction, useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled, { StyledComponent } from 'styled-components';
 import { Event } from '../../models/Event';
@@ -97,8 +97,7 @@ const TemporaryDateSearchBox = styled.h2`
 `;
 
 const EventsList = (props: any): JSX.Element => { 
-    const [list, setList]: [Event[], any] = useState([]);
-    const [query, setQuery]: [any, SetStateAction<any>] = useState(dayjs().unix() * 1000);
+    const [query, setQuery]: [number, Dispatch<SetStateAction<number>>] = useState(dayjs().unix() * 1000);
     const { data, setData } = useData();
     
     const AddEventButton = () => { 
