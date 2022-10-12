@@ -52,6 +52,14 @@ align-self: flex-start;
   z-index: 2;
 `;
 
+const AppTitle = styled(Link)`
+  background: transparent; 
+  width: 100%; 
+  text-decoration: none;
+  color: black;
+  transform: translateY(100%);
+`;
+
 function App(): JSX.Element {
   const { settings } = useSettings();
 
@@ -109,8 +117,6 @@ function App(): JSX.Element {
 
   // repere le nb de parametres dans timer et setEventsList accordingly
   useEffect((): void => { 
-    let start = dayjs(timer.start).startOf('D').unix() * 1000;
-
     if (Object.keys(timer).length === 3) {
         insertEvent({
           type: timer.category,
@@ -121,9 +127,10 @@ function App(): JSX.Element {
   }, [timer]);
 
   return (
-      <MobileShell>
-      <TopBar><Link to='/' style={{   background: 'transparent',
-width: '100%', textDecoration: 'none', color: 'black', transform: 'translateY(100%)'}}>{settings.name}</Link></TopBar>
+    <MobileShell>
+      <TopBar>
+        <AppTitle to='/'>{settings.name}</AppTitle>
+      </TopBar>
       <Routes>
         <Route path='/' element={
           <Home handleClick={handleClick} timerFn={timerFn} />} />
