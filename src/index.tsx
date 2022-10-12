@@ -5,6 +5,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { SettingsProvider } from './contexts/SettingsContext';
+import { DataProvider } from './contexts/DataContext';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -13,7 +14,9 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <SettingsProvider>
-        <App />
+        <DataProvider>
+          <App />
+        </DataProvider>
       </SettingsProvider>
     </BrowserRouter>
   </React.StrictMode>
