@@ -74,7 +74,6 @@ const List = styled.ul`
 
     padding: 0 0;
 
-    // padding-top: 8vh;
     margin-block: 0;
     transition: all 0.225s;
 
