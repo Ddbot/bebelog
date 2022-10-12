@@ -11,7 +11,6 @@ import { supabase } from './supabase/client';
 import Home from './screens/widgetsScreen/Home';
 
 import { useSettings } from './contexts/SettingsContext';
-import dayjs from 'dayjs';
 import CreateEventForm from './screens/eventsListScreen/CreateEventForm';
 import Visualisation from './screens/eventsVizScreen/Visualisation';
 import { FABGears, FABStats } from "./screens/widgetsScreen/styled-components";
@@ -19,6 +18,8 @@ import ListIcon from './assets/ListIcon';
 import EyeIcon from './assets/EyeIcon';
 import Gear from './assets/Gear';
 import Stats from './assets/Stats';
+
+import { useData } from './contexts/DataContext';
 
 const radius = '0.67cm';
 
@@ -76,6 +77,7 @@ const BottomBar = styled.nav`
 
 function App(): JSX.Element {
   const { settings } = useSettings();
+  const { setData } = useData();
 
   const [timer, setTimer]: [any, SetStateAction<any>] = useState({});
 
@@ -85,12 +87,20 @@ function App(): JSX.Element {
   function handleClick(event: React.MouseEvent<HTMLButtonElement>): void {
     const currentTarget: HTMLButtonElement = event.currentTarget;
     const { type }: any = currentTarget.dataset;
-
-    insertEvent({
+    const obj = {
           type,
           start: Date.now(),
           end: Date.now(),
-        });
+    }
+
+    insertEvent(obj);
+    
+    setData((prev: Event[]) => { 
+      return [
+        ...prev,
+          obj
+      ]
+    });
   };
 
   function timerFn(event: React.MouseEvent<HTMLButtonElement>): void {    
@@ -138,6 +148,7 @@ function App(): JSX.Element {
   async function insertEvent(event: any) {
 
     const { data, error } = await supabase.from('events').insert(event);
+
 
     if (error) console.error('Erruer lors de linsertion');
     if (data) console.log('Inséré ', data);
