@@ -28,7 +28,8 @@ const SkeletonListItem = styled.div`
 `;
 
 const Container: StyledComponent<any, any> = styled.div`
-    position: absolute;
+    // position: absolute;
+    grid-row: 1 / span 1;
     top: 0;
     width: 100%;
     height: 6vh;
@@ -61,7 +62,7 @@ const List = styled.ul`
 
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr;
+    grid-template-rows: repeat(5,1fr);
     grid-auto-rows: 1fr;
     gap: 0px 0px;
     grid-auto-flow: row;
@@ -73,7 +74,7 @@ const List = styled.ul`
 
     padding: 0 0;
 
-    padding-top: 8vh;
+    // padding-top: 8vh;
     margin-block: 0;
     transition: all 0.225s;
 
@@ -194,12 +195,6 @@ const EventsList = (props: any): JSX.Element => {
                     return <EventsListItem event={ev} key={'eventListItem'+i} />
                 })
             )}
-            { list?.length >= 1 && list?.length < 6 && Array.from({
-                length: 6-list.length
-            }, () => ('')).map((v, i) => {
-                return <SkeletonListItem key={ 'skeleton'+i} />
-            })
-            }
         </List>
         </>
 };

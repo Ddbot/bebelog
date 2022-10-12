@@ -21,7 +21,6 @@ const backgrounds = ['#03a29e','#FFA6D5','#FF5C58','#FFBD9B','#2C2891'];
 
 const EyeIcon = () => {
     const [open, setOpen] = useState(true);
-    const params = useParams();
 
     function handleClick(event: React.PointerEvent<HTMLButtonElement>) {    
         setOpen(prev => !prev);
@@ -34,9 +33,6 @@ const EyeIcon = () => {
 
         listView?.classList.toggle('blur');
 
-        console.log('eye_menu_buttons ', eye_menu_buttons);
-        
-        
         if (!!boutons_de_categories && open) {
             boutons_de_categories!.style.filter = 'blur(10px)';
             boutons_de_categories!.style.opacity = '0.15';
@@ -62,15 +58,8 @@ const EyeIcon = () => {
         eye_menu_buttons.forEach(link => { 
             link.classList.toggle('hidden');
         });
-            console.log('HIDDEN: ', eye_menu_buttons);
     };
 
-    
-
-    useEffect(() => { 
-        
-    }, [open]);
-    
     return <Container onClick={ handleClick }>
     <svg viewBox='0 0 24 24' width={24} fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
