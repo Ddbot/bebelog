@@ -10,6 +10,8 @@ import EventsListItem from './EventsListItem';
 import RightArrow from '../../assets/RighArrow';
 import BackArrow from '../../assets/BackArrow';
 
+import { useData } from '../../contexts/DataContext';
+
 const Container: StyledComponent<any, any> = styled.div`
     grid-row: 1 / span 1;
     top: 0;
@@ -97,6 +99,7 @@ const TemporaryDateSearchBox = styled.h2`
 const EventsList = (props: any): JSX.Element => { 
     const [list, setList]: [Event[], any] = useState([]);
     const [query, setQuery]: [any, SetStateAction<any>] = useState(dayjs().unix() * 1000);
+    const { data, setData } = useData();
     
     const AddEventButton = () => { 
         return <Container>
@@ -142,13 +145,13 @@ const EventsList = (props: any): JSX.Element => {
                 .lte('start', end);
             if (error) console.error(error);
             if (data) {
-                setList(data);
+                setData(data);
             }       
         };        
 
             fetchEvents();
 
-    }, [query]);
+    }, [query, setData]);
 
     return <>
         <TemporaryDateSearchBox>
@@ -159,8 +162,8 @@ const EventsList = (props: any): JSX.Element => {
         </TemporaryDateSearchBox>
         <List className='listView'>
             <AddEventButton />
-            {list?.length >= 1 && (
-                list?.map((ev: Event, i: number) => {
+            {data?.length >= 1 && (
+                data?.map((ev: Event, i: number) => {
                     return <EventsListItem event={ev} key={'eventListItem'+i} />
                 })
             )}
