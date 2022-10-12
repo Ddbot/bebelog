@@ -145,16 +145,12 @@ function App(): JSX.Element {
 
   // repere le nb de parametres dans timer et setEventsList accordingly
   useEffect((): void => { 
-    let start = dayjs(timer.start).startOf('D').unix() * 1000;
-
     if (Object.keys(timer).length === 3) {
         insertEvent({
           type: timer.category,
           start: timer.start,
           end: Date.now()
         });
-      
-      localStorage.removeItem(String(start));
   };    
   }, [timer]);
 
