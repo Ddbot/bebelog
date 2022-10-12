@@ -10,25 +10,7 @@ import EventsListItem from './EventsListItem';
 import RightArrow from '../../assets/RighArrow';
 import BackArrow from '../../assets/BackArrow';
 
-const SkeletonListItem = styled.div`
-    width: calc(100% - 32px);
-    height: 6vh;
-
-    list-style: none;
-
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    align-items: center;
-
-    margin: 0 16px; 
-
-    text-decoration: none;
-    font-size: 1.1rem;
-`;
-
 const Container: StyledComponent<any, any> = styled.div`
-    // position: absolute;
     grid-row: 1 / span 1;
     top: 0;
     width: 100%;
