@@ -1,6 +1,6 @@
-import React, { SetStateAction, useEffect, useState } from 'react';
-import { TimerType } from './models/Event';
-import { Routes, Route, Link, useLocation } from 'react-router-dom';
+import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
+import { Event, TimerType } from './models/Event';
+import { Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
 import EventsList from './screens/eventsListScreen/EventsList';
 import EventCard from './screens/eventsListScreen/EventCard';
 import SettingsPage from './screens/settings/Settings';
@@ -11,7 +11,6 @@ import { supabase } from './supabase/client';
 import Home from './screens/widgetsScreen/Home';
 
 import { useSettings } from './contexts/SettingsContext';
-import { DataType } from './contexts/DataContext';
 import CreateEventForm from './screens/eventsListScreen/CreateEventForm';
 import Visualisation from './screens/eventsVizScreen/Visualisation';
 import { FABGears, FABStats } from "./screens/widgetsScreen/styled-components";
@@ -78,6 +77,7 @@ const BottomBar = styled.nav`
 `;
 
 function App(): JSX.Element {
+  const navigate = useNavigate();
   const { settings } = useSettings();
   const { setData } = useData();
 
@@ -89,20 +89,20 @@ function App(): JSX.Element {
   function handleClick(event: React.MouseEvent<HTMLButtonElement>): void {
     const currentTarget: HTMLButtonElement = event.currentTarget;
     const { type }: any = currentTarget.dataset;
-    const obj = {
-          type,
-          start: Date.now(),
-          end: Date.now(),
-    }
+
+    const obj: Event = {
+      type,
+      start: dayjs().unix()*1000,
+      end: dayjs().unix()*1000,
+    };
 
     insertEvent(obj);
-    
-    setData((prev: Event[]) => { 
-      return [
-        ...prev,
-          obj
-      ]
-    });
+    navigate('/events_list', {
+      state: {
+        value: {
+          query: obj.start
+        }
+    }})
   };
 
   function timerFn(event: React.MouseEvent<HTMLButtonElement>): void {    
@@ -147,27 +147,19 @@ function App(): JSX.Element {
 
   };
   
-  async function insertEvent(event: any) {
-
+  const insertEvent = useCallback(async (event: Event) => {
     const { data, error } = await supabase.from('events').insert(event);
       setData((prev: DataObject) => { 
-        const start = String(dayjs(event.start).startOf('D').unix() * 1000);      
-        if (Object.keys(prev).includes(start)) {
-          return {
-            ...prev,
-            [start]: [...prev[start], event]
-          }
-        } else { 
-          return {
-            ...prev,
-            [start]: [event]
-          }        
-        }
+        const start = String(dayjs(event.start).startOf('D').unix() * 1000);           
+        delete prev[start];
+        return prev;
       });
 
     if (error) console.error('Erruer lors de linsertion');
     if (data) console.log('Inséré ', data);
-  };
+    navigate('/events_list');
+  }, [setData,navigate]);
+
 
   // repere le nb de parametres dans timer et setEventsList accordingly
   useEffect((): void => { 
@@ -178,7 +170,7 @@ function App(): JSX.Element {
           end: Date.now()
         });
   };    
-  }, [timer]);
+  }, [timer, insertEvent]);
 
   return (
       <MobileShell>

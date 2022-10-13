@@ -141,7 +141,7 @@ const EventCard = (props: Props) => {
         const { data, error } = await supabase.from('events').delete().match({ id });     
         
         if (error) console.error(error);
-        navigate('/events_list')
+        navigate('/events_list');
     }; 
 
     async function submitChange(event: React.MouseEvent<Element>) {

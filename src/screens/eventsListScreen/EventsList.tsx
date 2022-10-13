@@ -11,8 +11,6 @@ import RightArrow from '../../assets/RighArrow';
 import BackArrow from '../../assets/BackArrow';
 
 import { useData, DataObject } from '../../contexts/DataContext';
-import { isTaggedTemplateExpression } from 'typescript';
-import usePrevious from '../../hooks/usePrevious';
 
 const Container: StyledComponent<any, any> = styled.div`
     grid-row: 1 / span 1;
@@ -101,7 +99,6 @@ const TemporaryDateSearchBox = styled.h2`
 const EventsList = (props: any): JSX.Element => { 
     const [query, setQuery]: [number, Dispatch<SetStateAction<number>>] = useState(dayjs().unix() * 1000);
     const { data, setData }: {data: DataObject, setData: Dispatch<SetStateAction<DataObject>>} = useData();
-    const previousData = usePrevious(data);
     let start = String(dayjs(query).startOf('D').unix() * 1000);
     let end = String(dayjs(query).endOf('D').unix() * 1000);
 
