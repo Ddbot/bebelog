@@ -5,11 +5,11 @@ import dayjs from "dayjs";
 export type DataType = Event[] | [];
 type SetDataType = Function;
 
-type DataObject = {
-    [key: number]: Event[]
-} | {};
+export type DataObject = {
+    [key: string]: DataType
+};
 
-const today = dayjs().startOf('D').unix() * 1000;
+const today = String(dayjs().startOf('D').unix() * 1000);
 
 const initialData: DataObject = {
     [today]: [{
@@ -20,14 +20,14 @@ const initialData: DataObject = {
     }
 ]};
 
-const DataContext: React.Context<any> = createContext<{ data: DataType; setData: SetDataType }| undefined>(undefined);
+const DataContext: React.Context<any> = createContext<{ data: DataObject; setData: SetDataType }| undefined>(undefined);
 
 const DataProvider = ({ children }: { children: React.ReactNode }) => {
     const [data, setData]: [DataObject, Dispatch<SetStateAction<DataObject>>] = useState<DataObject>(initialData);
     const value = { data, setData };
 
     useEffect(() => { 
-        if(data) console.log('new data ',data);
+        console.log('NEW DATA ', data);
         
     }, [data]);
 

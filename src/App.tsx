@@ -19,8 +19,9 @@ import ListIcon from './assets/ListIcon';
 import EyeIcon from './assets/EyeIcon';
 import Gear from './assets/Gear';
 import Stats from './assets/Stats';
+import dayjs from 'dayjs';
 
-import { useData } from './contexts/DataContext';
+import { DataObject, useData } from './contexts/DataContext';
 
 const radius = '0.67cm';
 
@@ -149,12 +150,20 @@ function App(): JSX.Element {
   async function insertEvent(event: any) {
 
     const { data, error } = await supabase.from('events').insert(event);
-    setData((prev: DataType) => { 
-      return [
-        ...prev,
-        event
-      ]
-    });
+      setData((prev: DataObject) => { 
+        const start = String(dayjs(event.start).startOf('D').unix() * 1000);      
+        if (Object.keys(prev).includes(start)) {
+          return {
+            ...prev,
+            [start]: [...prev[start], event]
+          }
+        } else { 
+          return {
+            ...prev,
+            [start]: [event]
+          }        
+        }
+      });
 
     if (error) console.error('Erruer lors de linsertion');
     if (data) console.log('Inséré ', data);

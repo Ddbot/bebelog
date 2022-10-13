@@ -10,7 +10,7 @@ import EventsListItem from './EventsListItem';
 import RightArrow from '../../assets/RighArrow';
 import BackArrow from '../../assets/BackArrow';
 
-import { useData } from '../../contexts/DataContext';
+import { useData, DataObject } from '../../contexts/DataContext';
 import { isTaggedTemplateExpression } from 'typescript';
 
 const Container: StyledComponent<any, any> = styled.div`
@@ -99,8 +99,8 @@ const TemporaryDateSearchBox = styled.h2`
 
 const EventsList = (props: any): JSX.Element => { 
     const [query, setQuery]: [number, Dispatch<SetStateAction<number>>] = useState(dayjs().unix() * 1000);
-    const { data, setData } = useData();
-    const previousData = structuredClone(data);
+    const { data, setData }: {data: DataObject, setData: Dispatch<SetStateAction<DataObject>>} = useData();
+    const previousData: DataObject = structuredClone(data);
     
     const AddEventButton = () => { 
         return <Container>
@@ -135,18 +135,23 @@ const EventsList = (props: any): JSX.Element => {
     }
 
     useEffect(() => { 
-        let start = dayjs(query).startOf('D').unix() * 1000;
-        let end = dayjs(query).endOf('D').unix() * 1000;
+        let start = String(dayjs(query).startOf('D').unix() * 1000);
+        let end = String(dayjs(query).endOf('D').unix() * 1000);
         
         async function fetchEvents() {
             const { data, error } = await supabase
                 .from('events')
                 .select()
-                .gte('start', start)
-                .lte('start', end);
+                .gte('start', Number(start))
+                .lte('start', Number(end));
             if (error) console.error(error);
             if (data) {
-                setData(data);
+                setData((prev: DataObject) => {                    
+                    return {
+                        ...prev,
+                        [start]: [...data]
+                    }                    
+                });
             }
         };        
 
@@ -163,12 +168,8 @@ const EventsList = (props: any): JSX.Element => {
         </TemporaryDateSearchBox>
         <List className='listView'>
             <AddEventButton />
-            {data?.length >= 1 && (
-                data?.filter((d: Event) => { 
-                    const start = dayjs(query).startOf('D').unix() * 1000;
-                    return d.start >= start
-                })
-                .map((ev: Event, i: number) => {
+            {data[String(dayjs(query).startOf('D').unix()*1000)]?.length >= 1 && (
+                data[String(dayjs(query).startOf('D').unix()*1000)]?.map((ev: Event, i: number) => {
                     return <EventsListItem event={ev} key={'eventListItem'+i} />
                 })
             )}
