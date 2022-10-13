@@ -17,9 +17,9 @@ export type Event = {
 };
 
 export type TimerType = {
-  category?: undefined | string,
-  start?: undefined | number,
-  end?: undefined | number,
+  category?: string,
+  start?: number,
+  end?: number,
 }
 
 export type NourritureType = 'sein' | 'biberon';

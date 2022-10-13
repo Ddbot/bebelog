@@ -165,7 +165,9 @@ const EventsList = (props: any): JSX.Element => {
     },[setData,data]);
 
     useEffect(() => {    
-        fetchOrGetFromContext(start,end);
+        // return () => {
+            fetchOrGetFromContext(start, end);
+        // }
     }, [fetchOrGetFromContext,start,end]);
 
     return <>

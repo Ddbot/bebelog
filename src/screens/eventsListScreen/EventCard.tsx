@@ -9,6 +9,7 @@ import Trash from '../../assets/Trash';
 import Pen from '../../assets/Pen';
 import BackArrow from '../../assets/BackArrow';
 import { EventType } from '../../models/Event';
+import { DataObject, useData } from '../../contexts/DataContext';
 
 const Card = styled.div`
     width: 100%;
@@ -123,6 +124,7 @@ const EventCard = (props: Props) => {
     const location = useLocation();
     const { value } = location.state;
     const navigate = useNavigate();
+    const { setData } = useData();
 
     const [isInEditMode, setIsInEditMode] = useState(props.isEditMode ||false);
     const [time, setTime]:[Times, SetStateAction<any>] = useState({
@@ -180,11 +182,18 @@ const EventCard = (props: Props) => {
         }; 
         
         async function upsertEvent(payload: Payload) {
-            const { type,start, end } = payload;     
+            const { type, start, end } = payload;  
+            // calculer index dans ctx
+            const ctxIndex = String(dayjs(start).startOf('D').unix() * 1000);
+
             
             const { data, error } = await supabase.from('events').upsert({ type, start, end });
 
             if (error) console.error('Erruer lors de lupsertion', data);
+            setData((prev: DataObject) => { 
+                delete prev[ctxIndex];
+                return prev;
+            });
 
             navigate('/events_list');
         };         
