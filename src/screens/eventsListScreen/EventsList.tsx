@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled, { StyledComponent } from 'styled-components';
 import { Event } from '../../models/Event';
@@ -12,6 +12,7 @@ import BackArrow from '../../assets/BackArrow';
 
 import { useData, DataObject } from '../../contexts/DataContext';
 import { isTaggedTemplateExpression } from 'typescript';
+import usePrevious from '../../hooks/usePrevious';
 
 const Container: StyledComponent<any, any> = styled.div`
     grid-row: 1 / span 1;
@@ -100,7 +101,10 @@ const TemporaryDateSearchBox = styled.h2`
 const EventsList = (props: any): JSX.Element => { 
     const [query, setQuery]: [number, Dispatch<SetStateAction<number>>] = useState(dayjs().unix() * 1000);
     const { data, setData }: {data: DataObject, setData: Dispatch<SetStateAction<DataObject>>} = useData();
-    const previousData: DataObject = structuredClone(data);
+    const previousData = usePrevious(data);
+    let start = String(dayjs(query).startOf('D').unix() * 1000);
+    let end = String(dayjs(query).endOf('D').unix() * 1000);
+
     
     const AddEventButton = () => { 
         return <Container>
@@ -132,19 +136,20 @@ const EventsList = (props: any): JSX.Element => {
                 break;
         }
         
-    }
+    };
 
-    useEffect(() => { 
-        let start = String(dayjs(query).startOf('D').unix() * 1000);
-        let end = String(dayjs(query).endOf('D').unix() * 1000);
-        
+    let fetchOrGetFromContext = useCallback((start: string, end: string) => {
+        // on clone les data du contexte
+        const d = structuredClone(data);
+
         async function fetchEvents() {
             const { data, error } = await supabase
                 .from('events')
                 .select()
                 .gte('start', Number(start))
                 .lte('start', Number(end));
-            if (error) console.error(error);
+
+                if (error) console.error(error);
             if (data) {
                 setData((prev: DataObject) => {                    
                     return {
@@ -153,11 +158,15 @@ const EventsList = (props: any): JSX.Element => {
                     }                    
                 });
             }
-        };        
+        };
+        
+        // seulment si l'entree n'existe pas dans le contexte, on la fetch sinon depuis le ctx
+        !d[start] && fetchEvents();
+    },[setData,data]);
 
-            fetchEvents();
-
-    }, [query, setData]);
+    useEffect(() => {    
+        fetchOrGetFromContext(start,end);
+    }, [fetchOrGetFromContext,start,end]);
 
     return <>
         <TemporaryDateSearchBox>
