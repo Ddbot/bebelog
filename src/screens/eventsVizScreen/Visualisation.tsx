@@ -2,13 +2,15 @@ import { useState, useEffect, useRef } from 'react';
 import styled from "styled-components";
 import { icons } from '../widgetsScreen/Buttons';
 import { useLocation } from 'react-router-dom';
-import { EventType } from '../../models/Event';
+import { Event, EventType } from '../../models/Event';
 import {
     SVG,
     Text,
     IconsGroup,
     VizContainer
 } from './styles';
+import gsap from 'gsap';
+import dayjs from 'dayjs';
 
 const hIAA = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
 const categories = ['change', 'nourriture', 'medicament', 'lavage', 'dodo'];
@@ -16,19 +18,27 @@ const categories = ['change', 'nourriture', 'medicament', 'lavage', 'dodo'];
 const svgDimensions = {
     width: 1440,
     height: 2320
-};
+};  
 
 type Props = {};
 
-function getCoordinates(event: Event) {
-    function getX(type: Event['type']): number {
+function getCoordinates(event: Event) {    
+    const { type, start, end } = event;
+    
+    const startOfDay = dayjs(start).startOf('D').unix() * 1000;
+    const endOfDay = dayjs(start).endOf('D').unix() * 1000;
+    
+    const mapper = gsap.utils.mapRange(startOfDay, endOfDay, 0, svgDimensions.height);
+    function getX(type: EventType): number {
         const index = categories.indexOf(type);
         return index;
     };
+    const x1 = getX(type), x2 = getX(type), y1 = mapper(start), y2 = mapper(end);
+    return { x1, x2, y1, y2 };
 }
 
 const Visualisation = (props: Props) => {
-    const [data, setData] = useState([]);
+    const [data] = useState([]);
 
     useEffect(() => { 
         console.log('ily a des data ', data);
@@ -55,7 +65,9 @@ const Visualisation = (props: Props) => {
             </g>
             {/* DATA */}
             <g>
-
+                {data.map((d) => { 
+                    return <line {...getCoordinates(d)} strokeWidth={ 40 } stroke="red" />
+                })}
             </g>
         </SVG>
             <IconsGroup className='icones'>
