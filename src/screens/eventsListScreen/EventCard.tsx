@@ -10,6 +10,7 @@ import Pen from '../../assets/Pen';
 import BackArrow from '../../assets/BackArrow';
 import { EventType } from '../../models/Event';
 import { DataObject, useData } from '../../contexts/DataContext';
+import { stringify } from 'querystring';
 
 const Card = styled.div`
     width: 100%;
@@ -180,13 +181,23 @@ const EventCard = (props: Props) => {
         const clonedObj = Object.assign({}, value);
 
         async function updateEvent(payload: Payload) {
-            const { id, start, end, type } = payload;     
+            const { id, start, end } = payload;     
+
             
             const { data, error } = await supabase.from('events').update({ start, end }).match({ id });
 
             if (error) console.error('Erruer lors de linsertion', data);
 
-            navigate('/events_list');
+            setData((prev: DataObject) => { 
+                delete prev[String(dayjs(start).startOf('D').unix()*1000)];
+                return prev;
+            });            
+
+            navigate('/events_list', {
+                state: {
+                    value: dayjs(start).startOf('D').unix()*1000
+                }
+            });
         }; 
         
         async function upsertEvent(payload: Payload) {
@@ -203,7 +214,11 @@ const EventCard = (props: Props) => {
                 return prev;
             });
 
-            navigate('/events_list');
+            navigate('/events_list', {
+                state: {
+                    value: ctxIndex
+                }
+            });
         };         
         
         Object.keys(time as Object).forEach((key, i) => { 
