@@ -138,10 +138,18 @@ const EventCard = (props: Props) => {
         const { id } = event.currentTarget;
         const start = dayjs(value.start).startOf('D').unix() * 1000;
 
-        const { data, error } = await supabase.from('events').delete().match({ id });     
+        const { data, error } = await supabase.from('events').delete().match({ id });   
+        setData((prev: DataObject) => { 
+            delete prev[String(start)];
+            return prev;
+        });
         
         if (error) console.error(error);
-        navigate('/events_list');
+        navigate('/events_list', {
+            state: {
+                value: start
+            }
+        });
     }; 
 
     async function submitChange(event: React.MouseEvent<Element>) {

@@ -99,9 +99,7 @@ function App(): JSX.Element {
     insertEvent(obj);
     navigate('/events_list', {
       state: {
-        value: {
-          query: obj.start
-        }
+        value: obj.start
     }})
   };
 
@@ -157,7 +155,10 @@ function App(): JSX.Element {
 
     if (error) console.error('Erruer lors de linsertion');
     if (data) console.log('Inséré ', data);
-    navigate('/events_list');
+    navigate('/events_list', {
+      state: {
+        value: dayjs(event.start).startOf('D').unix() * 1000
+    }});
   }, [setData,navigate]);
 
 

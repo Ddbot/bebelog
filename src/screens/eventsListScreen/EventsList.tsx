@@ -96,9 +96,15 @@ const TemporaryDateSearchBox = styled.h2`
     }
 `;
 
-const EventsList = (props: any): JSX.Element => { 
-    const [query, setQuery]: [number, Dispatch<SetStateAction<number>>] = useState(dayjs().unix() * 1000);
-    const { data, setData }: {data: DataObject, setData: Dispatch<SetStateAction<DataObject>>} = useData();
+const EventsList = (props: any): JSX.Element => {     
+    const location = useLocation();
+    const now = dayjs().unix() * 1000;
+
+    const initialQuery = location?.state?.value ?? now;
+
+
+    const [query, setQuery]: [number, Dispatch<SetStateAction<number>>] = useState(initialQuery);
+    const { data, setData }: { data: DataObject, setData: Dispatch<SetStateAction<DataObject>> } = useData();
     let start = String(dayjs(query).startOf('D').unix() * 1000);
     let end = String(dayjs(query).endOf('D').unix() * 1000);
 
