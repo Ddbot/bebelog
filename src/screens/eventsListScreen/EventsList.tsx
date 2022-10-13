@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styled, { StyledComponent } from 'styled-components';
 import { Event } from '../../models/Event';
 import { supabase } from '../../supabase/client';
