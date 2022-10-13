@@ -192,7 +192,7 @@ width: '100%', textDecoration: 'none', color: 'black', transform: 'translateY(10
             <Gear />
         </FABGears>        
         <FABStats>
-          {pathname !== '/events_stats' && <Stats toggleClass={toggleClass} />}
+            { pathname !== '/events_stats' && <Stats toggleClass={toggleClass} />}
             { pathname !== '/events_list' && <ListIcon toggleClass={ toggleClass }/>}
             <EyeIcon />
         </FABStats>

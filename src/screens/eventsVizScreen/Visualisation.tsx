@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'react';
-import styled from "styled-components";
 import { icons } from '../widgetsScreen/Buttons';
 import { useLocation } from 'react-router-dom';
 import { Event, EventType } from '../../models/Event';
@@ -11,6 +10,7 @@ import {
 } from './styles';
 import gsap from 'gsap';
 import dayjs from 'dayjs';
+import { useData, DataObject } from '../../contexts/DataContext';
 
 const hIAA = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
 const categories = ['change', 'nourriture', 'medicament', 'lavage', 'dodo'];
@@ -29,20 +29,20 @@ function getCoordinates(event: Event) {
     const endOfDay = dayjs(start).endOf('D').unix() * 1000;
     
     const mapper = gsap.utils.mapRange(startOfDay, endOfDay, 0, svgDimensions.height);
+
     function getX(type: EventType): number {
         const index = categories.indexOf(type);
-        return index;
+        return (index+1)*(svgDimensions.width/6);
+
     };
+
     const x1 = getX(type), x2 = getX(type), y1 = mapper(start), y2 = mapper(end);
     return { x1, x2, y1, y2 };
 }
 
 const Visualisation = (props: Props) => {
-    const [data] = useState([]);
-
-    useEffect(() => { 
-        console.log('ily a des data ', data);
-    }, [data]);
+    const { data } = useData();    
+    const testDate = String(dayjs().subtract(1, 'day').startOf('D').unix() * 1000);
 
     return <VizContainer className='viz'> 
         <SVG viewBox={`0 0 ${svgDimensions.width} ${svgDimensions.height}`}>
@@ -65,8 +65,9 @@ const Visualisation = (props: Props) => {
             </g>
             {/* DATA */}
             <g>
-                {data.map((d) => { 
-                    return <line {...getCoordinates(d)} strokeWidth={ 40 } stroke="red" />
+                {data[testDate]?.map((d: Event, i: number) => {
+                    const { x1, y1 } = getCoordinates(d);
+                    return ['dodo', 'nourriture'].includes(d.type) ? <line {...getCoordinates(d)} strokeWidth={40} stroke="red" key={'line_' + i} /> : <circle cx={x1} cy={y1} r={60    } fill="red" />;
                 })}
             </g>
         </SVG>

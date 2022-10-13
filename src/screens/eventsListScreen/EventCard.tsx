@@ -237,7 +237,7 @@ const EventCard = (props: Props) => {
             clonedObj.end = dayjs(clonedObj.end).add(1, 'day').unix()*1000;
             isReady && updateEvent(clonedObj);
         }
-    }, [isReady,time,value, navigate]);
+    }, [isReady,time,value, navigate, setData]);
 
     return !['dodo','nourriture'].includes(value.type) ? <Card>
         <Content>
