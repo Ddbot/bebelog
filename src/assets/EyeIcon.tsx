@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import styled from "styled-components";
 
 const Container = styled.button`
+    position: relative;
     aspect-ratio: 1 / 1;
     max-width: 3rem;
-    position: absolute;
+    // position: absolute;
     background: white;
     z-index: 10;
+
+    transform: translateY(-12.5%);
 
     border: none;
     & > svg {
         scale: 1.618;
     }
-
 `;
 
 const scales = [0.7, 0.56, 1.2, 1.7, 0.4];
