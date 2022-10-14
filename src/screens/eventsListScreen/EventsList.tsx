@@ -8,10 +8,9 @@ import { SettingsType, useSettings } from '../../contexts/SettingsContext';
 
 import EventsListItem from './EventsListItem';
 
-import RightArrow from '../../assets/RighArrow';
-import BackArrow from '../../assets/BackArrow';
 
 import { useData, DataObject } from '../../contexts/DataContext';
+import DateDisplaySelector from './DateDisplaySelector';
 
 const Container: StyledComponent<any, any> = styled.div`
     grid-row: 1 / span 1;
@@ -123,29 +122,6 @@ const EventsList = (props: any): JSX.Element => {
                     }}>
             <span>+</span></Link></Container>;
     };    
-    
-    function handleClick(event:React.MouseEvent<HTMLButtonElement>) {
-        const name = event.currentTarget.dataset.name;
-        switch (name) {
-            case 'minus':
-                setSettings((prev: SettingsType) => { 
-
-                    return {
-                        ...prev,
-                        query: dayjs(prev.query).subtract(1, 'day').unix() * 1000};
-                });
-                break;        
-            default:
-                setSettings((prev: SettingsType) => { 
-
-                    return {
-                        ...prev,
-                        query: dayjs(prev.query).add(1, 'day').unix() * 1000};
-                });
-                break;
-        }
-        
-    };
 
     let fetchOrGetFromContext = useCallback((start: string, end: string) => {
         // on clone les data du contexte
@@ -181,10 +157,7 @@ const EventsList = (props: any): JSX.Element => {
 
     return <>
         <TemporaryDateSearchBox>
-            <button onClick={handleClick} data-name="minus"><BackArrow /></button>
-            <span>{dayjs(query).format('dddd DD MMM')}</span>
-            { (dayjs(query).add(1,'day').isSame(dayjs()) || dayjs(query).add(1,'day').isBefore(dayjs())) && <button onClick={handleClick} data-name="plus"><RightArrow /></button>}
-            { dayjs(query).add(1,'day').isAfter(dayjs()) && <button onClick={handleClick} data-name="plus" disabled></button>}
+            <DateDisplaySelector />
         </TemporaryDateSearchBox>
         <List className='listView'>
             <AddEventButton />
