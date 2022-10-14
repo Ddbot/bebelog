@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { icons } from '../widgetsScreen/Buttons';
 import { useLocation } from 'react-router-dom';
 import { Event, EventType } from '../../models/Event';
@@ -49,9 +50,9 @@ const Visualisation = (props: Props) => {
         <rect x="0" y="0" width={svgDimensions.width} height={svgDimensions.height} stroke="black" fill="rgba(0,0,0,0)" strokeWidth={4} />
         {/* lines */}
         <g className='hours'>
-            {hIAA.map((h,i) => { 
+            {hIAA.reverse().map((h,i) => { 
                 return <g key={ 'line_hour_' + i }>
-                    {h % 3 === 2 && <Text y={h * svgDimensions.height / 24} x={0} dy="3.08%" textLength={'4rem'} lengthAdjust="spacingAndGlyphs">{-h + 23}</Text>}
+                    {h % 3 === 0 && <Text y={h * svgDimensions.height / 24} x={0} dy="3.08%" textLength={'4rem'} lengthAdjust="spacingAndGlyphs">{(h-24)*-1}</Text>}
                     <line y1={h * svgDimensions.height / 24} y2={h * svgDimensions.height / 24} x1={svgDimensions.width} x2={0} strokeDasharray={5} strokeWidth={5} stroke="black" />
                 </g>
             })}
@@ -64,11 +65,12 @@ const Visualisation = (props: Props) => {
             }) }
             </g>
             {/* DATA */}
-            <g>
+            <g  >
                 {data[testDate]?.map((d: Event, i: number) => {
-                    const { x1, y1 } = getCoordinates(d);
-                    return ['dodo', 'nourriture'].includes(d.type) ? <line {...getCoordinates(d)} strokeWidth={40} stroke="red" key={'line_' + i} /> : <circle cx={x1} cy={y1} r={60    } fill="red" />;
+                    const { x1, y1, x2, y2} = getCoordinates(d);
+                    return ['dodo', 'nourriture'].includes(d.type) ? <a href="#" onClick={() => { console.log(...Object.values(d)) }} key={'line_' + i}><line x1={x1} x2={x2} y1={svgDimensions.height-y1} y2={svgDimensions.height-y2} strokeWidth={40} stroke="red" /></a> : <a href="#" onClick={() => { console.log(dayjs(d.start).format('HH:mm')) }}><circle cx={x1} cy={svgDimensions.height-y1} r={60} fill="red" /></a>;
                 })}
+                {/* <circle cx={0} cy={0} r={60} fill="red" /> */}
             </g>
         </SVG>
             <IconsGroup className='icones'>
