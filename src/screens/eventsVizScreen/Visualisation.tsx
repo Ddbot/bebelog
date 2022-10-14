@@ -13,6 +13,7 @@ import {
 import gsap from 'gsap';
 import dayjs from 'dayjs';
 import { useData, DataObject } from '../../contexts/DataContext';
+import DateDisplaySelector from '../eventsListScreen/DateDisplaySelector';
 
 const hIAA = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
 const categories = ['change', 'nourriture', 'medicament', 'lavage', 'dodo'];
@@ -52,6 +53,7 @@ const Visualisation = (props: Props) => {
     },[query])
 
     return <VizContainer className='viz'> 
+        {/* <DateDisplaySelector /> */}
         <SVG viewBox={`0 0 ${svgDimensions.width} ${svgDimensions.height}`}>
         <rect x="0" y="0" width={svgDimensions.width} height={svgDimensions.height} stroke="black" fill="rgba(0,0,0,0)" strokeWidth={4} />
         {/* lines */}
