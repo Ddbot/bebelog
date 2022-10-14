@@ -13,12 +13,12 @@ export type SettingsType = {
 type SetSettings = Function
 
 const initialSettings: SettingsType = {
-        name: 'Bébé',
-        birthDate: dayjs(),
-        nourriture: 'sein',
-        objectif: 30,
-        query: dayjs().startOf('D').unix()*1000
-    }
+    name: 'Bébé',
+    birthDate: dayjs(),
+    nourriture: 'sein',
+    objectif: 30,
+    query: dayjs().startOf('D').unix() * 1000
+};
 
 const SettingsContext: React.Context<any> = createContext<{ settings: SettingsType; setSettings: SetSettings} | undefined>(undefined);
 
@@ -26,11 +26,6 @@ function SettingsProvider({ children }: { children : React.ReactNode}) {
     const [settings, setSettings]:[settings: SettingsType, setSettings: Dispatch<SetStateAction<SettingsType>>] = useState(initialSettings);
     const value = { settings, setSettings };
 
-    useEffect(() => {
-        console.log(settings.query);
-        
-    },[settings])
-    
     return <SettingsContext.Provider value={ value }>{ children }</SettingsContext.Provider>
 };
 
