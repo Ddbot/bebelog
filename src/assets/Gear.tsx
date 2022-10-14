@@ -2,8 +2,11 @@ import styled from "styled-components"
 const SVG = styled.svg`
   // scale: 1.2;
   position: relative;
-  transform: translateX(50%);
+  // transform: translateX(50%);
   max-width: 3rem;
+
+  &.bottom {
+  }
 `;
 
 const Gear = (): JSX.Element => (
