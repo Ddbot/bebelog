@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { icons } from '../widgetsScreen/Buttons';
 import { useLocation } from 'react-router-dom';
 import { Event, EventType } from '../../models/Event';
+import { SettingsType, useSettings } from '../../contexts/SettingsContext';
 import {
     SVG,
     Text,
@@ -44,6 +45,11 @@ function getCoordinates(event: Event) {
 const Visualisation = (props: Props) => {
     const { data } = useData();    
     const testDate = String(dayjs().subtract(1, 'day').startOf('D').unix() * 1000);
+    const { settings }: { settings: SettingsType } = useSettings();
+    const { query }: { query: number } = settings;
+    useEffect(() => {
+        console.log('sdgdg ',query);
+    },[query])
 
     return <VizContainer className='viz'> 
         <SVG viewBox={`0 0 ${svgDimensions.width} ${svgDimensions.height}`}>
@@ -52,8 +58,8 @@ const Visualisation = (props: Props) => {
         <g className='hours'>
             {hIAA.reverse().map((h,i) => { 
                 return <g key={ 'line_hour_' + i }>
-                    {h % 3 === 0 && <Text y={h * svgDimensions.height / 24} x={0} dy="3.08%" textLength={'4rem'} lengthAdjust="spacingAndGlyphs">{(h-24)*-1}</Text>}
-                    <line y1={h * svgDimensions.height / 24} y2={h * svgDimensions.height / 24} x1={svgDimensions.width} x2={0} strokeDasharray={5} strokeWidth={5} stroke="black" />
+                    {h % 3 === 0 && <Text y={h * svgDimensions.height / 24} x={0} dy="1%" textLength={'3rem'} lengthAdjust="spacingAndGlyphs">{(h-24)*-1}</Text>}
+                    <line y1={h * svgDimensions.height / 24} y2={h * svgDimensions.height / 24} x1={svgDimensions.width} x2={0} strokeDasharray={(h-24)*-1 === 12 ? 0 : 5} strokeWidth={(h-24)*-1 === 12 ? 10: 5} stroke={(h-24)*-1 === 12 ? "blue":"black"} />
                 </g>
             })}
         </g>
@@ -66,9 +72,9 @@ const Visualisation = (props: Props) => {
             </g>
             {/* DATA */}
             <g  >
-                {data[testDate]?.map((d: Event, i: number) => {
+                {data[String(query)]?.map((d: Event, i: number) => {
                     const { x1, y1, x2, y2} = getCoordinates(d);
-                    return ['dodo', 'nourriture'].includes(d.type) ? <a href="#" onClick={() => { console.log(...Object.values(d)) }} key={'line_' + i}><line x1={x1} x2={x2} y1={svgDimensions.height-y1} y2={svgDimensions.height-y2} strokeWidth={40} stroke="red" /></a> : <a href="#" onClick={() => { console.log(dayjs(d.start).format('HH:mm')) }}><circle cx={x1} cy={svgDimensions.height-y1} r={60} fill="red" /></a>;
+                    return ['dodo', 'nourriture'].includes(d.type) ? <a href="#" onClick={() => { console.log(...Object.values(d)) }} key={'line_' + i}><line x1={x1} x2={x2} y1={svgDimensions.height - y1} y2={svgDimensions.height - y2} strokeWidth={40} stroke="red" /></a> : <a href="#" onClick={() => { console.log(dayjs(d.start).format('HH:mm')) }} key={ 'circle_' +i}><circle cx={x1} cy={svgDimensions.height - y1} r={60} stroke="red" strokeWidth={ 10} fill="transparent" /></a>;
                 })}
                 {/* <circle cx={0} cy={0} r={60} fill="red" /> */}
             </g>

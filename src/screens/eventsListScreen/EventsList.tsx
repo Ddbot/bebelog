@@ -4,6 +4,7 @@ import styled, { StyledComponent } from 'styled-components';
 import { Event } from '../../models/Event';
 import { supabase } from '../../supabase/client';
 import dayjs from 'dayjs';
+import { SettingsType, useSettings } from '../../contexts/SettingsContext';
 
 import EventsListItem from './EventsListItem';
 
@@ -99,11 +100,10 @@ const TemporaryDateSearchBox = styled.h2`
 const EventsList = (props: any): JSX.Element => {     
     const location = useLocation();
     const now = dayjs().unix() * 1000;
+    const { settings, setSettings }:{ settings: SettingsType, setSettings: Dispatch<SetStateAction<SettingsType>>} = useSettings();
+    const { query } = settings;
 
-    const initialQuery = location?.state?.value ?? now;
 
-
-    const [query, setQuery]: [number, Dispatch<SetStateAction<number>>] = useState(initialQuery);
     const { data, setData }: { data: DataObject, setData: Dispatch<SetStateAction<DataObject>> } = useData();
     let start = String(dayjs(query).startOf('D').unix() * 1000);
     let end = String(dayjs(query).endOf('D').unix() * 1000);
@@ -128,13 +128,19 @@ const EventsList = (props: any): JSX.Element => {
         const name = event.currentTarget.dataset.name;
         switch (name) {
             case 'minus':
-                setQuery((prev: any) => { 
-                    return dayjs(prev).subtract(1, 'day').unix() * 1000;
+                setSettings((prev: SettingsType) => { 
+
+                    return {
+                        ...prev,
+                        query: dayjs(prev.query).subtract(1, 'day').unix() * 1000};
                 });
                 break;        
             default:
-                setQuery((prev: any) => { 
-                    return dayjs(prev).add(1, 'day').unix() * 1000;
+                setSettings((prev: SettingsType) => { 
+
+                    return {
+                        ...prev,
+                        query: dayjs(prev.query).add(1, 'day').unix() * 1000};
                 });
                 break;
         }

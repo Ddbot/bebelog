@@ -1,4 +1,4 @@
-import React, { createContext, SetStateAction, useContext, useEffect, useState } from "react";
+import React, { createContext, Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { NourritureType } from '../models/Event';
 
@@ -7,7 +7,7 @@ export type SettingsType = {
     birthDate: dayjs.Dayjs,
     nourriture: NourritureType,
     objectif: number,
-    query: dayjs.Dayjs
+    query: number
 };
 
 type SetSettings = Function
@@ -16,15 +16,20 @@ const initialSettings: SettingsType = {
         name: 'Bébé',
         birthDate: dayjs(),
         nourriture: 'sein',
-    objectif: 30,
-        query: dayjs()
+        objectif: 30,
+        query: dayjs().startOf('D').unix()*1000
     }
 
 const SettingsContext: React.Context<any> = createContext<{ settings: SettingsType; setSettings: SetSettings} | undefined>(undefined);
 
 function SettingsProvider({ children }: { children : React.ReactNode}) {
-    const [settings, setSettings]:[SettingsType, SetStateAction<{}>] = useState(initialSettings);
+    const [settings, setSettings]:[settings: SettingsType, setSettings: Dispatch<SetStateAction<SettingsType>>] = useState(initialSettings);
     const value = { settings, setSettings };
+
+    useEffect(() => {
+        console.log(settings.query);
+        
+    },[settings])
     
     return <SettingsContext.Provider value={ value }>{ children }</SettingsContext.Provider>
 };

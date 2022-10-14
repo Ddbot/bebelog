@@ -54,7 +54,7 @@ const SettingsPage = (props: Props): JSX.Element => {
         birthDate: dayjs('10-10-2001'),
         nourriture: 'sein',
         objectif: 30,
-        query: dayjs()
+        query: dayjs().startOf('D').unix()*1000
     });
 
     function handleChange(event:React.ChangeEvent<HTMLInputElement>) {

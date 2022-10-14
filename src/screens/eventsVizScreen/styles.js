@@ -3,12 +3,14 @@ import styled from 'styled-components';
 export const SVG = styled.svg`
 	height: 88%;
 	width: 80%;
+	overflow-x: visible;
 `;
 
 export const Text = styled.text`
+position: relative;
 	font-size: 3.75rem;
 	fill: black;
-	transform: translate(2.08%);
+	// transform: translate(2.08%, -50%);
 `;
 
 export const IconsGroup = styled.ul`
