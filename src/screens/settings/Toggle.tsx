@@ -1,28 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import styled from "styled-components";
-import { useSettings } from "../../contexts/SettingsContext";
-const Label = styled.label`
-	position: relative;
-	display: inline;
-	width: 2.5rem;
-	height: 1.3rem;
-	border-radius: .8rem;
-	border: 0.125rem solid black;
-
-	/* After slide changes */
-	&:after {
-		content: '';
-		position: absolute;
-		width: 1.25rem;
-		height: 1.25rem;
-		border-radius: 100%;
-		background-color: black;
-		top: -1px;
-		left: -1px;
-		scale: 0.9;
-		transition: all 0.225s;
-	}
-`;
+import { SettingsType, useSettings } from "../../contexts/SettingsContext";
 
 const ToggleContainer = styled.div`
 	& > fieldset {
@@ -33,7 +11,7 @@ const ToggleContainer = styled.div`
 			justify-content: space-around;
 			align-items: center;
 
-			width: 5rem;
+			width: 2.4rem;
 			height: 1.5rem;
 			border-radius: .8rem;
 			border: 0.125rem solid black;
@@ -69,18 +47,19 @@ type Props = {
 };
 
 const Toggle = (props: Props): JSX.Element => {
-	const { setSettings } = useSettings();
+	const { settings, setSettings }: {settings: SettingsType, setSettings: Dispatch<SetStateAction<SettingsType>>} = useSettings();
 	
 	function handleChange(event: React.ChangeEvent<HTMLInputElement>): void { 
-		console.log('toggle value ', event.currentTarget.value);
-		
-		setSettings((prev: any) => {
+		event.persist();
+		const { value, name } = event.currentTarget;
+		setSettings((prev: SettingsType) => {
 			return { 
 				...prev,
-				nourriture: event.currentTarget.value
+				[name]: value
 			}
 		});
 	};
+
 	return (
 		<ToggleContainer>
 			<fieldset>
@@ -89,18 +68,18 @@ const Toggle = (props: Props): JSX.Element => {
 					id="sein"
 					className="checkbox"
 					onChange={handleChange}
-					name={props.name}
+					name='nourriture'
 					value="sein"
-					defaultChecked={ props.selected === 'sein'}
+					defaultChecked={ settings.nourriture === 'sein'}
 				/>
-							<Input
+				<Input
 					type="radio"
 					id="biberon"
 					className="checkbox"
 					onChange={handleChange}
-					name={props.name}
+					name='nourriture'
 					value="biberon"
-					defaultChecked={ props.selected === 'biberon'}
+					defaultChecked={ settings.nourriture === 'biberon'}
 				/>
 			</fieldset>
 		</ToggleContainer>

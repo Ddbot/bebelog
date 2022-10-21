@@ -78,7 +78,7 @@ const BottomBar = styled.nav`
 
 function App(): JSX.Element {
   const navigate = useNavigate();
-  const { settings } = useSettings();
+  const { settings, setSettings } = useSettings();
   const { setData } = useData();
 
   const [timer, setTimer]: [any, SetStateAction<any>] = useState({});
@@ -172,6 +172,19 @@ function App(): JSX.Element {
         });
   };    
   }, [timer, insertEvent]);
+  
+  useEffect(() => { 
+    async function f() {
+      const { data, error } = await supabase.from('userSettings').select({ ...settings });
+      if (data) {
+        console.log('dATA ', data);
+        
+        setSettings(data);
+      };
+        if(error) console.error('blablabla ', error);      
+    };
+    f();
+  }, [settings,setSettings]);
 
   return (
       <MobileShell>

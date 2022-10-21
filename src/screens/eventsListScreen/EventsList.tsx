@@ -97,8 +97,6 @@ const TemporaryDateSearchBox = styled.h2`
 `;
 
 const EventsList = (props: any): JSX.Element => {     
-    const location = useLocation();
-    const now = dayjs().unix() * 1000;
     const { settings, setSettings }:{ settings: SettingsType, setSettings: Dispatch<SetStateAction<SettingsType>>} = useSettings();
     const { query } = settings;
 

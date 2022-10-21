@@ -1,6 +1,41 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
+export const Biberon = styled.div`
+	scale: 0.7;
+	margin-right: 0.3rem;
+`;
+
+export const Sein = styled.div`
+	scale: 0.8;
+`;
+
+export const FeedingToggle = styled.div`
+	display: inline-flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+
+	&.feeding {
+		// max-width: 3rem;
+		justify-content: flex-end;
+	}
+
+	& > span {
+		margin-right: 1rem;
+	}
+`;
+
+export const Input = styled.input`
+	height: 2rem;
+	width: 60%;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	text-align: right;
+`;
+
 export const H1Link = styled(Link)`
 	display: flex;
 	flex-flow: row nowrap;
@@ -20,7 +55,7 @@ export const Container = styled.div`
 	display: flex;
 	flex-flow: column nowrap;
 	justify-content: space-between;
-	padding: 0 1rem;
+	padding: 0 2rem;
 
 	background: white;
 `;

@@ -62,7 +62,6 @@ const FABStatsContainer = styled.div`
 
 const FABGearContainer = styled(FABStatsContainer)`
 	z-index: 3;
-	margin: 0 1.618rem;
 `;
 
 export const FABStats = ({ children }) => {
