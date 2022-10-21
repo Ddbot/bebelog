@@ -28,11 +28,20 @@ const Content = styled.div`
 `;
 
 const Icon = styled.div`
-    grid-column: 1 / span 3;
+    grid-column: 2 / span 1;
     grid-row: 1 / span 1;
-    scale: 4;
     transform-origin: top center;
-    margin-top: 24px;
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: flex-end;
+    pointer-events: none;
+    width: 100%;
+
+    & > svg {
+        width: 100%;
+    }
 `;
 
 const Values = styled.div`

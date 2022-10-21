@@ -29,7 +29,7 @@ const SettingsPage = (props: Props): JSX.Element => {
     function handleChange(event:React.ChangeEvent<HTMLInputElement>) {
         const { name, value } = event.currentTarget;
 
-        console.log(name, value)
+        console.log(name, value);
         
         name !== 'birthDate' && setSettings((prev: SettingsType) => { 
             return {
@@ -58,16 +58,15 @@ const SettingsPage = (props: Props): JSX.Element => {
         setIsEditMode(false);
     };
 
-    useEffect(() => { 
-        const initialUserSettings = (!!localStorage.getItem('userSettings') && localStorage.getItem('userSettings') !== null) ? JSON.parse(localStorage.getItem('userSettings')!) : {
-            name: 'Bébé',
-            birthDate: dayjs().unix()*1000,
-            nourriture: 'biberon',
-            objectif: 30,
-            query: dayjs().startOf('D').unix() * 1000
-        };
-        console.log('initialUserSettings ', initialUserSettings)
-    }, []);
+    // useEffect(() => { 
+    //     const initialUserSettings = (!!localStorage.getItem('userSettings') && localStorage.getItem('userSettings') !== null) ? JSON.parse(localStorage.getItem('userSettings')!) : {
+    //         name: 'Bébé',
+    //         birthDate: dayjs().unix()*1000,
+    //         nourriture: 'biberon',
+    //         objectif: 30,
+    //         query: dayjs().startOf('D').unix() * 1000
+    //     };
+    // }, []);
 
     return <Container>
         <H1><H1Link to="/"><button>◀</button></H1Link><span>Reglages</span><Gear /></H1>
@@ -83,7 +82,7 @@ const SettingsPage = (props: Props): JSX.Element => {
                 <FeedingToggle>
                     <span><b>Birthday: </b></span>
                     { !isEditMode && <i>{ dayjs(settings.birthDate).format('DD-MM-YYYY')}</i>}
-                    {isEditMode && <Input name="birthDate" id="birthDate" type="date" onChange={handleChange} value={settings.birthDate} />}
+                    {isEditMode && <Input name="birthDate" id="birthDate" type="date" onChange={handleChange} value={dayjs(settings.birthDate).format('YYYY-MM-DD')} />}
                 </FeedingToggle>
             </Li>
             <Li>
