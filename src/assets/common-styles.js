@@ -34,11 +34,11 @@ export const TopBar = styled.nav`
 	display: flex;
 	flex-flow: row wrap;
 	align-items: center;
-	justify-content: center;
+	justify-content: space-between;
 
 	font-size: 1.7rem;
 
-	margin: 0;
+	margin: 0 10%;
 	background: white;
 	color: black;
 
@@ -46,6 +46,24 @@ export const TopBar = styled.nav`
 	& a {
 		text-decoration: none;
 		color: black;
+	}
+
+	& > * {
+		transform: translateY(50%);
+	}
+
+	& > button {
+		display: flex;
+		flex-flow: row nowrap;
+		padding: 0;
+
+		&[data-name='minus'] {
+			justify-content: flex-start;
+		}
+
+		&[data-name='plus'] {
+			justify-content: flex-end;
+		}
 	}
 `;
 
