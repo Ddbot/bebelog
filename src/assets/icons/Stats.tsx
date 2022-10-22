@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { SVGIcon } from './common-styles';
+import { SVGIcon } from '../common-styles';
 import { useLocation } from "react-router-dom";
 
 const MenuButton = styled(SVGIcon)`  

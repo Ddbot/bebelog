@@ -14,9 +14,9 @@ import {
 } from './styled-components';
 import dayjs from 'dayjs';
 import Toggle from './Toggle';
-import Nourriture from "../../assets/Nourriture";
-import Tetee from "../../assets/Tetee";
-import Gear from "../../assets/Gear";
+import Nourriture from "../../assets/icons/Nourriture";
+import Tetee from "../../assets/icons/Tetee";
+import Gear from "../../assets/icons/Gear";
 import { useSettings, SettingsType } from "../../contexts/SettingsContext";
 import { supabase } from "../../supabase/client";
 

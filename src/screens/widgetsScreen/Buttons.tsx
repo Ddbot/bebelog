@@ -3,11 +3,11 @@ import {
     Widget,
     ButtonsGroup
 } from './styled-components';
-import Lavage from '../../assets/Lavage';
-import Change from '../../assets/Change';
-import Dodo from '../../assets/Dodo';
-import Medicament from '../../assets/Medicament';
-import Nourriture from '../../assets/Nourriture';
+import Lavage from '../../assets/icons/Lavage';
+import Change from '../../assets/icons/Change';
+import Dodo from '../../assets/icons/Dodo';
+import Medicament from '../../assets/icons/Medicament';
+import Nourriture from '../../assets/icons/Nourriture';
 
 type Props = {
     handleClick: any,

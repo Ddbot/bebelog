@@ -16,10 +16,10 @@ import { useSettings } from './contexts/SettingsContext';
 import CreateEventForm from './screens/eventsListScreen/CreateEventForm';
 import Visualisation from './screens/eventsVizScreen/Visualisation';
 import { FABGears, FABStats } from "./screens/widgetsScreen/styled-components";
-import ListIcon from './assets/ListIcon';
-import EyeIcon from './assets/EyeIcon';
-import Gear from './assets/Gear';
-import Stats from './assets/Stats';
+import ListIcon from './assets/icons/ListIcon';
+import EyeIcon from './assets/icons/EyeIcon';
+import Gear from './assets/icons/Gear';
+import Stats from './assets/icons/Stats';
 import dayjs from 'dayjs';
 
 import { DataObject, useData } from './contexts/DataContext';

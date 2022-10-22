@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { SVGIcon } from './common-styles';
+import { SVGIcon } from '../common-styles';
 
 const MenuButton = styled(SVGIcon)`  
 position: absolute;

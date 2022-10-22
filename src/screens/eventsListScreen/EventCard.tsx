@@ -1,13 +1,13 @@
 import { SetStateAction, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { icons } from '../../assets/icons';
+import { icons } from '../../assets/icons/icons';
 import React from 'react';
 import { supabase } from '../../supabase/client';
 import dayjs from 'dayjs';
-import Trash from '../../assets/Trash';
-import Pen from '../../assets/Pen';
-import BackArrow from '../../assets/BackArrow';
+import Trash from '../../assets/icons/Trash';
+import Pen from '../../assets/icons/Pen';
+import BackArrow from '../../assets/icons/BackArrow';
 import { EventType } from '../../models/Event';
 import { DataObject, useData } from '../../contexts/DataContext';
 import { 

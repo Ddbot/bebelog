@@ -1,6 +1,6 @@
 import { SettingsType, useSettings } from '../../contexts/SettingsContext';
-import BackArrow from '../../assets/BackArrow';
-import RightArrow from '../../assets/RighArrow';
+import BackArrow from '../../assets/icons/BackArrow';
+import RightArrow from '../../assets/icons/RighArrow';
 
 import dayjs from 'dayjs';
 

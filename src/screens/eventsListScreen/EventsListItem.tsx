@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Event } from '../../models/Event';
-import { icons } from '../../assets/icons';
+import { icons } from '../../assets/icons/icons';
 import dayjs from 'dayjs'
 import { useEffect } from 'react';
 
