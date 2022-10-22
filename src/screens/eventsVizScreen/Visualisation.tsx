@@ -1,7 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { icons } from '../widgetsScreen/Buttons';
-import { useLocation } from 'react-router-dom';
 import { Event, EventType } from '../../models/Event';
 import { SettingsType, useSettings } from '../../contexts/SettingsContext';
 import {
@@ -13,9 +11,7 @@ import {
 } from './styles';
 import gsap from 'gsap';
 import dayjs from 'dayjs';
-import { useData, DataObject } from '../../contexts/DataContext';
-// import DateDisplaySelector from '../eventsListScreen/DateDisplaySelector';
-import iconsColors from '../../screens/widgetsScreen/Buttons';
+import { useData } from '../../contexts/DataContext';
 
 type ListItemProps = {
     bg: string,
@@ -62,7 +58,6 @@ const Visualisation = (props: Props) => {
     const { query }: { query: number } = settings;
 
     return <VizContainer className='viz'> 
-        {/* <DateDisplaySelector /> */}
         <SVG viewBox={`0 0 ${svgDimensions.width} ${svgDimensions.height}`}>
         <rect x="0" y="0" width={svgDimensions.width} height={svgDimensions.height} stroke="black" fill="rgba(0,0,0,0)" strokeWidth={4} />
         {/* lines */}
@@ -93,12 +88,12 @@ const Visualisation = (props: Props) => {
                 })}
             </g>
         </SVG>
-            <IconsGroup className='icones'>
-            {categories.map((cat: string, i: number) => { 
-                return <ListItem key={'categorie_icone2_' + cat} bg={'pink'}>
-                    { icons[cat]}
-                    </ListItem>
-            }) }
+        <IconsGroup className='icones'>
+        {categories.map((cat: string, i: number) => { 
+            return <ListItem key={'categorie_icone2_' + cat} bg={'pink'}>
+                { icons[cat]}
+                </ListItem>
+        }) }
         </IconsGroup>  
     </VizContainer>
 };

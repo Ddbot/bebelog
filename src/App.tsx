@@ -144,9 +144,7 @@ function App(): JSX.Element {
     <MobileShell>
       <TopBar>
         {pathname !== '/events/stats' ? <Link to='/'>{settings.name}</Link> : <DateDisplaySelector />}
-        <FABGears>
         { pathname !== '/settings' && pathname !== '/events/stats' && <Gear />}
-        </FABGears>
       </TopBar>
       <Routes>
         <Route path='/' element={
