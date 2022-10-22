@@ -5,7 +5,8 @@ import EventsList from './screens/eventsListScreen/EventsList';
 import EventCard from './screens/eventsListScreen/EventCard';
 import SettingsPage from './screens/settings/Settings';
 
-import styled from 'styled-components';
+import DateDisplaySelector from './screens/eventsListScreen/DateDisplaySelector';
+
 import './App.css';
 import { supabase } from './supabase/client'; 
 import Home from './screens/widgetsScreen/Home';
@@ -49,7 +50,7 @@ function App(): JSX.Element {
     };
 
     insertEvent(obj);
-    navigate('/events_list', {
+    navigate('/events/list', {
       state: {
         value: obj.start
     }})
@@ -107,7 +108,7 @@ function App(): JSX.Element {
 
     if (error) console.error('Erruer lors de linsertion');
     if (data) console.log('Inséré ', data);
-    navigate('/events_list', {
+    navigate('/events/list', {
       state: {
         value: dayjs(event.start).startOf('D').unix() * 1000
     }});
@@ -127,7 +128,9 @@ function App(): JSX.Element {
   
   useEffect(() => { 
     async function f() {
-      const { data, error } = await supabase.from('userSettings').select({ ...settings });
+      
+      const { data, error } = await supabase.from('userSettings')
+        .select({ ...settings})
       if (data) {
         setSettings(data);
       };
@@ -141,25 +144,25 @@ function App(): JSX.Element {
   return (
     <MobileShell>
       <TopBar>
-        <Link to='/'>{settings.name}</Link>
+        {pathname !== '/events/stats' ? <Link to='/'>{settings.name}</Link> : <DateDisplaySelector /> }
       </TopBar>
       <Routes>
         <Route path='/' element={
           <Home handleClick={handleClick} timerFn={timerFn} />} />
-        <Route path='events_list' element={<EventsList />} />
+        <Route path='events/list' element={<EventsList />} />
         <Route path="events/:id" element={<EventCard isEditMode={ false } />} />
         <Route path="settings" element={<SettingsPage />} />
         <Route path="add_event" element={<CreateEventForm />} />
         <Route path="pick_time" element={<EventCard isEditMode={true} />} />
-        <Route path="events_stats" element={ <Visualisation />} />
+        <Route path="events/stats" element={ <Visualisation />} />
       </Routes>
       <BottomBar>
         <FABGears>
             <Gear />
         </FABGears>        
         <FABStats>
-            { pathname !== '/events_stats' && <Stats toggleClass={toggleClass} />}
-            { pathname !== '/events_list' && <ListIcon toggleClass={ toggleClass }/>}
+            { pathname !== '/events/stats' && <Stats toggleClass={toggleClass} />}
+            { pathname !== '/events/list' && <ListIcon toggleClass={ toggleClass }/>}
             <EyeIcon />
         </FABStats>
       </BottomBar>
