@@ -63,10 +63,9 @@ export const Container = styled.div`
 export const H1 = styled.h1`
 	display: flex;
 	flex-flow: row nowrap;
-	justify-content: space-between;
+	justify-content: flex-start;
 	align-items: center;
-
-	// transform: translateY(-50%);
+	margin-block-end: 0;
 
 	& button {
 		width: 2.4rem;
@@ -77,6 +76,7 @@ export const H1 = styled.h1`
 	& > span {
 		text-align: center;
 		align-self: center;
+		margin-left: 1rem;
 	}
 `;
 
@@ -93,7 +93,7 @@ export const Ul = styled.ul`
 	place-items: stretch start;
 	place-content: stretch start;
 
-
+	margin-block: 0;
 	padding-inline-start: 0;
 
 `;
@@ -124,7 +124,7 @@ export const Li = styled.li`
 	justify-content: space-between;
 	align-items: center;
 
-	padding: 0 0.625rem;
+	// padding: 0 0.625rem;
 
 
 	& > label {

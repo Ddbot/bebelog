@@ -24,6 +24,8 @@ export const MobileShell = styled.div`
 
 	position: relative;
 	z-index: 2;
+
+	background: white;
 `;
 
 export const TopBar = styled.nav`
@@ -71,7 +73,7 @@ export const TopBar = styled.nav`
 `;
 
 export const BottomBar = styled.nav`
-	width: calc(100vw - 1.25rem);
+	width: calc(100vw - 1.25rem);	
 	background: white;
 
 	display: flex;
@@ -82,4 +84,8 @@ export const BottomBar = styled.nav`
 	z-index: 2;
 
 	padding: 0 1rem;
+	& a,
+	& button {
+		margin: 0 0.5rem;
+	}
 `;

@@ -4,9 +4,9 @@ import {
     Container, 
     EditButton, 
     H1, 
+    H1Link,
     Ul, 
     Li, 
-    H1Link,
     Biberon,
     Sein,
     FeedingToggle,
@@ -16,7 +16,6 @@ import dayjs from 'dayjs';
 import Toggle from './Toggle';
 import Nourriture from "../../assets/icons/Nourriture";
 import Tetee from "../../assets/icons/Tetee";
-import Gear from "../../assets/icons/Gear";
 import { useSettings, SettingsType } from "../../contexts/SettingsContext";
 import { supabase } from "../../supabase/client";
 
@@ -58,20 +57,8 @@ const SettingsPage = (props: Props): JSX.Element => {
         setIsEditMode(false);
     };
 
-    useEffect(() => { 
-        // const initialUserSettings = (!!localStorage.getItem('userSettings') && localStorage.getItem('userSettings') !== null) ? JSON.parse(localStorage.getItem('userSettings')!) : {
-        //     name: 'Bébé',
-        //     birthDate: dayjs().unix()*1000,
-        //     nourriture: 'biberon',
-        //     objectif: 30,
-        //     query: dayjs().startOf('D').unix() * 1000
-        // };
-        console.log(new Date(settings.birthDate));
-        
-    }, []);
-
     return <Container>
-        <H1><H1Link to="/"><button>◀</button></H1Link><span>Reglages</span><Gear /></H1>
+        <H1><H1Link to="/"><button>◀</button></H1Link><span>Reglages</span></H1>
         <Ul>
             <Li>
                 <FeedingToggle>

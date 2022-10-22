@@ -29,12 +29,11 @@ export const ButtonsGroup = styled.div`
 	align-items: center;
 
 	transition: all .225s;
-	// z-index: 1;
 `;
 
 export const HomeContainer = styled.div`
 	width: 100%;
-	height: calc(100% - 6rem);
+	height: 55vh;
 	position: relative;
 
 	display: flex;

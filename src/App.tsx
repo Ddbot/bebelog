@@ -28,6 +28,7 @@ import {
   BottomBar,
   MobileShell
 } from './assets/common-styles';
+import HomeIcon from './assets/icons/HomeIcon';
 
 function App(): JSX.Element {
   const navigate = useNavigate();
@@ -143,6 +144,9 @@ function App(): JSX.Element {
     <MobileShell>
       <TopBar>
         {pathname !== '/events/stats' ? <Link to='/'>{settings.name}</Link> : <DateDisplaySelector />}
+        <FABGears>
+        { pathname !== '/settings' && pathname !== '/events/stats' && <Gear />}
+        </FABGears>
       </TopBar>
       <Routes>
         <Route path='/' element={
@@ -155,14 +159,10 @@ function App(): JSX.Element {
         <Route path="events/stats" element={ <Visualisation />} />
       </Routes>
       <BottomBar>
-        <FABGears>
-            <Gear />
-        </FABGears>        
-        <FABStats>
-            { pathname !== '/events/stats' && <Stats toggleClass={toggleClass} />}
-            { pathname !== '/events/list' && <ListIcon toggleClass={ toggleClass }/>}
-            <EyeIcon />
-        </FABStats>
+          { pathname !== '/' && <Link to="/"><HomeIcon /></Link>}
+          { pathname !== '/events/stats' && <Stats toggleClass={toggleClass} />}
+          { pathname !== '/events/list' && <ListIcon toggleClass={ toggleClass }/>}
+          <EyeIcon />
       </BottomBar>
     </MobileShell>
     );
