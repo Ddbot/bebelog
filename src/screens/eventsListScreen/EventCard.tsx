@@ -1,4 +1,4 @@
-import { SetStateAction, useEffect, useState } from 'react';
+import { SetStateAction, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { icons } from '../../assets/icons';
@@ -70,9 +70,9 @@ const EventCard = (props: Props) => {
         });
     }; 
 
-    async function submitChange() {
+    const submitChange = useCallback(async () => {
         setIsReady(true);
-    };     
+    }, [setIsReady]);     
 
     function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
         const { name, value } = event.currentTarget;  
