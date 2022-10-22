@@ -18,6 +18,8 @@ Values,
 ButtonContainer,
 ArrowContainer
 } from './styled-components';
+import useKeyPress from '../../hooks/useKeyPress';
+
 type Times = {
     [key: string]: string
 };
@@ -47,6 +49,9 @@ const EventCard = (props: Props) => {
 
     const [isReady, setIsReady] = useState(false);
 
+    const enterPress = useKeyPress('Enter');
+    const escapePress = useKeyPress('Escape');
+
     async function deleteEvent(event: React.MouseEvent<Element>) {
         const { id } = event.currentTarget;
         const start = dayjs(value.start).startOf('D').unix() * 1000;
@@ -65,7 +70,7 @@ const EventCard = (props: Props) => {
         });
     }; 
 
-    async function submitChange(event: React.MouseEvent<Element>) {
+    async function submitChange() {
         setIsReady(true);
     };     
 
@@ -153,8 +158,12 @@ const EventCard = (props: Props) => {
     
     // si ds EditMode et keypress Enter alors submit
     useEffect(() => {
-        
-     },[isInEditMode])
+        enterPress && isInEditMode && submitChange();
+    }, [isInEditMode, enterPress, submitChange]);
+
+        useEffect(() => {
+            escapePress && setIsInEditMode(false);
+    }, [escapePress, setIsInEditMode]);
 
     return !['dodo','nourriture'].includes(value.type) ? <Card>
         <Content>
