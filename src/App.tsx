@@ -5,7 +5,8 @@ import EventsList from './screens/eventsListScreen/EventsList';
 import EventCard from './screens/eventsListScreen/EventCard';
 import SettingsPage from './screens/settings/Settings';
 
-import styled from 'styled-components';
+import DateDisplaySelector from './screens/eventsListScreen/DateDisplaySelector';
+
 import './App.css';
 import { supabase } from './supabase/client'; 
 import Home from './screens/widgetsScreen/Home';
@@ -141,7 +142,7 @@ function App(): JSX.Element {
   return (
     <MobileShell>
       <TopBar>
-        <Link to='/'>{settings.name}</Link>
+        {pathname !== '/events/stats' ? <Link to='/'>{settings.name}</Link> : <DateDisplaySelector />}
       </TopBar>
       <Routes>
         <Route path='/' element={

@@ -43,6 +43,9 @@ export const TopBar = styled.nav`
 	color: black;
 
 	z-index: 999;
+	& span {
+		font-size: 1.4rem;
+	}
 	& a {
 		text-decoration: none;
 		color: black;

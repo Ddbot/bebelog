@@ -37,7 +37,7 @@ const DateDisplaySelector = (props: Props) => {
 
     return <>
         <button onClick={handleClick} data-name="minus"><BackArrow /></button>
-        <span>{dayjs(query).format('dddd DD MMM')}</span>
+        <span>{dayjs(query).format('dd DD[/]MM[/]YY')}</span>
             { (dayjs(query).add(1,'day').isSame(dayjs()) || dayjs(query).add(1,'day').isBefore(dayjs())) && <button onClick={handleClick} data-name="plus"><RightArrow /></button>}
     {dayjs(query).add(1, 'day').isAfter(dayjs()) && <button onClick={handleClick} data-name="plus" disabled></button>}
     </>
