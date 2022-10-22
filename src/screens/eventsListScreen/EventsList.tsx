@@ -165,7 +165,7 @@ const EventsList = (props: any): JSX.Element => {
                 })
             )}
         </List>
-        </>
+    </>
 };
 
 export default EventsList;

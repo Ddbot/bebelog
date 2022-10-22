@@ -55,9 +55,9 @@ const ArrowContainer = styled.span`
 `;
 
 const EventsListItem = ({ event }: Props) => { 
-    return  !['dodo','nourriture'].includes(String(event.type)) ? <Card to={`/events/${event.id}`} state={{ value: event}}><Li>
+    return !['dodo', 'nourriture'].includes(String(event.type)) ? <Card to={`/events/${event.id}`} state={{ value: { ...event, from: 'events_list' }}}><Li>
         {icons[String(event.type)]}{ dayjs(event.start).format('HH[:]mm')}
-    </Li></Card> : <Card to={`/events/${event.id}`} state={{value:event}}><Li>
+    </Li></Card> : <Card to={`/events/${event.id}`} state={{ value : { ...event, from: 'events_list' }}}><Li>
             {icons[String(event.type)]} <>{dayjs(event.start!).format('HH:mm')} <ArrowContainer><span>→</span></ArrowContainer> {dayjs(event.end).format('HH:mm')}</>
     </Li></Card>
 };

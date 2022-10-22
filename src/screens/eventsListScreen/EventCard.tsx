@@ -41,6 +41,9 @@ const EventCard = (props: Props) => {
     const navigate = useNavigate();
     const { setData } = useData();
 
+    console.log('Value ', value);
+    
+
     const [isInEditMode, setIsInEditMode] = useState(props.isEditMode ||false);
     const [time, setTime]:[Times, SetStateAction<any>] = useState({
         start: dayjs(value.start).format('HH:mm'),
@@ -171,7 +174,7 @@ const EventCard = (props: Props) => {
             {isInEditMode && <Values><input data-type='oneshot' onChange={handleChange} type="time" name="start" min={0} max={23} value={time['start']} /></Values>}
             { !isInEditMode && <Values><div>{dayjs(value.start).format('HH:mm')}</div></Values>}
             <ButtonContainer>                
-                <button id={value.id} onClick={() => { navigate('/events_list')}}><BackArrow /></button>
+                <button id={value.id} onClick={() => { navigate(`/${value.from}`)}}><BackArrow /></button>
                 <button id={value.id} onClick={deleteEvent}><Trash /></button>
                 { !isInEditMode &&<button id={value.id} onClick={() => { setIsInEditMode(true)}}><Pen /></button>}
                 {isInEditMode && <button id={value.id} onClick={submitChange} disabled={ isReady }>✔️</button>}
@@ -184,7 +187,7 @@ const EventCard = (props: Props) => {
                     <input data-type='timed' onChange={handleChange} type="time" name="start" className="durationDisplay" min={0} max={23} value={time['start']} /> <ArrowContainer><span>→</span></ArrowContainer> <input type="time" onChange={ handleChange} className="durationDisplay" name="end" min={0} max={23} value={time['end']} /></Values>}
                 { !isInEditMode && <Values><div className="durationDisplay">{dayjs(value.start!).format('HH:mm')} <ArrowContainer><span>→</span></ArrowContainer> {dayjs(value.end).format('HH:mm')}</div></Values>}
                 <ButtonContainer>                    
-                    <button id={value.id} onClick={() => { navigate('/events_list')}}><BackArrow /></button>
+                    <button id={value.id} onClick={() => { navigate(`/${value.from}`)}}><BackArrow /></button>
                     <button id={value.id} onClick={deleteEvent}><Trash /></button>
                     { !isInEditMode &&<button id={value.id} onClick={() => { setIsInEditMode(true)}}><Pen /></button>}
                     {isInEditMode && <button id={value.id} onClick={submitChange}>✔️</button>}
