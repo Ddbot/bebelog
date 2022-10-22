@@ -149,7 +149,12 @@ const EventCard = (props: Props) => {
             clonedObj.end = dayjs(clonedObj.end).add(1, 'day').unix()*1000;
             isReady && updateEvent(clonedObj);
         }
-    }, [isReady,time,value, navigate, setData]);
+    }, [isReady, time, value, navigate, setData]);
+    
+    // si ds EditMode et keypress Enter alors submit
+    useEffect(() => {
+        
+     },[isInEditMode])
 
     return !['dodo','nourriture'].includes(value.type) ? <Card>
         <Content>
