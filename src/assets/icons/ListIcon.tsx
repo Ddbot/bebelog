@@ -32,7 +32,7 @@ opacity: 0;
   `;
 
 const ListIcon = ({ toggleClass }: any) => {
-  return <MenuButton to="/events_list" className="menuBtn hidden" onClick={toggleClass}>
+  return <MenuButton to="/events/list" className="menuBtn hidden" onClick={toggleClass}>
     <svg viewBox="-5 -5 31 23" width={24} height={24} fill="none" xmlns="http://www.w3.org/2000/svg" pointerEvents={'all'}>
       <rect x="-5" y="-5" width={31} height={28} strokeWidth={2} stroke="black" />
       <path transform="translate(0 2.5)"
