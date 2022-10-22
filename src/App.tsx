@@ -147,7 +147,7 @@ function App(): JSX.Element {
         <Route path='/' element={
           <Home handleClick={handleClick} timerFn={timerFn} />} />
         <Route path='events_list' element={<EventsList />} />
-        <Route path="events_list/:id" element={<EventCard isEditMode={ false } />} />
+        <Route path="events/:id" element={<EventCard isEditMode={ false } />} />
         <Route path="settings" element={<SettingsPage />} />
         <Route path="add_event" element={<CreateEventForm />} />
         <Route path="pick_time" element={<EventCard isEditMode={true} />} />

@@ -85,11 +85,11 @@ const Visualisation = (props: Props) => {
             <g>
                 {data[String(query)]?.map((d: Event, i: number) => {
                     const { x1, y1, x2, y2} = getCoordinates(d);
-                    return ['dodo', 'nourriture'].includes(d.type) ? <a href="#" onClick={() => { console.log(...Object.values(d)) }} key={'line_' + i}><line x1={x1} x2={x2} y1={svgDimensions.height - y1} y2={svgDimensions.height - y2} strokeWidth={40} stroke="red" /></a> : <a href="#" onClick={() => { console.log(dayjs(d.start).format('HH:mm')) }} key={'circle_' + i}>
+                    return ['dodo', 'nourriture'].includes(d.type) ? <Link to={`/events/${d.id}`} state={{ value: d}} onClick={() => { console.log(dayjs(d.start).format('HH:mm'),' to ',dayjs(d.end).format('HH:mm'), Math.round((d.end - d.start) / 1000/60) + ' minutes') }} key={'line_' + i}><line x1={x1} x2={x2} y1={svgDimensions.height - y1} y2={svgDimensions.height - y2} strokeWidth={40} stroke="red" /></Link> : <Link to={`/events/${d.id}`} state={{ value: d}} onClick={() => { console.log(dayjs(d.start).format('HH:mm')) }} key={'circle_' + i}>
                         <circle cx={x1} cy={svgDimensions.height - y1} r={circleRadius} stroke="black" strokeWidth={10} fill="transparent" />
                         <line transform={`rotate(45, ${x1}, ${svgDimensions.height - y1})`} x1={x1 - circleRadius} x2={x1 + circleRadius} y1={svgDimensions.height - y1} y2={svgDimensions.height - y1} strokeWidth={10} stroke="black" strokeDasharray={"10 0"} />
                         <line transform={`rotate(45, ${x1}, ${svgDimensions.height - y1})`} x1={x1} x2={x1} y1={svgDimensions.height - y1 - circleRadius } y2={svgDimensions.height - y1 + circleRadius} strokeWidth={10} stroke="black" strokeDasharray={"10 0"}/>
-                    </a>;
+                    </Link>;
                 })}
             </g>
         </SVG>
