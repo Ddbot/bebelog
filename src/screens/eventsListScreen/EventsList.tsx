@@ -160,9 +160,18 @@ const EventsList = (props: any): JSX.Element => {
         <List className='listView'>
             <AddEventButton />
             {data[String(dayjs(query).startOf('D').unix()*1000)]?.length >= 1 && (
-                data[String(dayjs(query).startOf('D').unix()*1000)]?.map((ev: Event, i: number) => {
+                data[String(dayjs(query).startOf('D').unix() * 1000)]?.sort((a,b) => { 
+                    if(a.start > b.start){
+                        return 1
+                    };
+                    if(a.start <= b.start){
+                        return -1
+                    };
+                    return 0
+                })   
+                .map((ev: Event, i: number) => {
                     return <EventsListItem event={ev} key={'eventListItem'+i} />
-                })
+                })                 
             )}
         </List>
     </>

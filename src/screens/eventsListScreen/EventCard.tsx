@@ -113,7 +113,7 @@ const EventCard = (props: Props) => {
                 return prev;
             });            
 
-            navigate('/events_list', {
+            navigate(`/${value.from}`, {
                 state: {
                     value: dayjs(start).startOf('D').unix()*1000
                 }
@@ -134,7 +134,7 @@ const EventCard = (props: Props) => {
                 return prev;
             });
 
-            navigate('/events_list', {
+            navigate(`/${value.from}`, {
                 state: {
                     value: ctxIndex
                 }
