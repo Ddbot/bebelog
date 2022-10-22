@@ -16,6 +16,7 @@ import dayjs from 'dayjs';
 import { useData, DataObject } from '../../contexts/DataContext';
 // import DateDisplaySelector from '../eventsListScreen/DateDisplaySelector';
 import iconsColors from '../../screens/widgetsScreen/Buttons';
+import {supabase} from '../../supabase/client';
 
 type ListItemProps = {
     bg: string,
@@ -57,9 +58,26 @@ function getCoordinates(event: Event) {
 }
 
 const Visualisation = (props: Props) => {
-    const { data } = useData();    
+    const { data, setData } = useData();    
     const { settings }: { settings: SettingsType } = useSettings();
     const { query }: { query: number } = settings;
+
+    console.log(data,dayjs(query));
+
+    async function fetchEvents() {
+        const { data, error } = await supabase
+            .from('events')
+            .select()
+            .gte('start', dayjs(query).startOf('D').unix()*1000)
+            .lte('start', dayjs(query).endOf('D').unix() * 1000);
+        if (data) setData(data);
+        if (error) console.error(error);
+        
+    };
+    
+    useEffect(() => { 
+        fetchEvents();
+    }, []);
 
     return <VizContainer className='viz'> 
         {/* <DateDisplaySelector /> */}
@@ -83,9 +101,9 @@ const Visualisation = (props: Props) => {
             </g>
             {/* DATA */}
             <g>
-                {data[String(query)]?.map((d: Event, i: number) => {
+                {data.map((d: Event, i: number) => {
                     const { x1, y1, x2, y2} = getCoordinates(d);
-                    return ['dodo', 'nourriture'].includes(d.type) ? <Link to={`/events/${d.id}`} state={{ value: { ...d, from: 'events_stats' }}} onClick={() => { console.log(dayjs(d.start).format('HH:mm'),' to ',dayjs(d.end).format('HH:mm'), Math.round((d.end - d.start) / 1000/60) + ' minutes') }} key={'line_' + i}><line x1={x1} x2={x2} y1={svgDimensions.height - y1} y2={svgDimensions.height - y2} strokeWidth={40} stroke="red" /></Link> : <Link to={`/events/${d.id}`} state={{ value: { ...d, from: 'events_stats' }}} onClick={() => { console.log(dayjs(d.start).format('HH:mm')) }} key={'circle_' + i}>
+                    return ['dodo', 'nourriture'].includes(d.type) ? <Link to={`/events/${d.id}`} state={{ value: { ...d, from: 'events/stats' }}} onClick={() => { console.log(dayjs(d.start).format('HH:mm'),' to ',dayjs(d.end).format('HH:mm'), Math.round((d.end - d.start) / 1000/60) + ' minutes') }} key={'line_' + i}><line x1={x1} x2={x2} y1={svgDimensions.height - y1} y2={svgDimensions.height - y2} strokeWidth={40} stroke="red" /></Link> : <Link to={`/events/${d.id}`} state={{ value: { ...d, from: 'events/stats' }}} onClick={() => { console.log(dayjs(d.start).format('HH:mm')) }} key={'circle_' + i}>
                         <circle cx={x1} cy={svgDimensions.height - y1} r={circleRadius} stroke="black" strokeWidth={10} fill="transparent" />
                         <line transform={`rotate(45, ${x1}, ${svgDimensions.height - y1})`} x1={x1 - circleRadius} x2={x1 + circleRadius} y1={svgDimensions.height - y1} y2={svgDimensions.height - y1} strokeWidth={10} stroke="black" strokeDasharray={"10 0"} />
                         <line transform={`rotate(45, ${x1}, ${svgDimensions.height - y1})`} x1={x1} x2={x1} y1={svgDimensions.height - y1 - circleRadius } y2={svgDimensions.height - y1 + circleRadius} strokeWidth={10} stroke="black" strokeDasharray={"10 0"}/>

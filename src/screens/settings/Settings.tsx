@@ -58,18 +58,6 @@ const SettingsPage = (props: Props): JSX.Element => {
         setIsEditMode(false);
     };
 
-    useEffect(() => { 
-        // const initialUserSettings = (!!localStorage.getItem('userSettings') && localStorage.getItem('userSettings') !== null) ? JSON.parse(localStorage.getItem('userSettings')!) : {
-        //     name: 'Bébé',
-        //     birthDate: dayjs().unix()*1000,
-        //     nourriture: 'biberon',
-        //     objectif: 30,
-        //     query: dayjs().startOf('D').unix() * 1000
-        // };
-        console.log(new Date(settings.birthDate));
-        
-    }, []);
-
     return <Container>
         <H1><H1Link to="/"><button>◀</button></H1Link><span>Reglages</span><Gear /></H1>
         <Ul>

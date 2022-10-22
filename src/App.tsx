@@ -129,8 +129,7 @@ function App(): JSX.Element {
   useEffect(() => { 
     async function f() {
       
-      const { data, error } = await supabase.from('userSettings')
-        .select({ ...settings})
+      const { data, error } = await supabase.from('userSettings').select({ ...settings})
       if (data) {
         setSettings(data);
       };

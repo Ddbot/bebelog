@@ -66,7 +66,7 @@ const EventCard = (props: Props) => {
         });
         
         if (error) console.error(error);
-        navigate('/events_list', {
+        navigate('/events/list', {
             state: {
                 value: start
             }
@@ -122,23 +122,26 @@ const EventCard = (props: Props) => {
         
         async function upsertEvent(payload: Payload) {
             const { type, start, end } = payload;  
+
             // calculer index dans ctx
             const ctxIndex = String(dayjs(start).startOf('D').unix() * 1000);
 
             
             const { data, error } = await supabase.from('events').upsert({ type, start, end });
 
-            if (error) console.error('Erruer lors de lupsertion', data);
+            if (error) console.error('Erreur lors de l\'upsertion', data);
+
             setData((prev: DataObject) => { 
                 delete prev[ctxIndex];
                 return prev;
             });
 
-            navigate(`/${value.from}`, {
-                state: {
-                    value: ctxIndex
-                }
-            });
+            // navigate(`/${value.from}`, {
+            //     state: {
+            //         value: ctxIndex
+            //     }
+            // });
+            navigate('/events/list');
         };         
         
         Object.keys(time as Object).forEach((key, i) => { 
