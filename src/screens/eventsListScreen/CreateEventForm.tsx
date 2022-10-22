@@ -2,7 +2,7 @@ import { Link, useLocation, useNavigate, Outlet} from 'react-router-dom';
 import { ButtonsGroup, Widget } from '../widgetsScreen/styled-components';
 import { icons } from '../widgetsScreen/Buttons';
 import { HomeContainer } from '../widgetsScreen/styled-components';
-import { useSettings } from '../../contexts/SettingsContext';
+import { useSettings, SettingsType } from '../../contexts/SettingsContext';
 import React from 'react';
 import { EventType } from '../../models/Event';
 import styled from 'styled-components';
@@ -12,13 +12,18 @@ type Props = {
 };
 
 const CreateEventForm = (props: Props) => {
-    const { settings } = useSettings();
+    const { setSettings } = useSettings();
     const location = useLocation();
     const navigate = useNavigate();
 
     function handleClick( event : React.MouseEvent<HTMLButtonElement>) {
         const { query } = location.state;
-        console.log('Query: ', dayjs(query).format('DD MMMM YYYY'));
+        setSettings((prev: SettingsType) => {
+            return {
+                ...prev,
+                query: dayjs(query).unix() * 1000
+            }
+        });
         
 
         navigate('/pick_time', {

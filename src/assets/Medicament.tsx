@@ -1,8 +1,16 @@
 import React from 'react';
+import styled from 'styled-components';
 
-const Medicament = ():JSX.Element => {
+type Props = {
+  color: string;
+};
+
+const SVG = styled.svg`
+`;
+
+const Medicament = ({ color }: Props):JSX.Element => {
     return (
-      <svg xmlns="http://www.w3.org/2000/svg" width={32} viewBox="0 0 980 982">
+      <SVG xmlns="http://www.w3.org/2000/svg" width={32} viewBox="0 0 980 982">
         <defs />
         <path
           fill="#B5B5B5"
@@ -22,7 +30,7 @@ const Medicament = ():JSX.Element => {
           stroke="#000"
           d="M849.5 341q7.7-1.2 11 2l11.5 10.5q12.1 13.4 18 33l3 13 1 21-1 1-1 14-6 19q-6.6 16.4-18.5 27.5-5.5 6.5-17 7-9.2-1.7-13.5-8.5l-3-10 3-8q10.5-11.5 17-27l3-12v-16l-4-15-5-10-12-17-1-12q1.6-6.9 7.5-9.5l7-3z"
         />
-      </svg>
+      </SVG>
     );
 }
 

@@ -10,16 +10,16 @@ export type Action = {
 
 export type Event = { 
     id?: string;  
-    start?: number;
-    end?: number;
-  type?: EventType;
+    start: number;
+    end: number;
+  type: EventType;
   isNew?: boolean;
 };
 
 export type TimerType = {
-  category?: undefined | string,
-  start?: undefined | number,
-  end?: undefined | number,
+  category?: string,
+  start?: number,
+  end?: number,
 }
 
 export type NourritureType = 'sein' | 'biberon';

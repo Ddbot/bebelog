@@ -1,15 +1,16 @@
-import React, { SetStateAction, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import styled, { StyledComponent } from 'styled-components';
 import { Event } from '../../models/Event';
 import { supabase } from '../../supabase/client';
 import dayjs from 'dayjs';
-import { useData } from '../../contexts/DataContext';
+import { SettingsType, useSettings } from '../../contexts/SettingsContext';
 
 import EventsListItem from './EventsListItem';
 
-import RightArrow from '../../assets/RighArrow';
-import BackArrow from '../../assets/BackArrow';
+
+import { useData, DataObject } from '../../contexts/DataContext';
+import DateDisplaySelector from './DateDisplaySelector';
 
 const Container: StyledComponent<any, any> = styled.div`
     grid-row: 1 / span 1;
@@ -95,10 +96,15 @@ const TemporaryDateSearchBox = styled.h2`
     }
 `;
 
-const EventsList = (props: any): JSX.Element => { 
-    const [list, setList]: [Event[], any] = useState([]);
-    const [query, setQuery]: [any, SetStateAction<any>] = useState(dayjs().unix() * 1000);
-    const { data, setData } = useData();
+const EventsList = (props: any): JSX.Element => {     
+    const { settings, setSettings }:{ settings: SettingsType, setSettings: Dispatch<SetStateAction<SettingsType>>} = useSettings();
+    const { query } = settings;
+
+
+    const { data, setData }: { data: DataObject, setData: Dispatch<SetStateAction<DataObject>> } = useData();
+    let start = String(dayjs(query).startOf('D').unix() * 1000);
+    let end = String(dayjs(query).endOf('D').unix() * 1000);
+
     
     const AddEventButton = () => { 
         return <Container>
@@ -114,54 +120,47 @@ const EventsList = (props: any): JSX.Element => {
                     }}>
             <span>+</span></Link></Container>;
     };    
-    
-    function handleClick(event:React.MouseEvent<HTMLButtonElement>) {
-        const name = event.currentTarget.dataset.name;
-        switch (name) {
-            case 'minus':
-                setQuery((prev: any) => { 
-                    return dayjs(prev).subtract(1, 'day').unix() * 1000;
-                });
-                break;        
-            default:
-                setQuery((prev: any) => { 
-                    return dayjs(prev).add(1, 'day').unix() * 1000;
-                });
-                break;
-        }
-        
-    }
 
-    useEffect(() => { 
-        let start = dayjs(query).startOf('D').unix() * 1000;
-        let end = dayjs(query).endOf('D').unix() * 1000;
-        
+    let fetchOrGetFromContext = useCallback((start: string, end: string) => {
+        // on clone les data du contexte
+        const d = structuredClone(data);
+
         async function fetchEvents() {
             const { data, error } = await supabase
                 .from('events')
                 .select()
-                .gte('start', start)
-                .lte('start', end);
-            if (error) console.error(error);
-            if (data) {
-                setData(data);
-            }       
-        };        
+                .gte('start', Number(start))
+                .lte('start', Number(end));
 
-        if(data.length === 0) fetchEvents();
-    }, [query, data, setData]);
+                if (error) console.error(error);
+            if (data) {
+                setData((prev: DataObject) => {                    
+                    return {
+                        ...prev,
+                        [start]: [...data]
+                    }                    
+                });
+            }
+        };
+        
+        // seulment si l'entree n'existe pas dans le contexte, on la fetch sinon depuis le ctx
+        !d[start] && fetchEvents();
+    },[setData,data]);
+
+    useEffect(() => {    
+        // return () => {
+            fetchOrGetFromContext(start, end);
+        // }
+    }, [fetchOrGetFromContext,start,end]);
 
     return <>
         <TemporaryDateSearchBox>
-            <button onClick={handleClick} data-name="minus"><BackArrow /></button>
-            <span>{dayjs(query).format('dddd DD MMM')}</span>
-            { (dayjs(query).add(1,'day').isSame(dayjs()) || dayjs(query).add(1,'day').isBefore(dayjs())) && <button onClick={handleClick} data-name="plus"><RightArrow /></button>}
-            { dayjs(query).add(1,'day').isAfter(dayjs()) && <button onClick={handleClick} data-name="plus" disabled></button>}
+            <DateDisplaySelector />
         </TemporaryDateSearchBox>
         <List className='listView'>
             <AddEventButton />
-            {list?.length >= 1 && (
-                list?.map((ev: Event, i: number) => {
+            {data[String(dayjs(query).startOf('D').unix()*1000)]?.length >= 1 && (
+                data[String(dayjs(query).startOf('D').unix()*1000)]?.map((ev: Event, i: number) => {
                     return <EventsListItem event={ev} key={'eventListItem'+i} />
                 })
             )}

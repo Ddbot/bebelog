@@ -1,6 +1,6 @@
-import React, { SetStateAction, useEffect, useState } from 'react';
-import { TimerType } from './models/Event';
-import { Routes, Route, Link } from 'react-router-dom';
+import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
+import { Event, TimerType } from './models/Event';
+import { Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
 import EventsList from './screens/eventsListScreen/EventsList';
 import EventCard from './screens/eventsListScreen/EventCard';
 import SettingsPage from './screens/settings/Settings';
@@ -14,7 +14,15 @@ import Home from './screens/widgetsScreen/Home';
 
 import { useSettings } from './contexts/SettingsContext';
 import CreateEventForm from './screens/eventsListScreen/CreateEventForm';
+import Visualisation from './screens/eventsVizScreen/Visualisation';
+import { FABGears, FABStats } from "./screens/widgetsScreen/styled-components";
+import ListIcon from './assets/ListIcon';
+import EyeIcon from './assets/EyeIcon';
+import Gear from './assets/Gear';
+import Stats from './assets/Stats';
+import dayjs from 'dayjs';
 
+import { DataObject, useData } from './contexts/DataContext';
 
 const radius = '0.67cm';
 
@@ -26,18 +34,21 @@ const MobileShell = styled.div`
 
   display: flex;
   flex-flow: row wrap;
-  align-items: center;
+  align-items: space-between;
   justify-content: center;
 
   text-align: center;
   overflow: hidden;
 
+  position: relative;
+  z-index: 2;
+
 `;
 
-const TopBar = styled.h1`
-align-self: flex-start;
+const TopBar = styled.nav`
+  align-self: flex-start;
   width: calc(100vw - 20px);
-  height: 3rem;
+  height: 6vh;
 
   display: flex;
   flex-flow: row wrap;
@@ -47,34 +58,51 @@ align-self: flex-start;
   font-size: 1.7rem;
 
   margin: 0;
-  background: transparent;
+  background: white;
   color: black;
 
-  z-index: 2;
+  z-index: 999;
 `;
 
-const AppTitle = styled(Link)`
-  background: transparent; 
-  width: 100%; 
-  text-decoration: none;
-  color: black;
-  transform: translateY(100%);
+const BottomBar = styled.nav`
+    width: calc(100vw - 1.25rem);
+  background: white;
+
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-end;
+    justify-content: flex-end;
+    
+    z-index: 2;
+
+    padding: 0 1rem;
 `;
 
 function App(): JSX.Element {
-  const { settings } = useSettings();
+  const navigate = useNavigate();
+  const { settings, setSettings } = useSettings();
+  const { setData } = useData();
 
   const [timer, setTimer]: [any, SetStateAction<any>] = useState({});
+
+  const location = useLocation();
+  const pathname = location.pathname;
 
   function handleClick(event: React.MouseEvent<HTMLButtonElement>): void {
     const currentTarget: HTMLButtonElement = event.currentTarget;
     const { type }: any = currentTarget.dataset;
 
-    insertEvent({
-          type,
-          start: Date.now(),
-          end: Date.now(),
-        });
+    const obj: Event = {
+      type,
+      start: dayjs().unix()*1000,
+      end: dayjs().unix()*1000,
+    };
+
+    insertEvent(obj);
+    navigate('/events_list', {
+      state: {
+        value: obj.start
+    }})
   };
 
   function timerFn(event: React.MouseEvent<HTMLButtonElement>): void {    
@@ -108,13 +136,33 @@ function App(): JSX.Element {
       }
     });       
   };
-  async function insertEvent(event: any) {
 
+  function toggleClass() {
+    const boutons_de_menu_dans_Eye_icon = document.querySelectorAll('.menuBtn');
+    boutons_de_menu_dans_Eye_icon.forEach(bouton => { bouton.classList.toggle('hidden'); });
+    let viz = document.querySelector('.viz');
+    let listView = document.querySelector('.listView');
+        viz?.classList.toggle('blur');
+        listView?.classList.toggle('blur');
+
+  };
+  
+  const insertEvent = useCallback(async (event: Event) => {
     const { data, error } = await supabase.from('events').insert(event);
+      setData((prev: DataObject) => { 
+        const start = String(dayjs(event.start).startOf('D').unix() * 1000);           
+        delete prev[start];
+        return prev;
+      });
 
     if (error) console.error('Erruer lors de linsertion');
     if (data) console.log('Inséré ', data);
-  };
+    navigate('/events_list', {
+      state: {
+        value: dayjs(event.start).startOf('D').unix() * 1000
+    }});
+  }, [setData,navigate]);
+
 
   // repere le nb de parametres dans timer et setEventsList accordingly
   useEffect((): void => { 
@@ -125,7 +173,20 @@ function App(): JSX.Element {
           end: Date.now()
         });
   };    
-  }, [timer]);
+  }, [timer, insertEvent]);
+  
+  useEffect(() => { 
+    async function f() {
+      const { data, error } = await supabase.from('userSettings').select({ ...settings });
+      if (data) {
+        setSettings(data);
+      };
+      if (error) {
+        console.error('blablabla ', error);
+      };      
+    };
+    f();
+  }, [settings,setSettings]);
 
   return (
     <MobileShell>
@@ -139,8 +200,19 @@ function App(): JSX.Element {
         <Route path="events_list/:id" element={<EventCard isEditMode={ false } />} />
         <Route path="settings" element={<SettingsPage />} />
         <Route path="add_event" element={<CreateEventForm />} />
-        <Route path="pick_time" element={<EventCard isEditMode={ true } />} />
+        <Route path="pick_time" element={<EventCard isEditMode={true} />} />
+        <Route path="events_stats" element={ <Visualisation />} />
       </Routes>
+      <BottomBar>
+        <FABGears>
+            <Gear />
+        </FABGears>        
+        <FABStats>
+            { pathname !== '/events_stats' && <Stats toggleClass={toggleClass} />}
+            { pathname !== '/events_list' && <ListIcon toggleClass={ toggleClass }/>}
+            <EyeIcon />
+        </FABStats>
+      </BottomBar>
     </MobileShell>
     );
   }

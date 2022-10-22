@@ -1,23 +1,35 @@
-import { createContext, Dispatch, SetStateAction, useContext, useState } from "react";
+import { createContext, Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import { Event, EventType } from "../models/Event";
+import dayjs from "dayjs";
 
-type DataType = Event[] | [];
+export type DataType = Event[] | [];
 type SetDataType = Function;
 
-const initialData: Event[] = [
-    { 
+export type DataObject = {
+    [key: string]: DataType
+};
+
+const today = String(dayjs().startOf('D').unix() * 1000);
+
+const initialData: DataObject = {
+    [today]: [{
         id: 'firstData',  
         start: 0,
         end: 0,
         type: EventType.DODO
     }
-];
+]};
 
-const DataContext: React.Context<any> = createContext<{ data: DataType; setData: SetDataType }| undefined>(undefined);
+const DataContext: React.Context<any> = createContext<{ data: DataObject; setData: SetDataType }| undefined>(undefined);
 
 const DataProvider = ({ children }: { children: React.ReactNode }) => {
-    const [data, setData]:[Event[]|[], Dispatch<SetStateAction<Event[]>>] = useState<Event[]>(initialData);
+    const [data, setData]: [DataObject, Dispatch<SetStateAction<DataObject>>] = useState<DataObject>(initialData);
     const value = { data, setData };
+
+    useEffect(() => { 
+        console.log('NEW DATA ', data);
+        
+    }, [data]);
 
     return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
 };

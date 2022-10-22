@@ -1,13 +1,15 @@
 import styled from "styled-components";
+type Props = {
+  color: string
+};
 
 const SVG = styled.svg`
-    stroke-width: 0.75rem;
-    stroke: black;
 `;
+
 const Path = styled.path`
 `;
 
-const Lavage = (): JSX.Element => (
+const Lavage = ({ color }: Props): JSX.Element => (
   <SVG
     viewBox="0 0 512 512"
     width={40}

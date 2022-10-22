@@ -1,67 +1,47 @@
-import React, { SetStateAction, useEffect, useState } from "react";
-import styled from "styled-components";
-import { CancelButton, Container, EditButton, H1, Ul, Li, H1Link } from './styled-components';
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import {
+    CancelButton, 
+    Container, 
+    EditButton, 
+    H1, 
+    Ul, 
+    Li, 
+    H1Link,
+    Biberon,
+    Sein,
+    FeedingToggle,
+    Input
+} from './styled-components';
 import dayjs from 'dayjs';
 import Toggle from './Toggle';
 import Nourriture from "../../assets/Nourriture";
 import Tetee from "../../assets/Tetee";
 import Gear from "../../assets/Gear";
 import { useSettings, SettingsType } from "../../contexts/SettingsContext";
+import { supabase } from "../../supabase/client";
 
-const Biberon = styled.div`
-    scale:0.7;
-    margin-right: .3rem;
-`;
-
-const Sein = styled.div`
-    scale: 0.8;
-`;
-
-type Props = {
-
-};
-
-const FeedingToggle = styled.div`
-    display: inline-flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-
-    &.feeding {
-        justify-content: flex-end;
-    }
-
-    & > span {
-        margin-right: 1rem;
-    }
-`;
-
-const Input = styled.input`
-    height: 2rem;
-    width: 60%;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    text-align: right;
-`;
+type Props = {};
 
 const SettingsPage = (props: Props): JSX.Element => { 
-    const { settings, setSettings } = useSettings();
+    const { settings, setSettings }: { settings: SettingsType, setSettings: Dispatch<SetStateAction<SettingsType>>} = useSettings();
     const [isEditMode, setIsEditMode] = useState(false);
-    const [bufferizedSettings, setBufferizedSettings] : [SettingsType,SetStateAction<any>]= useState({
-        name: 'Bébé',
-        birthDate: dayjs('10-10-2001'),
-        nourriture: 'sein',
-        objectif: 30
-    });
 
     function handleChange(event:React.ChangeEvent<HTMLInputElement>) {
         const { name, value } = event.currentTarget;
-        setBufferizedSettings((prev: SettingsType) => { 
+
+        console.log(name, value);
+        
+        name !== 'birthDate' && setSettings((prev: SettingsType) => { 
             return {
                 ...prev,
                 [name]: value
+            }
+        });
+
+        name === 'birthDate' && setSettings((prev: SettingsType) => { 
+            return {
+                ...prev,
+                [name]: dayjs(value).unix()*1000
             }
         });
     };
@@ -70,17 +50,25 @@ const SettingsPage = (props: Props): JSX.Element => {
         setIsEditMode(prev => !prev);
     };
 
-    function submitSettings(event: React.MouseEvent) {
+    async function submitSettings() {   
+        const { data, error } = await supabase.from('userSettings').upsert({ ...settings }).eq('userId', 30).select()
+        if(data)console.log('Data upserted: ', data);
+        if (error) console.error('oups ',error);
         
-        setSettings((prev: any) => {
-            return {
-                ...bufferizedSettings,
-                nourriture: prev.nourriture
-            }
-        });
-
         setIsEditMode(false);
     };
+
+    useEffect(() => { 
+        // const initialUserSettings = (!!localStorage.getItem('userSettings') && localStorage.getItem('userSettings') !== null) ? JSON.parse(localStorage.getItem('userSettings')!) : {
+        //     name: 'Bébé',
+        //     birthDate: dayjs().unix()*1000,
+        //     nourriture: 'biberon',
+        //     objectif: 30,
+        //     query: dayjs().startOf('D').unix() * 1000
+        // };
+        console.log(new Date(settings.birthDate));
+        
+    }, []);
 
     return <Container>
         <H1><H1Link to="/"><button>◀</button></H1Link><span>Reglages</span><Gear /></H1>
@@ -89,14 +77,14 @@ const SettingsPage = (props: Props): JSX.Element => {
                 <FeedingToggle>
                     <span><b>Name: </b></span>
                     { !isEditMode && <i>{settings.name}</i>}
-                    {isEditMode && <Input name="name" id="nameInput" type="text" onChange={handleChange} value={bufferizedSettings.name} />}
+                    {isEditMode && <Input name="name" id="nameInput" type="text" onChange={handleChange} value={settings.name} />}
                 </FeedingToggle>
             </Li>
             <Li>
                 <FeedingToggle>
                     <span><b>Birthday: </b></span>
-                    { !isEditMode && <i>{ dayjs(settings.birthDate).format('DD MMMM YYYY')}</i>}
-                    {isEditMode && <Input name="birthDate" id="birthDate" type="date" onChange={handleChange} value={dayjs(bufferizedSettings.birthDate).format('YYYY-MM-DD')} />}
+                    { !isEditMode && <i>{ dayjs(settings.birthDate).format('DD-MM-YYYY')}</i>}
+                    {isEditMode && <Input name="birthDate" id="birthDate" type="date" onChange={handleChange} value={dayjs(settings.birthDate).format('YYYY-MM-DD')} />}
                 </FeedingToggle>
             </Li>
             <Li>
@@ -108,7 +96,7 @@ const SettingsPage = (props: Props): JSX.Element => {
                     </Sein>
                     <Toggle name="nourriture" selected={ settings.nourriture} />    
                     <Biberon>
-                        <Nourriture />
+                        <Nourriture color="black" />
                     </Biberon>
                 </FeedingToggle>}
             </Li>
@@ -116,7 +104,7 @@ const SettingsPage = (props: Props): JSX.Element => {
                 <span><b>Objectif: </b>
                 </span>
                 { !isEditMode && <span>{ settings.objectif}</span>}
-                {isEditMode && <Input type="number" name="objectif" id="objectif" step="10" min={10} max={1000} onChange={handleChange} value={ bufferizedSettings.objectif} />}
+                {isEditMode && <Input type="number" name="objectif" id="objectif" step="10" min={10} max={1000} onChange={handleChange} value={ settings.objectif} />}
             </Li>
             <Li>
                 {isEditMode && <CancelButton onClick={handleClick}>Cancel</CancelButton>}

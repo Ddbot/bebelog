@@ -6,6 +6,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { SettingsProvider } from './contexts/SettingsContext';
 import { DataProvider } from './contexts/DataContext';
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
