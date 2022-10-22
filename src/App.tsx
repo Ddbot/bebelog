@@ -62,6 +62,10 @@ const TopBar = styled.nav`
   color: black;
 
   z-index: 999;
+  & a {
+    text-decoration: none;
+    color: black;
+  }
 `;
 
 const BottomBar = styled.nav`
@@ -191,7 +195,7 @@ function App(): JSX.Element {
   return (
     <MobileShell>
       <TopBar>
-        <AppTitle to='/'>{settings.name}</AppTitle>
+        <Link to='/'>{settings.name}</Link>
       </TopBar>
       <Routes>
         <Route path='/' element={
