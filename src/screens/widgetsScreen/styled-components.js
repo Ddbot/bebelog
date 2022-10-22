@@ -65,7 +65,7 @@ const FABGearContainer = styled(FABStatsContainer)`
 `;
 
 export const FABStats = ({ children }) => {
-	return <FABStatsContainer to="/events_list">{children}</FABStatsContainer>
+	return <FABStatsContainer to="/events/list">{children}</FABStatsContainer>
 };
 
 export const FABGears = ({ children }) => {

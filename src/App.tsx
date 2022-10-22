@@ -49,7 +49,7 @@ function App(): JSX.Element {
     };
 
     insertEvent(obj);
-    navigate('/events_list', {
+    navigate('/events/list', {
       state: {
         value: obj.start
     }})
@@ -107,7 +107,7 @@ function App(): JSX.Element {
 
     if (error) console.error('Erruer lors de linsertion');
     if (data) console.log('Inséré ', data);
-    navigate('/events_list', {
+    navigate('/events/list', {
       state: {
         value: dayjs(event.start).startOf('D').unix() * 1000
     }});
@@ -146,20 +146,20 @@ function App(): JSX.Element {
       <Routes>
         <Route path='/' element={
           <Home handleClick={handleClick} timerFn={timerFn} />} />
-        <Route path='events_list' element={<EventsList />} />
+        <Route path='events/list' element={<EventsList />} />
         <Route path="events/:id" element={<EventCard isEditMode={ false } />} />
         <Route path="settings" element={<SettingsPage />} />
         <Route path="add_event" element={<CreateEventForm />} />
         <Route path="pick_time" element={<EventCard isEditMode={true} />} />
-        <Route path="events_stats" element={ <Visualisation />} />
+        <Route path="events/stats" element={ <Visualisation />} />
       </Routes>
       <BottomBar>
         <FABGears>
             <Gear />
         </FABGears>        
         <FABStats>
-            { pathname !== '/events_stats' && <Stats toggleClass={toggleClass} />}
-            { pathname !== '/events_list' && <ListIcon toggleClass={ toggleClass }/>}
+            { pathname !== '/events/stats' && <Stats toggleClass={toggleClass} />}
+            { pathname !== '/events/list' && <ListIcon toggleClass={ toggleClass }/>}
             <EyeIcon />
         </FABStats>
       </BottomBar>

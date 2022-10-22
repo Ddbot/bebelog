@@ -36,7 +36,7 @@ const Stats = ({ toggleClass }: any): JSX.Element => {
   const location = useLocation();
   const pathname = location.pathname;
 
-  return <MenuButton to="/events_stats" className="menuBtn hidden" onClick={toggleClass} >
+  return <MenuButton to="/events/stats" className="menuBtn hidden" onClick={toggleClass} >
     <svg
       viewBox="0 0 21 21"
       width={24}
