@@ -5,8 +5,6 @@ import EventsList from './screens/eventsListScreen/EventsList';
 import EventCard from './screens/eventsListScreen/EventCard';
 import SettingsPage from './screens/settings/Settings';
 
-import { DataProvider } from './contexts/DataContext';
-
 import styled from 'styled-components';
 import './App.css';
 import { supabase } from './supabase/client'; 
@@ -24,63 +22,11 @@ import dayjs from 'dayjs';
 
 import { DataObject, useData } from './contexts/DataContext';
 
-const radius = '0.67cm';
-
-const MobileShell = styled.div`
-  aspect-ratio: 1 / 2;
-  width: 7.57cm;
-  border-radius: ${radius};
-  border: 8px solid black;
-
-  display: flex;
-  flex-flow: row wrap;
-  align-items: space-between;
-  justify-content: center;
-
-  text-align: center;
-  overflow: hidden;
-
-  position: relative;
-  z-index: 2;
-
-`;
-
-const TopBar = styled.nav`
-  align-self: flex-start;
-  width: calc(100vw - 20px);
-  height: 6vh;
-
-  display: flex;
-  flex-flow: row wrap;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 1.7rem;
-
-  margin: 0;
-  background: white;
-  color: black;
-
-  z-index: 999;
-  & a {
-    text-decoration: none;
-    color: black;
-  }
-`;
-
-const BottomBar = styled.nav`
-    width: calc(100vw - 1.25rem);
-  background: white;
-
-    display: flex;
-    flex-flow: row wrap;
-    align-items: flex-end;
-    justify-content: flex-end;
-    
-    z-index: 2;
-
-    padding: 0 1rem;
-`;
+import {
+  TopBar,
+  BottomBar,
+  MobileShell
+} from './assets/common-styles';
 
 function App(): JSX.Element {
   const navigate = useNavigate();
