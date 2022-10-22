@@ -1,8 +1,19 @@
+import styled from 'styled-components';
 import { SettingsType, useSettings } from '../../contexts/SettingsContext';
 import BackArrow from '../../assets/icons/BackArrow';
 import RightArrow from '../../assets/icons/RighArrow';
 
 import dayjs from 'dayjs';
+
+const Button = styled.button`
+    border: none;
+    background: transparent;
+`;
+
+const Span = styled.span`
+    font-size: 1.4rem;
+`;
+
 
 
 type Props = {
@@ -36,10 +47,10 @@ const DateDisplaySelector = (props: Props) => {
     };
 
     return <>
-        <button onClick={handleClick} data-name="minus"><BackArrow /></button>
-        <span>{dayjs(query).format('dddd DD MMM')}</span>
-            { (dayjs(query).add(1,'day').isSame(dayjs()) || dayjs(query).add(1,'day').isBefore(dayjs())) && <button onClick={handleClick} data-name="plus"><RightArrow /></button>}
-    {dayjs(query).add(1, 'day').isAfter(dayjs()) && <button onClick={handleClick} data-name="plus" disabled></button>}
+        <Button onClick={handleClick} data-name="minus"><BackArrow /></Button>
+        <Span>{dayjs(query).format('ddd DD[/]MM[/]YY')}</Span>
+            { (dayjs(query).add(1,'day').isSame(dayjs()) || dayjs(query).add(1,'day').isBefore(dayjs())) && <Button onClick={handleClick} data-name="plus"><RightArrow /></Button>}
+    {dayjs(query).add(1, 'day').isAfter(dayjs()) && <Button onClick={handleClick} data-name="plus" disabled style={{ visibility: 'hidden' }}></Button>}
     </>
 }
 export default DateDisplaySelector;
