@@ -51,22 +51,24 @@ const SettingsPage = (props: Props): JSX.Element => {
     };
 
     async function submitSettings() {   
-        const { data, error } = await supabase.from('userSettings').insert({ ...settings });
+        const { data, error } = await supabase.from('userSettings').upsert({ ...settings }).eq('userId', 30).select()
         if(data)console.log('Data upserted: ', data);
-        if(error) console.error(error);
+        if (error) console.error('oups ',error);
         
         setIsEditMode(false);
     };
 
-    // useEffect(() => { 
-    //     const initialUserSettings = (!!localStorage.getItem('userSettings') && localStorage.getItem('userSettings') !== null) ? JSON.parse(localStorage.getItem('userSettings')!) : {
-    //         name: 'Bébé',
-    //         birthDate: dayjs().unix()*1000,
-    //         nourriture: 'biberon',
-    //         objectif: 30,
-    //         query: dayjs().startOf('D').unix() * 1000
-    //     };
-    // }, []);
+    useEffect(() => { 
+        // const initialUserSettings = (!!localStorage.getItem('userSettings') && localStorage.getItem('userSettings') !== null) ? JSON.parse(localStorage.getItem('userSettings')!) : {
+        //     name: 'Bébé',
+        //     birthDate: dayjs().unix()*1000,
+        //     nourriture: 'biberon',
+        //     objectif: 30,
+        //     query: dayjs().startOf('D').unix() * 1000
+        // };
+        console.log(new Date(settings.birthDate));
+        
+    }, []);
 
     return <Container>
         <H1><H1Link to="/"><button>◀</button></H1Link><span>Reglages</span><Gear /></H1>
@@ -94,7 +96,7 @@ const SettingsPage = (props: Props): JSX.Element => {
                     </Sein>
                     <Toggle name="nourriture" selected={ settings.nourriture} />    
                     <Biberon>
-                        <Nourriture />
+                        <Nourriture color="black" />
                     </Biberon>
                 </FeedingToggle>}
             </Li>

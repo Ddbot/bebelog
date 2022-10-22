@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { Event, EventType } from '../../models/Event';
 import { SettingsType, useSettings } from '../../contexts/SettingsContext';
 import {
+    Li,
     SVG,
     Text,
     IconsGroup,
@@ -13,7 +14,17 @@ import {
 import gsap from 'gsap';
 import dayjs from 'dayjs';
 import { useData, DataObject } from '../../contexts/DataContext';
-import DateDisplaySelector from '../eventsListScreen/DateDisplaySelector';
+// import DateDisplaySelector from '../eventsListScreen/DateDisplaySelector';
+import iconsColors from '../../screens/widgetsScreen/Buttons';
+
+type ListItemProps = {
+    bg: string,
+    children: React.ReactNode
+}
+
+const ListItem = ({ bg, children }: ListItemProps) => { 
+    return <Li>{ children }</Li>
+};
 
 const hIAA = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
 const categories = ['change', 'nourriture', 'medicament', 'lavage', 'dodo'];
@@ -22,6 +33,8 @@ const svgDimensions = {
     width: 1440,
     height: 2320
 };  
+
+const circleRadius = 60;
 
 type Props = {};
 
@@ -45,12 +58,8 @@ function getCoordinates(event: Event) {
 
 const Visualisation = (props: Props) => {
     const { data } = useData();    
-    const testDate = String(dayjs().subtract(1, 'day').startOf('D').unix() * 1000);
     const { settings }: { settings: SettingsType } = useSettings();
     const { query }: { query: number } = settings;
-    useEffect(() => {
-        console.log('sdgdg ',query);
-    },[query])
 
     return <VizContainer className='viz'> 
         {/* <DateDisplaySelector /> */}
@@ -73,19 +82,22 @@ const Visualisation = (props: Props) => {
             }) }
             </g>
             {/* DATA */}
-            <g  >
+            <g>
                 {data[String(query)]?.map((d: Event, i: number) => {
                     const { x1, y1, x2, y2} = getCoordinates(d);
-                    return ['dodo', 'nourriture'].includes(d.type) ? <a href="#" onClick={() => { console.log(...Object.values(d)) }} key={'line_' + i}><line x1={x1} x2={x2} y1={svgDimensions.height - y1} y2={svgDimensions.height - y2} strokeWidth={40} stroke="red" /></a> : <a href="#" onClick={() => { console.log(dayjs(d.start).format('HH:mm')) }} key={ 'circle_' +i}><circle cx={x1} cy={svgDimensions.height - y1} r={60} stroke="red" strokeWidth={ 10} fill="transparent" /></a>;
+                    return ['dodo', 'nourriture'].includes(d.type) ? <a href="#" onClick={() => { console.log(...Object.values(d)) }} key={'line_' + i}><line x1={x1} x2={x2} y1={svgDimensions.height - y1} y2={svgDimensions.height - y2} strokeWidth={40} stroke="red" /></a> : <a href="#" onClick={() => { console.log(dayjs(d.start).format('HH:mm')) }} key={'circle_' + i}>
+                        <circle cx={x1} cy={svgDimensions.height - y1} r={circleRadius} stroke="black" strokeWidth={10} fill="transparent" />
+                        <line transform={`rotate(45, ${x1}, ${svgDimensions.height - y1})`} x1={x1 - circleRadius} x2={x1 + circleRadius} y1={svgDimensions.height - y1} y2={svgDimensions.height - y1} strokeWidth={10} stroke="black" strokeDasharray={"10 0"} />
+                        <line transform={`rotate(45, ${x1}, ${svgDimensions.height - y1})`} x1={x1} x2={x1} y1={svgDimensions.height - y1 - circleRadius } y2={svgDimensions.height - y1 + circleRadius} strokeWidth={10} stroke="black" strokeDasharray={"10 0"}/>
+                    </a>;
                 })}
-                {/* <circle cx={0} cy={0} r={60} fill="red" /> */}
             </g>
         </SVG>
             <IconsGroup className='icones'>
-            {categories.map((cat, i) => { 
-                return <li key={'categorie_icone2_' + cat}>
+            {categories.map((cat: string, i: number) => { 
+                return <ListItem key={'categorie_icone2_' + cat} bg={'pink'}>
                     { icons[cat]}
-                    </li>
+                    </ListItem>
             }) }
         </IconsGroup>  
     </VizContainer>

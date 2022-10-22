@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+export const Li = styled.li`
+	background: ${ props => props.bg };
+`;
+
 export const SVG = styled.svg`
 	height: 88%;
 	width: 80%;

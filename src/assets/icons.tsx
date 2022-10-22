@@ -8,11 +8,11 @@ import Stats from './Stats';
 import ListIcon from './ListIcon';
 
 export const icons: any = {
-    lavage: <Lavage />,
-    change: <Change />,
-    medicament:<Medicament />,
-    dodo:<Dodo />,
-    nourriture: <Nourriture />,
-    stats: <Stats />,
-    list: <ListIcon />
+    lavage: <Lavage color={'#CC8881'}/>,
+    change: < Change color={'#8FA9CC'}/>,
+    medicament:<Medicament color={'#BCCC7A'}/>,
+    dodo:<Dodo color={'#9E99CC'}/>,
+    nourriture: <Nourriture color={'#85C9CC'} />,
+    stats: <Stats color="black" />,
+    list: <ListIcon color="black" />
 };

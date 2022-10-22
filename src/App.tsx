@@ -177,11 +177,11 @@ function App(): JSX.Element {
     async function f() {
       const { data, error } = await supabase.from('userSettings').select({ ...settings });
       if (data) {
-        console.log('dATA ', data);
-        
         setSettings(data);
       };
-        if(error) console.error('blablabla ', error);      
+      if (error) {
+        console.error('blablabla ', error);
+      };      
     };
     f();
   }, [settings,setSettings]);
