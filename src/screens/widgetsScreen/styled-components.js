@@ -1,18 +1,73 @@
-import styled, { keyframes} from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { Link } from 'react-router-dom';
+
+const widgetAnimation = keyframes`
+	100% {
+		opacity: 1;
+		transform: translate(0,0);
+	}
+`;
+
+const widgetAnimationOdd = keyframes`
+	100% {
+		opacity: 1;
+		transform: translate(0,50%);
+	}
+`;
+
+const widgetAnimationEven = keyframes`
+	100% {
+		opacity: 1;
+		transform: translate(0,-33%);
+	}
+`;
 
 export const Widget = styled.button`
 	background: transparent;
 	border-radius: 50%;
 	aspect-ratio: 1 / 1;
 	height: 30%;
-	&:nth-of-type(1),
-	&:nth-of-type(3) {
-		transform: translateY(50%);
+
+	opacity: 0;
+
+	animation: 0.125s cubic-bezier(.8, .5, .2, 1.4) 0.18s forwards ${widgetAnimation};
+
+	&:nth-of-type(1) {
+		transform-origin: left top;
+		transform: translate(-2rem, -2rem);
+		animation: 0.25s cubic-bezier(.8, .5, .2, 1.4) 0.1s forwards ${widgetAnimationOdd};
 	}
 	&:nth-of-type(2) {
-		transform: translateY(-33%);
+		transform-origin: center top;
+		transform: translate(0, -2rem);
+		animation: 0.25s cubic-bezier(.8, .5, .2, 1.4) 0.12s forwards ${widgetAnimationEven};
 	}
+
+	&:nth-of-type(3) {
+		transform-origin: right top;
+		transform: translate(2rem, -2rem);
+		animation: 0.25s cubic-bezier(.8, .5, .2, 1.4) 0.14s forwards ${widgetAnimationOdd};
+	}
+
+	&:nth-of-type(4) {
+		transform-origin: left bottom;
+		transform: translate(-2rem, 2rem);
+	}
+
+	&:nth-of-type(5) {
+		transform-origin: right bottom;
+		transform: translate(2rem, 2rem);
+	}
+
+	&:nth-of-type(1),
+	&:nth-of-type(3) {
+		// transform: translateY(50%);
+	}
+
+	&:nth-of-type(2) {
+		// transform: translateY(-33%);
+	}
+
 	&:nth-of-type(4),
 	&:nth-of-type(5) {
 		margin: 0 8px;
