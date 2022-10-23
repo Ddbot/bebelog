@@ -1,7 +1,17 @@
-import styled from "styled-components"
+import styled, { keyframes } from "styled-components"
+
+const svgAnimation = keyframes`
+	100% {
+		opacity: 1;
+		transform: translateX(0%);
+	}`;
 
 const SVG = styled.svg`
-scale: 0.7;
+  scale: 0.7;
+  opacity: 0;
+	transform: translateX(100%);
+	animation: .25s ease-out .25s forwards ${svgAnimation};
+  transition: all .25s linear;
 `;
 
 const HomeIcon = () => (
