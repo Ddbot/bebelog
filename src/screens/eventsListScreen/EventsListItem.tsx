@@ -1,11 +1,19 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Event, EventType } from '../../models/Event';
 import { icons } from '../../assets/icons/icons';
 import dayjs from 'dayjs'
 
+const LiAnimation = keyframes`
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    };
+`;
+
 type Props = {
-    event: Event
+    event: Event,
+    index: number
 };
 
 const colors = (type: EventType): string => {
@@ -51,6 +59,13 @@ const Li = styled.li`
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
+
+    transform: translateY(-50%);
+    opacity: 0;
+
+    animation-name: ${LiAnimation};
+    animation-duration: .125s;
+    animation-fill-mode: forwards;
 `;
 
 const ArrowContainer = styled.span`
@@ -61,12 +76,12 @@ const ArrowContainer = styled.span`
     }
 `;
 
-const EventsListItem = ({ event }: Props) => { 
+const EventsListItem = ({ event,index }: Props) => { 
     return !['dodo', 'nourriture'].includes(String(event.type)) ? <Card to={`/events/${event.id}`} state={{ value: { ...event, from: 'events/list' } }}><Li style={{
-        background:  colors(event.type)}}>
+        background:  colors(event.type), animationDelay: `${index * 0.1}s` }}>
         {icons[String(event.type)]}{ dayjs(event.start).format('HH[:]mm')}
     </Li></Card> : <Card to={`/events/${event.id}`} state={{ value: { ...event, from: 'events/list' } }}><Li style={{
-        background:  colors(event.type)}}>
+        background:  colors(event.type),animationDelay: `${index * 0.1}s`}}>
             {icons[String(event.type)]} <>{dayjs(event.start!).format('HH:mm')} <ArrowContainer><span>→</span></ArrowContainer> {dayjs(event.end).format('HH:mm')}</>
     </Li></Card>
 };
