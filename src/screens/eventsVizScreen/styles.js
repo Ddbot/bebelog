@@ -2,13 +2,16 @@ import styled, { keyframes } from 'styled-components';
 const pointAnimation = keyframes`
 	100% {
 		transform: translateY(0);
+		opacity: 1;
 	}
 `;
 
 export const G = styled.g`
 	transform: translateY(6%);
+	opacity: 0;
 	animation-name: ${pointAnimation};
 	animation-duration: 0.0625s;
+	animation-timing-function: cubic-bezier(.8, .5, .2, 1.4);
 	animation-fill-mode: forwards;
 `;
 

@@ -110,8 +110,7 @@ function App(): JSX.Element {
       state: {
         value: dayjs(event.start).startOf('D').unix() * 1000
     }});
-  }, [setData,navigate]);
-
+  }, [setData, navigate]);
 
   // repere le nb de parametres dans timer et setEventsList accordingly
   useEffect((): void => { 
@@ -148,7 +147,6 @@ function App(): JSX.Element {
       <TopBar>
         {pathname !== '/events/stats' ? <Link to='/'>{settings.name}</Link> : <DateDisplaySelector />}
         {pathname !== '/settings' && pathname !== '/events/stats' && <Link to='/settings'><Gear /></Link>}
-        <button onClick={() => { console.log('on ouvrira un portal ici CONDITIONNEL AVEC AUTH'); }}>PORTAL</button>
       </TopBar>
       <Routes>
         <Route path='/' element={
