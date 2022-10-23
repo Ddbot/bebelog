@@ -2,16 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 
 type Props = {
-  color: string;
 };
 
 const SVG = styled.svg`
 `;
 
-const Medicament = ({ color }: Props):JSX.Element => {
+const Medicament = (props: Props):JSX.Element => {
     return (
       <SVG xmlns="http://www.w3.org/2000/svg" width={32} viewBox="0 0 980 982">
-        <defs />
+        <circle cx={980 / 2} cy={982 / 2} r={ 980/2} fill={ '#BCCC7A'} />
         <path
           fill="#B5B5B5"
           stroke="#B5B5B5"

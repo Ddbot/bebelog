@@ -83,7 +83,7 @@ const SettingsPage = (props: Props): JSX.Element => {
                     </Sein>
                     <Toggle name="nourriture" selected={ settings.nourriture} />    
                     <Biberon>
-                        <Nourriture color="black" />
+                        <Nourriture />
                     </Biberon>
                 </FeedingToggle>}
             </Li>

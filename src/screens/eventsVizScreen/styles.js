@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
-export const Li = styled.li`
-	background: ${ props => props.bg };
-`;
+export const Li = styled.li``;
 
 export const SVG = styled.svg`
 	height: 88%;
@@ -47,7 +45,7 @@ export const IconsGroup = styled.ul`
 
 	& > li:nth-of-type(2) {
 		& > svg {
-			scale: 0.6;
+			// scale: 0.6;
 			aspect-ratio: 1/1;
 			width: 1.6rem;
 		}

@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 type Props = {
-  color: string;
 };
 
 const SVG = styled.svg`
@@ -11,13 +10,13 @@ const Path = styled.path`
     stroke-width: .7rem;
 `;
 
-const Nourriture = ({ color }: Props): JSX.Element => (
+const Nourriture = (props: Props): JSX.Element => (
   <SVG
     xmlns="http://www.w3.org/2000/svg"
     id="svg"
     width={32}
     viewBox="0 0 400 400">
-    <defs />
+    <circle cx={200} cy={200} r={200} fill={ '#85C9CC'} />
     <g id="svgg">
       <Path
         id="path0"

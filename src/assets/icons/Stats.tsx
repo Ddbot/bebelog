@@ -3,7 +3,7 @@ import { SVGIcon } from '../common-styles';
 import { useLocation } from "react-router-dom";
 
 const MenuButton = styled(SVGIcon)`  
-position: absolute;
+    position: absolute;
 
     &:not(.hidden){
       display: flex;
@@ -33,8 +33,6 @@ position: absolute;
     grid-row: 1 / span 1;
 `;
 const Stats = ({ toggleClass }: any): JSX.Element => {
-  const location = useLocation();
-  const pathname = location.pathname;
 
   return <MenuButton to="/events/stats" className="menuBtn hidden" onClick={toggleClass} >
     <svg

@@ -16,11 +16,11 @@ type Props = {
 };
 
 export const icons: any = {
-    lavage: <Lavage color={'#CC8881'}/>,
-    change: < Change color={'#8FA9CC'}/>,
-    medicament:<Medicament color={'#BCCC7A'}/>,
-    dodo:<Dodo color={'#9E99CC'}/>,
-    nourriture: <Nourriture color={'#85C9CC'}/>
+    lavage: <Lavage />,
+    change: < Change />,
+    medicament:<Medicament />,
+    dodo:<Dodo />,
+    nourriture: <Nourriture />
 };
 
 export const iconsColors: string[] = ['#CC8881', '#8FA9CC', '#BCCC7A', '#9E99CC', '#85C9CC'];
