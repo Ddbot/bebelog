@@ -26,11 +26,6 @@ const DataProvider = ({ children }: { children: React.ReactNode }) => {
     const [data, setData]: [DataObject, Dispatch<SetStateAction<DataObject>>] = useState<DataObject>(initialData);
     const value = { data, setData };
 
-    useEffect(() => { 
-        console.log('NEW DATA ', data);
-        
-    }, [data]);
-
     return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
 };
 

@@ -33,6 +33,7 @@ function App(): JSX.Element {
   const { setData } = useData();
 
   const [timer, setTimer]: [any, SetStateAction<any>] = useState({});
+  const [isAuthenticated, setIsAuthenticated]:[boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
 
   const location = useLocation();
   const pathname = location.pathname;
@@ -135,16 +136,23 @@ function App(): JSX.Element {
     };
     f();
   }, [settings, setSettings]);
+  
+  useEffect(() => { 
+    async function getSession() {
+      const { data: { session } } = await supabase.auth.getSession();
+      setIsAuthenticated(!!session)
+    }
+
+    console.log(getSession());    
+  }, []);
 
   useEffect(() => { 
-    console.log('TIMER: ', timer);
-    
-  }, [timer]);
-  
+    console.log('isAuthenticated: ', isAuthenticated);
+  },[isAuthenticated])
 
   return (
     <MobileShell>
-      <TopBar>
+      {isAuthenticated && <><TopBar>
         {pathname !== '/events/stats' ? <Link to='/'>{settings.name}</Link> : <DateDisplaySelector />}
         {pathname !== '/settings' && pathname !== '/events/stats' && <Link to='/settings'><Gear /></Link>}
       </TopBar>
@@ -163,7 +171,7 @@ function App(): JSX.Element {
           { pathname !== '/events/stats' && <Stats toggleClass={toggleClass} />}
           { pathname !== '/events/list' && <ListIcon toggleClass={ toggleClass }/>}
           <EyeIcon />
-      </BottomBar>
+      </BottomBar> </>}
     </MobileShell>
     );
   }

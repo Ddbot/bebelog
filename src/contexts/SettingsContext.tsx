@@ -28,8 +28,6 @@ function SettingsProvider({ children }: { children : React.ReactNode}) {
 
     useEffect(() => {
         localStorage.setItem('userSettings', JSON.stringify(settings));
-        console.log(localStorage.getItem('userSettings'));
-        
     },[settings]);
 
     return <SettingsContext.Provider value={ value }>{ children }</SettingsContext.Provider>
