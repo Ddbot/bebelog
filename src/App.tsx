@@ -4,6 +4,7 @@ import { Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom'
 import EventsList from './screens/eventsListScreen/EventsList';
 import EventCard from './screens/eventsListScreen/EventCard';
 import SettingsPage from './screens/settings/Settings';
+import SignUpForm from './SignUpForm';
 
 import DateDisplaySelector from './screens/eventsListScreen/DateDisplaySelector';
 
@@ -171,7 +172,8 @@ function App(): JSX.Element {
           { pathname !== '/events/stats' && <Stats toggleClass={toggleClass} />}
           { pathname !== '/events/list' && <ListIcon toggleClass={ toggleClass }/>}
           <EyeIcon />
-      </BottomBar> </>}
+        </BottomBar> </>}
+      {!isAuthenticated && <SignUpForm /> }
     </MobileShell>
     );
   }
