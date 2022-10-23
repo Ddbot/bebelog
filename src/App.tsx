@@ -1,4 +1,4 @@
-import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
 import { Event, TimerType } from './models/Event';
 import { Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
 import EventsList from './screens/eventsListScreen/EventsList';
@@ -10,11 +10,9 @@ import DateDisplaySelector from './screens/eventsListScreen/DateDisplaySelector'
 import './App.css';
 import { supabase } from './supabase/client'; 
 import Home from './screens/widgetsScreen/Home';
-
 import { useSettings } from './contexts/SettingsContext';
 import CreateEventForm from './screens/eventsListScreen/CreateEventForm';
 import Visualisation from './screens/eventsVizScreen/Visualisation';
-import { FABGears, FABStats } from "./screens/widgetsScreen/styled-components";
 import ListIcon from './assets/icons/ListIcon';
 import EyeIcon from './assets/icons/EyeIcon';
 import Gear from './assets/icons/Gear';
@@ -22,7 +20,6 @@ import Stats from './assets/icons/Stats';
 import dayjs from 'dayjs';
 
 import { DataObject, useData } from './contexts/DataContext';
-
 import {
   TopBar,
   BottomBar,
@@ -138,13 +135,19 @@ function App(): JSX.Element {
       };      
     };
     f();
-  }, [settings,setSettings]);
+  }, [settings, setSettings]);
+
+  useEffect(() => { 
+    console.log('TIMER: ', timer);
+    
+  }, [timer]);
+  
 
   return (
     <MobileShell>
       <TopBar>
         {pathname !== '/events/stats' ? <Link to='/'>{settings.name}</Link> : <DateDisplaySelector />}
-        { pathname !== '/settings' && pathname !== '/events/stats' && <Gear />}
+        { pathname !== '/settings' && pathname !== '/events/stats' && <Link to='/settings'><Gear /></Link>}
       </TopBar>
       <Routes>
         <Route path='/' element={
