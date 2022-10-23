@@ -17,7 +17,7 @@ const Nourriture = (props: Props): JSX.Element => (
     width={32}
     viewBox="0 0 400 400">
     <circle cx={200} cy={200} r={200} fill={ '#85C9CC'} />
-    <g id="svgg">
+    <g>
       <Path
         id="path0"
         fillRule="evenodd"

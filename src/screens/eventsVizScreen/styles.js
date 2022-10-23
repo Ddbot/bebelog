@@ -58,6 +58,8 @@ export const VizContainer = styled.div`
 	justify-content: flex-end;
 	align-items: center;
 	background: white;
+
+	transform: translateY(2.5%);
 	&.blur {
 		filter: blur(10px);
 	}

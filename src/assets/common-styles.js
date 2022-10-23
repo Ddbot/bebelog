@@ -72,8 +72,12 @@ export const TopBar = styled.nav`
 	}
 `;
 
-export const BottomBar = styled.nav`
+export const BottomBar = styled.nav`	
+	// align-self: center;
+
 	width: calc(100vw - 1.25rem);	
+	// height: 6vh;
+
 	background: white;
 
 	display: flex;
