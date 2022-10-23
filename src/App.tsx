@@ -147,7 +147,8 @@ function App(): JSX.Element {
     <MobileShell>
       <TopBar>
         {pathname !== '/events/stats' ? <Link to='/'>{settings.name}</Link> : <DateDisplaySelector />}
-        { pathname !== '/settings' && pathname !== '/events/stats' && <Link to='/settings'><Gear /></Link>}
+        {pathname !== '/settings' && pathname !== '/events/stats' && <Link to='/settings'><Gear /></Link>}
+        <button onClick={() => { console.log('on ouvrira un portal ici CONDITIONNEL AVEC AUTH'); }}>PORTAL</button>
       </TopBar>
       <Routes>
         <Route path='/' element={
