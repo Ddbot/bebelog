@@ -3,6 +3,7 @@ import { icons } from '../widgetsScreen/Buttons';
 import { Event, EventType } from '../../models/Event';
 import { SettingsType, useSettings } from '../../contexts/SettingsContext';
 import {
+    G,
     Li,
     SVG,
     Text,
@@ -60,7 +61,7 @@ function getCoordinates(event: Event) {
 
     const x1 = getX(type), x2 = getX(type), y1 = mapper(start), y2 = mapper(end);
     return { x1, x2, y1, y2 };
-}
+};
 
 const Visualisation = (props: Props) => {
     const { data } = useData();    
@@ -90,11 +91,16 @@ const Visualisation = (props: Props) => {
             <g>
                 {data[String(query)]?.map((d: Event, i: number) => {
                     const { x1, y1, x2, y2} = getCoordinates(d);
-                    return ['dodo', 'nourriture'].includes(d.type) ? <Link to={`/events/${d.id}`} state={{ value: { ...d, from: 'events/stats' } }} onClick={() => { console.log(dayjs(d.start).format('HH:mm'), ' to ', dayjs(d.end).format('HH:mm'), Math.round((d.end - d.start) / 1000 / 60) + ' minutes') }} key={'line_' + i}><line x1={x1} x2={x2} y1={svgDimensions.height - y1} y2={svgDimensions.height - y2} strokeWidth={40} stroke={ colors(d.type)} />
+                    return ['dodo', 'nourriture'].includes(d.type) ? <Link to={`/events/${d.id}`} state={{ value: { ...d, from: 'events/stats' } }} onClick={() => { console.log(dayjs(d.start).format('HH:mm'), ' to ', dayjs(d.end).format('HH:mm'), Math.round((d.end - d.start) / 1000 / 60) + ' minutes') }} key={'line_' + i}>
+                        <G style={{ animationDelay: `${ i * 0.06}s`}}>
+                            <line x1={x1} x2={x2} y1={svgDimensions.height - y1} y2={svgDimensions.height - y2} strokeWidth={40} stroke={colors(d.type)} />
+                        </G>
                     </Link> : <Link to={`/events/${d.id}`} state={{ value: { ...d, from: 'events/stats' } }} onClick={() => { console.log(dayjs(d.start).format('HH:mm')) }} key={'circle_' + i}>
-                        <circle cx={x1} cy={svgDimensions.height - y1} r={circleRadius} stroke="white" strokeWidth={10} fill={ colors(d.type) } />
-                        <line transform={`rotate(45, ${x1}, ${svgDimensions.height - y1})`} x1={x1 - circleRadius} x2={x1 + circleRadius} y1={svgDimensions.height - y1} y2={svgDimensions.height - y1} strokeWidth={10} stroke="white" strokeDasharray={"10 0"} />
-                        <line transform={`rotate(45, ${x1}, ${svgDimensions.height - y1})`} x1={x1} x2={x1} y1={svgDimensions.height - y1 - circleRadius } y2={svgDimensions.height - y1 + circleRadius} strokeWidth={10} stroke="white" strokeDasharray={"10 0"}/>
+                        <G style={{ animationDelay: `${ i * 0.06}s`}}>
+                            <circle cx={x1} cy={svgDimensions.height - y1} r={circleRadius} stroke="white" strokeWidth={10} fill={ colors(d.type) } />
+                            <line transform={`rotate(45, ${x1}, ${svgDimensions.height - y1})`} x1={x1 - circleRadius} x2={x1 + circleRadius} y1={svgDimensions.height - y1} y2={svgDimensions.height - y1} strokeWidth={10} stroke="white" strokeDasharray={"10 0"} />
+                            <line transform={`rotate(45, ${x1}, ${svgDimensions.height - y1})`} x1={x1} x2={x1} y1={svgDimensions.height - y1 - circleRadius} y2={svgDimensions.height - y1 + circleRadius} strokeWidth={10} stroke="white" strokeDasharray={"10 0"} />
+                        </G>
                     </Link>;
                 })}
             </g>

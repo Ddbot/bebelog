@@ -1,4 +1,16 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+const pointAnimation = keyframes`
+	100% {
+		transform: translateY(0);
+	}
+`;
+
+export const G = styled.g`
+	transform: translateY(6%);
+	animation-name: ${pointAnimation};
+	animation-duration: 0.0625s;
+	animation-fill-mode: forwards;
+`;
 
 export const Li = styled.li``;
 
