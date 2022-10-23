@@ -90,3 +90,12 @@ export const BottomBar = styled.nav`
 		margin: 0 0.5rem;
 	}
 `;
+
+export const LogOutButton = styled.button`
+	height: 50%;
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+	transform: translateY(66.67%);
+	border-radius: 4px;
+`;

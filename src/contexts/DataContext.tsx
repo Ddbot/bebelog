@@ -16,7 +16,8 @@ const initialData: DataObject = {
         id: 'firstData',  
         start: 0,
         end: 0,
-        type: EventType.DODO
+        type: EventType.DODO,
+        user_id: ''
     }
 ]};
 

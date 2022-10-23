@@ -7,7 +7,8 @@ export type SettingsType = {
     birthDate: number,
     nourriture: NourritureType,
     objectif: number,
-    query: number
+    query: number,
+    userId: string
 };
 
 type SetSettings = Function
@@ -17,7 +18,8 @@ const initialSettings: SettingsType = {
     birthDate: dayjs().unix()*1000,
     nourriture: 'sein',
     objectif: 30,
-    query: dayjs().startOf('D').unix() * 1000
+    query: dayjs().startOf('D').unix() * 1000,
+    userId: ''
 };
 
 const SettingsContext: React.Context<any> = createContext<{ settings: SettingsType; setSettings: SetSettings} | undefined>(undefined);

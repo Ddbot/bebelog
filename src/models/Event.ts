@@ -14,6 +14,7 @@ export type Event = {
     end: number;
   type: EventType;
   isNew?: boolean;
+  user_id: string
 };
 
 export type TimerType = {

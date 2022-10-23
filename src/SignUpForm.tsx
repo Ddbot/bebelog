@@ -1,4 +1,5 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
 import styled from 'styled-components';
 
 import { useSettings, SettingsType } from "./contexts/SettingsContext";
@@ -18,7 +19,7 @@ const initialData: FormPropsType = {
 
 const SignUpForm = (): JSX.Element => { 
     const [data, setData]:[data: FormPropsType, setData: Dispatch<SetStateAction<FormPropsType>>] = useState<FormPropsType>(initialData);
-    // const { setSettings }: { setSettings: Dispatch<SetStateAction<SettingsType>>} = useSettings();
+    const { setSettings }: { setSettings: Dispatch<SetStateAction<SettingsType>>} = useSettings();
 
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
         const { name, value } = event.currentTarget;
@@ -31,18 +32,37 @@ const SignUpForm = (): JSX.Element => {
         });
     };
 
-    async function submitData() {   
+    async function submitData() {
         const { email, password } = data;
 
         const { data: { user }, error } = await supabase.auth.signUp({ email, password });
+        if (user) { 
+            setSettings((prev: SettingsType) => {
+                return {
+                    ...prev,
+                    userId: user.id
+                }
+             });
+        }
 
-        if(user)console.log('User signed up : ', user);
-        if (error) console.error('oups ',error);
-    };
-
-    useEffect(() => { 
-        console.log(data);
-    }, [data]);
+        if (error) {
+            switch (error.message) {
+                case 'User already registered':
+                    const { data: { user }, error } = await supabase.auth.signInWithPassword({ email, password });
+                    if (user) { 
+                        setSettings((prev: SettingsType) => {
+                            return {
+                                ...prev,
+                                userId: user.id
+                            }
+                        });
+                    }                    
+                    break;
+                default:
+                    break
+            };
+        };
+    }
 
     return <Container>
         <h1>Sign Up</h1>

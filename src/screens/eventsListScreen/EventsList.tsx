@@ -129,8 +129,10 @@ const EventsList = (props: any): JSX.Element => {
             const { data, error } = await supabase
                 .from('events')
                 .select()
+                .eq('user_id', settings.userId)
                 .gte('start', Number(start))
-                .lte('start', Number(end));
+                .lte('start', Number(end))
+            
 
                 if (error) console.error(error);
             if (data) {
