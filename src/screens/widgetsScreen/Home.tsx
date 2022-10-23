@@ -1,10 +1,9 @@
-import { useEffect } from 'react';
 import Buttons from './Buttons';
 import { HomeContainer } from './styled-components';
 
 type Props = {
-    handleClick: any,
-    timerFn: any,
+    handleClick: Function,
+    timerFn: Function,
 };
 
 const Home = ({ handleClick, timerFn }: Props) => {

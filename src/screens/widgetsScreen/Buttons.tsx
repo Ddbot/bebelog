@@ -9,6 +9,7 @@ import Dodo from '../../assets/icons/Dodo';
 import Medicament from '../../assets/icons/Medicament';
 import Nourriture from '../../assets/icons/Nourriture';
 
+
 type Props = {
     handleClick: any,
     timerFn: any,
@@ -31,7 +32,7 @@ const Buttons = ({ handleClick, timerFn }: Props): JSX.Element => {
                 .filter((button: [string, EventType]) => { 
                     return !['dodo','nourriture','timed'].includes(button[1])
                 })
-                .map((ev: [string, EventType], i: number): any => { 
+                .map((ev: [string, EventType], i: number): JSX.Element => { 
             return <Widget
                 key={'btn' + i}
                 data-type={ev[1]}
